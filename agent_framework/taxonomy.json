@@ -1,0 +1,21 @@
+{
+  "Python": ["python"],
+  "Java": ["java", "spring boot"],
+  "LLM": ["llm", "大模型", "gpt", "llama", "glm"],
+  "Agent": ["agent", "智能体", "agent runtime", "agent框架"],
+  "RAG": ["rag", "检索增强", "检索增强生成"],
+  "Tool Use": ["tool use", "工具调用", "function calling"],
+  "Prompt Engineering": ["prompt", "提示工程"],
+  "LangChain": ["langchain"],
+  "LangGraph": ["langgraph"],
+  "MCP": ["mcp", "model context protocol"],
+  "Vector Database": ["向量数据库", "milvus", "faiss", "pgvector"],
+  "Evaluation": ["评测", "eval", "evaluation"],
+  "Observability": ["可观测", "观测"],
+  "FastAPI": ["fastapi"],
+  "Docker": ["docker", "容器化"],
+  "Kubernetes": ["kubernetes", "k8s"],
+  "SQL": ["sql", "mysql", "postgresql"],
+  "PyTorch": ["pytorch"],
+  "Git": ["git"]
+}

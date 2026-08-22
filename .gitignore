@@ -1,0 +1,26 @@
+# Runtime data and user-imported competition data
+data/
+*.db
+*.sqlite
+*.sqlite3
+
+# Build outputs
+build/
+dist/
+*.spec
+
+# Python caches and local environments
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.venv/
+venv/
+
+# Editors and operating systems
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db
+
+# Local launchers may contain machine-specific Python paths
+*.vbs
