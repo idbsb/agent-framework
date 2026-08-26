@@ -1,0 +1,119 @@
+{
+  "generated_at": "2026-08-26T17:10:02+08:00",
+  "environment": {
+    "os": "Windows-11-10.0.26200-SP0",
+    "python": "3.12.13",
+    "node": "v24.18.0"
+  },
+  "passed": true,
+  "checks": {
+    "frozen_structure": true,
+    "frozen_hashes": true,
+    "original_api_compatible": true,
+    "all_api_http_200": true,
+    "emerging_evidence": true,
+    "singleton_confidence": true,
+    "graph_adapter": true,
+    "evolution_missing_state": true,
+    "frontend_build": true,
+    "browser_qa": true,
+    "live_demo_flow": true
+  },
+  "hashes": {
+    "standardized_jd_dataset": "B00A0220FD4B974D8B00BB57D6F0AF3BB40F1D92CC7DDD59FCB0DDDA9FC90EDE",
+    "standard_job_title_mapping": "293B34DBB8E4E6F5689CF58387A38601F30FEB759B46E7F34931BC1F6FF859B1",
+    "standard_skill_dictionary": "178C64E654D3534878489E88AAFC5A17B98FE361CB38DB370F9036D01E5C1055",
+    "standardized_resume_testset": "3B78EDFFD349055342818FFF6B803B92D5BD1C1BD1DE140E3764EF82C3CCD952"
+  },
+  "row_counts": {
+    "jds": 191,
+    "resumes": 27,
+    "skills": 82,
+    "aliases": 146
+  },
+  "api_calls": {
+    "GET /api/jobs": {
+      "status": 200,
+      "passed": true
+    },
+    "GET /api/skills": {
+      "status": 200,
+      "passed": true
+    },
+    "POST /api/jd/parse": {
+      "status": 200,
+      "passed": true
+    },
+    "POST /api/resume/parse": {
+      "status": 200,
+      "passed": true
+    },
+    "POST /api/match": {
+      "status": 200,
+      "passed": true
+    },
+    "GET /api/system/overview": {
+      "status": 200,
+      "passed": true
+    },
+    "GET /api/job-analysis/{job_title}": {
+      "status": 200,
+      "passed": true
+    },
+    "GET /api/graph/job/{job_title}": {
+      "status": 200,
+      "passed": true
+    },
+    "GET /api/graph/skill/{skill_id}": {
+      "status": 200,
+      "passed": true
+    },
+    "GET /api/evolution/job/{job_title}": {
+      "status": 200,
+      "passed": true
+    },
+    "GET /api/emerging-jobs": {
+      "status": 200,
+      "passed": true
+    },
+    "GET /api/emerging-jobs/{candidate_id}": {
+      "status": 200,
+      "passed": true
+    }
+  },
+  "observations": {
+    "job_count": 117,
+    "skill_count": 82,
+    "overview_metrics": {
+      "jd_count": 191,
+      "standard_job_count": 117,
+      "standard_skill_count": 82,
+      "graph_node_count": 72,
+      "graph_edge_count": 74,
+      "resume_count": 27,
+      "evidence_covered_jd_count": 168
+    },
+    "focus_job_analysis_available": true,
+    "graph_summary": {
+      "node_count": 26,
+      "edge_count": 25,
+      "evidence_count": 72
+    },
+    "evolution_status": "not_connected",
+    "emerging_summary": {
+      "candidate_count": 11,
+      "high_confidence": 0,
+      "medium_confidence": 1,
+      "weak_candidate": 10
+    },
+    "live_match_score": 33.33
+  },
+  "missing_group_a_files": [
+    "knowledge_graph_v1.json",
+    "key_job_evolution_v1.json",
+    "key_job_graph_profiles_v1.xlsx",
+    "job_skill_evolution_v1.xlsx",
+    "graph_nodes_v1.xlsx",
+    "graph_edges_v1.xlsx"
+  ]
+}

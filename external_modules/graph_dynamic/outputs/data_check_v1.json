@@ -1,0 +1,29 @@
+{
+  "jd_total": 191,
+  "confirmed_job_jd": 179,
+  "standard_job_count": 117,
+  "standard_skill_count": 82,
+  "jd_id_unique": true,
+  "skill_id_unique": true,
+  "key_job_jd_counts": {
+    "AI Agent开发工程师": 12,
+    "RAG引擎研发工程师": 2,
+    "AI安全技术工程师": 9
+  },
+  "publish_valid": 83,
+  "publish_missing": 96,
+  "publish_coverage": 0.46368715083798884,
+  "collection_valid": 175,
+  "time_source": "标准发布时间（有效时）+采集批次回退",
+  "strict_long_term_supported": false,
+  "effective_start": "2026-04-14T00:00:00",
+  "effective_end": "2026-08-15T00:00:00",
+  "config": {
+    "time_window": "day",
+    "min_jd_count": 3,
+    "growth_threshold": 0.15,
+    "decline_threshold": -0.15,
+    "new_skill_min_count": 2,
+    "publish_time_min_coverage": 0.6
+  }
+}

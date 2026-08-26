@@ -1,0 +1,17 @@
+weights:
+  required_skills: 0.50
+  bonus_skills: 0.15
+  projects: 0.15
+  experience: 0.10
+  education: 0.10
+thresholds:
+  high: 75
+  medium: 45
+  job_prediction_review: 0.65
+  skill_confidence_accept: 0.80
+profile:
+  minimum_required_frequency: 0.20
+  minimum_bonus_frequency: 0.15
+  maximum_required_skills: 15
+  maximum_bonus_skills: 10
+

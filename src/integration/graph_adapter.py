@@ -1,0 +1,240 @@
+from __future__ import annotations
+
+import json
+import re
+from pathlib import Path
+from typing import Any
+
+from ..core.skill_extractor import SkillIndex
+from ..data_loader import DataLoader
+
+
+GRAPH_SOURCE_LABEL = "由组员A现有正式关系表转换"
+
+
+def _text(value: object) -> str:
+    return str(value or "").strip()
+
+
+def _evidence_ids(value: object) -> list[str]:
+    if isinstance(value, (list, tuple, set)):
+        values = [_text(item).upper() for item in value]
+    else:
+        values = re.findall(r"JD-\d+", _text(value), flags=re.IGNORECASE)
+    return list(dict.fromkeys(item for item in values if re.fullmatch(r"JD-\d+", item, flags=re.IGNORECASE)))
+
+
+class GraphAdapter:
+    """Prefer formal graph JSON; otherwise convert only existing formal Excel relations."""
+
+    def __init__(self, loader: DataLoader, skill_index: SkillIndex):
+        self.loader = loader
+        self.skill_index = skill_index
+        self.project_root = loader.project_root
+
+    def _json_paths(self) -> list[Path]:
+        return [
+            self.project_root / "external_modules" / "graph_dynamic" / "outputs" / "knowledge_graph_v1.json",
+            self.project_root / "outputs" / "knowledge_graph_v1.json",
+            self.project_root / "knowledge_graph_v1.json",
+            self.project_root / "组员图谱动态" / "knowledge_graph_v1.json",
+        ]
+
+    def _excel_paths(self) -> list[Path]:
+        return [
+            self.project_root / "组员图谱动态" / "重要岗位技能分析表.xlsx",
+            self.project_root / "outputs" / "job_skill_analysis_cleaned.xlsx",
+        ]
+
+    def _from_json(self, path: Path) -> dict[str, Any]:
+        value = json.loads(path.read_text(encoding="utf-8"))
+        if not isinstance(value, dict):
+            raise ValueError(f"{path.name} 顶层必须是JSON对象")
+        raw_nodes = value.get("nodes")
+        raw_edges = value.get("edges")
+        if not isinstance(raw_nodes, list) or not isinstance(raw_edges, list):
+            raise ValueError(f"{path.name} 必须包含nodes与edges数组")
+
+        nodes: list[dict[str, Any]] = []
+        for item in raw_nodes:
+            if not isinstance(item, dict):
+                continue
+            formal_type = _text(item.get("type") or item.get("node_type"))
+            name = _text(
+                item.get("name") or item.get("label") or item.get("standard_job_title")
+                or item.get("standard_skill_name") or item.get("jd_id")
+                or item.get("company_name") or item.get("domain_name") or item.get("id")
+            )
+            nodes.append({**item, "name": name, "type": formal_type.lower(), "formal_type": formal_type})
+
+        edges: list[dict[str, Any]] = []
+        for item in raw_edges:
+            if not isinstance(item, dict):
+                continue
+            evidence_ids = _evidence_ids(item.get("evidence_jd_ids"))
+            try:
+                frequency = float(item.get("frequency") or 0)
+            except (TypeError, ValueError):
+                frequency = 0.0
+            edges.append({
+                **item,
+                "frequency": frequency,
+                "evidence_jd_ids": evidence_ids,
+                "evidence_count": len(evidence_ids),
+            })
+
+        job_skill_count = sum(1 for edge in edges if edge.get("edge_type") == "Job_Skill")
+        qa_path = path.with_name("qa_report_v1.json")
+        qa_report = json.loads(qa_path.read_text(encoding="utf-8")) if qa_path.exists() else None
+        return {
+            **{key: item for key, item in value.items() if key not in {"nodes", "edges", "summary"}},
+            "available": True,
+            "status": "connected",
+            "source_type": "formal_json",
+            "source_label": "组员A正式知识图谱",
+            "source_file": str(path.relative_to(self.project_root)),
+            "notice": "正式图谱完整保留在后台；当前接口按所选岗位或技能返回直接关联子图。",
+            "nodes": nodes,
+            "edges": edges,
+            "summary": {
+                "node_count": len(nodes),
+                "edge_count": len(edges),
+                "job_skill_edge_count": job_skill_count,
+                "job_count": sum(1 for node in nodes if node.get("type") == "job"),
+                "skill_count": sum(1 for node in nodes if node.get("type") == "skill"),
+            },
+            "formal_qa_report": qa_report,
+        }
+
+    def _from_excel(self, path: Path) -> dict[str, Any]:
+        workbook_sheet = "Sheet1" if path.name == "重要岗位技能分析表.xlsx" else "技能明细"
+        rows = self.loader.read_sheet(path, workbook_sheet)
+        nodes: dict[str, dict[str, Any]] = {}
+        edges: list[dict[str, Any]] = []
+        current_job = ""
+        current_level = ""
+        for row in rows:
+            row_job = _text(row.get("岗位名称"))
+            if row_job and (row_job.startswith("重要程度") or set(row_job) <= {"★", "☆"}):
+                break
+            if row_job:
+                current_job = row_job
+            row_level = _text(row.get("技能层次"))
+            if row_level:
+                current_level = row_level
+            job_title = current_job
+            skill_name = _text(row.get("技能名称"))
+            ids = _evidence_ids(row.get("依据来源（JD编号）"))
+            if not job_title or not skill_name or not ids:
+                continue
+            job_id = f"job:{job_title}"
+            skill_id = self.skill_index.resolve_name(skill_name) or f"skill-name:{skill_name}"
+            nodes[job_id] = {"id": job_id, "name": job_title, "type": "job", "category": "岗位"}
+            skill_record = self.skill_index.skills.get(skill_id)
+            nodes[skill_id] = {
+                "id": skill_id,
+                "name": skill_name,
+                "type": "skill",
+                "category": skill_record.category if skill_record else current_level or "技能",
+            }
+            frequency = row.get("出现频率")
+            try:
+                frequency_value = float(frequency)
+            except (TypeError, ValueError):
+                frequency_value = 0.0
+            edges.append({
+                "id": f"{job_id}->{skill_id}",
+                "source": job_id,
+                "target": skill_id,
+                "relation": "requires_skill",
+                "skill_level": current_level,
+                "importance": _text(row.get("重要程度")),
+                "occurrence": _text(row.get("出现次数")),
+                "frequency": round(frequency_value, 4),
+                "platform_sources": _text(row.get("JD来源（平台）")),
+                "evidence_jd_ids": ids,
+                "evidence_count": len(ids),
+            })
+        edges.sort(key=lambda item: (item["source"], -item["frequency"], item["target"]))
+        return {
+            "available": True,
+            "status": "compatibility_conversion",
+            "source_type": "formal_excel_compatibility",
+            "source_label": GRAPH_SOURCE_LABEL,
+            "source_file": str(path.relative_to(self.project_root)),
+            "notice": "仅转换组员A现有正式岗位—技能关系，不重新推导或补全关系。",
+            "nodes": list(nodes.values()),
+            "edges": edges,
+            "summary": {
+                "node_count": len(nodes),
+                "edge_count": len(edges),
+                "job_count": sum(1 for node in nodes.values() if node["type"] == "job"),
+                "skill_count": sum(1 for node in nodes.values() if node["type"] == "skill"),
+            },
+        }
+
+    def load(self) -> dict[str, Any]:
+        for path in self._json_paths():
+            if path.exists():
+                return self._from_json(path)
+        for path in self._excel_paths():
+            if path.exists():
+                return self._from_excel(path)
+        return {
+            "available": False,
+            "status": "not_connected",
+            "source_type": "missing",
+            "source_label": "岗位能力图谱数据尚未接入",
+            "notice": "未找到组员A正式图谱JSON或关系Excel。",
+            "nodes": [],
+            "edges": [],
+            "summary": {"node_count": 0, "edge_count": 0, "job_count": 0, "skill_count": 0},
+        }
+
+    @staticmethod
+    def _filter_payload(payload: dict[str, Any], edges: list[dict[str, Any]]) -> dict[str, Any]:
+        node_ids = {edge["source"] for edge in edges} | {edge["target"] for edge in edges}
+        nodes = [node for node in payload.get("nodes", []) if node.get("id") in node_ids]
+        return {
+            **{key: value for key, value in payload.items() if key not in {"nodes", "edges", "summary"}},
+            "nodes": nodes,
+            "edges": edges,
+            "summary": {
+                "node_count": len(nodes),
+                "edge_count": len(edges),
+                "job_skill_edge_count": sum(1 for edge in edges if edge.get("edge_type") == "Job_Skill"),
+                "evidence_count": sum(int(edge.get("evidence_count", 0)) for edge in edges),
+            },
+        }
+
+    def for_job(self, job_title: str, limit: int | None = None) -> dict[str, Any]:
+        payload = self.load()
+        job_node = next((
+            node for node in payload.get("nodes", [])
+            if node.get("type") == "job" and _text(node.get("name")) == job_title
+        ), None)
+        job_id = job_node.get("id") if job_node else f"job:{job_title}"
+        edges = [
+            edge for edge in payload.get("edges", [])
+            if edge.get("source") == job_id and (payload.get("source_type") != "formal_json" or edge.get("edge_type") == "Job_Skill")
+        ]
+        edges.sort(key=lambda item: (-float(item.get("frequency", 0)), str(item.get("target", ""))))
+        result = self._filter_payload(payload, edges[:limit] if limit is not None else edges)
+        result["job_title"] = job_title
+        if payload.get("available") and not edges:
+            result["status"] = "job_not_found"
+            result["notice"] = "当前组员A关系表中没有该岗位。"
+        return result
+
+    def for_skill(self, skill_id: str) -> dict[str, Any]:
+        payload = self.load()
+        edges = [
+            edge for edge in payload.get("edges", [])
+            if edge.get("target") == skill_id and (payload.get("source_type") != "formal_json" or edge.get("edge_type") == "Job_Skill")
+        ]
+        result = self._filter_payload(payload, edges)
+        result["skill_id"] = skill_id
+        if payload.get("available") and not edges:
+            result["status"] = "skill_not_found"
+            result["notice"] = "当前组员A关系表中没有该技能。"
+        return result

@@ -1,0 +1,27 @@
+{
+  "passed": true,
+  "checks": {
+    "frozen_hash_unchanged": {
+      "standardized_jd_dataset_v1.xlsx": true,
+      "standard_job_title_mapping_v1.xlsx": true,
+      "standard_skill_dictionary_v1.xlsx": true
+    },
+    "node_ids_unique": true,
+    "edge_ids_unique": true,
+    "all_job_skill_ids_official": true,
+    "all_job_skill_have_evidence": true,
+    "no_duplicate_job_skill_edges": true,
+    "key_jobs_present": true,
+    "strict_long_term_disabled": true,
+    "small_samples_marked": true,
+    "graph_nodes_v1.xlsx_valid_xlsx": true,
+    "graph_edges_v1.xlsx_valid_xlsx": true,
+    "key_job_graph_profiles_v1.xlsx_valid_xlsx": true,
+    "job_skill_evolution_v1.xlsx_valid_xlsx": true,
+    "json_meta_counts_match": true,
+    "visual_files_present": true
+  },
+  "node_count": 490,
+  "edge_count": 2012,
+  "job_skill_edge_count": 633
+}

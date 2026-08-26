@@ -1,0 +1,28 @@
+weights:
+  title_novelty: 0.25
+  skill_novelty: 0.20
+  cluster_consistency: 0.15
+  evidence_count: 0.15
+  source_diversity: 0.10
+  company_diversity: 0.10
+  recent_signal: 0.05
+thresholds:
+  high_confidence: 75
+  medium_confidence: 50
+  singleton_score_cap: 49
+clustering:
+  seed_similarity: 0.32
+  seed_title_min_similarity: 0.45
+  support_similarity: 0.62
+  support_title_min_similarity: 0.45
+  title_weight: 0.55
+  skill_weight: 0.45
+evidence:
+  target_jd_count: 5
+  target_source_count: 3
+  target_company_count: 3
+  core_skill_min_ratio: 0.50
+  maximum_core_skills: 12
+  maximum_distinguishing_skills: 10
+recency:
+  recent_days: 90

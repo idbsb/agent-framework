@@ -1,0 +1,63 @@
+{
+  "baseline_at": "2026-08-26T18:00:00+08:00",
+  "purpose": "组员A正式知识图谱与动态演化接入前只读基线",
+  "tests": {
+    "runner": ".venv\\Scripts\\python.exe -m unittest discover -s tests -p test_*.py -v",
+    "passed": true,
+    "passed_count": 21
+  },
+  "original_api_http_status": {
+    "POST /api/jd/parse": 200,
+    "POST /api/resume/parse": 200,
+    "POST /api/match": 200,
+    "GET /api/jobs": 200,
+    "GET /api/skills": 200
+  },
+  "added_api_http_status": {
+    "GET /api/system/overview": 200,
+    "GET /api/job-analysis/{job_title}": 200,
+    "GET /api/graph/job/{job_title}": 200,
+    "GET /api/graph/skill/{skill_id}": 200,
+    "GET /api/evolution/job/{job_title}": 200,
+    "GET /api/emerging-jobs": 200,
+    "GET /api/emerging-jobs/{candidate_id}": 200
+  },
+  "frontend": {
+    "page_count": 8,
+    "all_routes_http_200": true,
+    "all_pages_rendered_chinese": true,
+    "graph_echarts_canvas_present": true,
+    "console_errors": 0,
+    "horizontal_overflow": false,
+    "production_build_passed": true
+  },
+  "temporary_graph": {
+    "source_type": "formal_excel_compatibility",
+    "source_label": "由组员A现有正式关系表转换",
+    "node_count": 72,
+    "edge_count": 74,
+    "job_count": 3,
+    "skill_count": 69,
+    "default_focus_subgraph_node_count": 26,
+    "default_focus_subgraph_edge_count": 25
+  },
+  "evolution": {
+    "available": false,
+    "status": "not_connected",
+    "page_message": "动态演化数据尚未接入"
+  },
+  "frozen_excel_sha256": {
+    "standardized_jd_dataset_v1.xlsx": "B00A0220FD4B974D8B00BB57D6F0AF3BB40F1D92CC7DDD59FCB0DDDA9FC90EDE",
+    "standard_job_title_mapping_v1.xlsx": "293B34DBB8E4E6F5689CF58387A38601F30FEB759B46E7F34931BC1F6FF859B1",
+    "standard_skill_dictionary_v1.xlsx": "178C64E654D3534878489E88AAFC5A17B98FE361CB38DB370F9036D01E5C1055",
+    "standardized_resume_testset_v1.xlsx": "3B78EDFFD349055342818FFF6B803B92D5BD1C1BD1DE140E3764EF82C3CCD952"
+  },
+  "formal_delivery_inventory": {
+    "delivery_container": "组员图谱动态(1).zip",
+    "delivery_container_sha256": "3030A47774A220B899E8E8157FC7C1EEBB280D12F8FD4988A38FB9D41F5F8525",
+    "qa_passed": true,
+    "node_count": 490,
+    "edge_count": 2012,
+    "job_skill_edge_count": 633
+  }
+}

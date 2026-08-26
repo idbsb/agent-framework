@@ -13,8 +13,22 @@ dist/
 __pycache__/
 *.py[cod]
 .pytest_cache/
+.codex_artifacts/
 .venv/
 venv/
+node_modules/
+frontend/node_modules/
+frontend/dist/
+*.tsbuildinfo
+frontend/vite.config.js
+frontend/vite.config.d.ts
+.env
+.env.*
+!.env.example
+*.zip
+agent_framework/
+组员图谱动态/
+reports/qa_screenshots/
 
 # Editors and operating systems
 .idea/

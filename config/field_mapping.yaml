@@ -1,0 +1,44 @@
+standardized_jd_dataset:
+  jd_id: JD编号
+  original_job_title: 原始岗位名称
+  standard_job_title: 标准岗位名称
+  job_family: 岗位族
+  technical_domain: 技术领域
+  company: 企业名称
+  city: 城市
+  responsibilities: 工作职责
+  required_skills_raw: 必备技能原文
+  bonus_skills_raw: 加分技能原文
+  education: 学历要求
+  experience: 标准工作经验
+  original_experience: 原始工作经验
+  source: 招聘来源
+  source_url: 原始链接
+  standardization_status: 标准化状态
+  original_row_number: 原始JD行号
+standard_job_title_mapping:
+  jd_id: JD编号
+  original_job_title: 原始岗位名称
+  cleaned_job_title: 清洗后岗位名称
+  standard_job_title: 最终标准岗位名称
+  job_family: 岗位族
+  technical_domain: 技术领域
+  status: 标准化状态
+  rationale: 判断依据
+  pending_candidate: 待确认候选名称
+standardized_resume_testset:
+  resume_id: 简历编号
+  original_resume_id: 原始简历编号
+  target_job: 标准目标岗位
+  education: 学历
+  experience: 工作经验
+  work_experience: 工作经历
+  projects: 项目经历
+  skills_raw: 技能清单
+  human_match_level: 修订后匹配等级
+  human_possessed_skills: 修订后已具备技能
+  human_missing_skills: 修订后缺失技能
+  human_match_interval: 修订后匹配区间
+  review_note: 人工审核备注
+  original_row_number: 原简历表行号
+

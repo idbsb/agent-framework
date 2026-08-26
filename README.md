@@ -1,83 +1,144 @@
-# 三组岗位技能 Agent（持续更新版 V4）
+# 多源异构数据驱动的岗位与能力图谱构建智能系统
 
-本框架对应比赛下一阶段的最小闭环：
+本项目面向挑战杯比赛演示，以真实招聘 JD、标准岗位体系和标准技能库为基础，形成以下完整链路：
 
-`真实 JD 导入 → 技能抽取 → 岗位画像 → 简历匹配 → 人工复核/反馈 → 下一轮重算`
+`真实JD → JD解析 → 岗位/技能标准化 → 岗位能力图谱 → 动态演化接口 → 新岗位候选发现`
 
-当前版本优先保证真实 JD 可持续更新、技能可重新提取、页面刷新不丢结果，并完成一份简历与一类岗位的匹配闭环。
+`简历文本 → Resume Parser → 能力画像 → 人岗匹配 → 技能差距 → 学习路径`
 
-## 特点
+当前系统基于 191 条真实招聘 JD、82 个标准技能和 27 份标准化测试简历构建。所有数字由正式数据或程序输出读取，不使用最终演示 Mock Data。
 
-- SQLite 保存统一数据结构：岗位、技能、岗位-技能关系、岗位画像、简历、评估和人工反馈。
-- `SkillExtractionAgent` 以可审计的技能词典抽取结果；每条技能都记录命中原文和置信度。
-- `ProfileAgent` 按 JD 出现频次及权重汇总岗位画像。
-- `MatchAgent` 输出已匹配技能、缺失技能、匹配分数和可执行的改进建议。
-- `ReviewAgent` 的确认/驳回/新增技能反馈会进入库中；后续运行会优先采用已确认或人工新增的技能，降低被驳回技能的可信度。
-- 预留 `LLMExtractor` 接口：后续接入模型时只替换抽取器，不需要改变数据层、画像层和匹配层。
-- 以 `job_id/JD编号` 为唯一标识：新编号新增、已有编号更新、完全相同的数据跳过。
-- 更新 JD 时重新计算自动抽取技能，同时保留人工确认、驳回和补充记录。
-- 导入概况和最近一次操作结果保存到 SQLite，刷新网页或重新打开程序仍能看到。
-- 提供 Excel/JSON 网页入口以及 JSON 更新 API，便于第一组后续持续推送数据。
+## 系统架构
 
-## 快速开始
+- 算法层：`src/core/` 中已有 JD Parser、Resume Parser、Matching Engine 和技能抽取保持兼容。
+- 数据层：`src/data_loader.py` 只读加载四个冻结正式 Excel，并提供 SHA-256 与 ID 校验。
+- 新岗位发现：`src/emerging/` 使用真实标题、标准技能组合、聚类一致性和多源 Evidence 生成候选。
+- 兼容层：`src/integration/` 读取组员 A 的图谱/演化成果。正式 JSON 缺失时，图谱只转换已有正式关系表；演化明确返回未接入状态。
+- 接口层：FastAPI 提供解析、匹配、图谱、演化、新岗位和系统概览接口。
+- 展示层：React + Vite + TypeScript + ECharts 构建八个页面。
 
-最简单的使用方式：双击交付包中的 `岗位技能Agent_持续更新版.exe`，浏览器会自动打开中文操作页；无需使用终端。
+## 数据来源
 
-网页支持直接同时导入第一组的 `重点岗位真实JD库.xlsx` 和 `岗位名称标准化表V1.1.xlsx`：标准化表用于把原始岗位名归入标准岗位、岗位簇和技术领域，真实 JD 库随后自动提取技能。未匹配的岗位会在结果中列出，交由第一组补充标准化规则。
+正式数据位于 `outputs/`：
 
-如需使用命令行，在本目录执行：
+- `standardized_jd_dataset_v1.xlsx`
+- `standard_job_title_mapping_v1.xlsx`
+- `standard_skill_dictionary_v1.xlsx`
+- `standardized_resume_testset_v1.xlsx`
+
+这些文件视为冻结数据，程序只读使用。图谱兼容数据来自 `组员图谱动态/重要岗位技能分析表.xlsx`，页面和 API 会明确标记“由组员A现有正式关系表转换”。
+
+## 功能模块
+
+1. 数据驾驶舱：真实 JD、岗位、技能、图谱、简历、来源和热门技能。
+2. 岗位分析：职责、必备技能、加分技能、技能频率和能力画像。
+3. 岗位能力图谱：按重点岗位过滤、拖拽、缩放、节点详情和 Evidence JD。
+4. 动态演化：正式结果 Adapter；当前缺失时展示“动态演化数据尚未接入”。
+5. 新岗位发现：候选评分、置信等级、真实标题、技能与完整 Evidence。
+6. JD 智能解析：现场粘贴 JD，输出岗位预测、技能和证据。
+7. 简历智能分析：现场粘贴简历文本，输出能力画像和证据。
+8. 人岗匹配：五维评分、技能差距、优势技能、优先补足技能和已有学习建议。
+
+## 环境要求
+
+- Windows 10/11
+- Python 3.11–3.12
+- Node.js 20 或更高版本
+- npm 10 或更高版本
+
+## 安装
 
 ```powershell
-python -m agent_framework.cli init
-python -m agent_framework.cli import-jobs --file ..\evidence_records.json
-python -m agent_framework.cli build-profile --cluster "AI Agent开发工程师"
-python -m agent_framework.cli match --cluster "AI Agent开发工程师" --resume "Python；LangGraph；RAG；向量数据库；Docker；FastAPI"
-```
-
-也可以用 `python -m unittest discover -s tests -v` 验证核心闭环。
-
-## 开发环境与组员协作
-
-```powershell
-git clone https://github.com/idbsb/challenge-cup-job-skill-agent.git
-cd challenge-cup-job-skill-agent
 python -m venv .venv
 .venv\Scripts\Activate.ps1
 python -m pip install -r requirements.txt
-python launch.py
+cd frontend
+npm install
+cd ..
 ```
 
-源代码协作流程、分支和数据保密要求见 [CONTRIBUTING.md](CONTRIBUTING.md)。真实 Excel、简历、SQLite 数据库和打包 exe 不进入 GitHub。
+## 启动
 
-## 增量更新规则
+Windows 可直接双击 `start_system.bat`。
 
-每条 JD 必须有稳定的 `JD编号`（或 `job_id`、`id`）。系统按编号判断：
-
-1. 编号不存在：新增岗位并提取技能。
-2. 编号已存在、内容变化：更新岗位并重新提取自动技能。
-3. 编号和内容都相同：记为“无变化”，不重复写入。
-4. 更新不会删除第一组已经做出的人工复核记录。
-
-网页首页会持续显示岗位总数、岗位簇数量、技术领域数量、技能数量，以及最近导入的新增/更新/无变化数量。
-
-## 数据导入约定
-
-JSON 可直接传数组，也可使用 `{"jobs": [...]}`。中文字段可使用第一组已有字段：`id`、`原始岗位名`、`岗位簇`、`企业`、`发布时间`、`职责摘要`、`技能摘要`、`学历经验`、`url`、`来源`、`状态`；未知字段会保留在 `raw_json`，不丢失来源证据。接口细节见 [API接口说明.md](API接口说明.md)。
-
-## 人工复核示例
+后端：
 
 ```powershell
-python -m agent_framework.cli review --job-id AGENT001 --skill "RAG" --decision confirm --reviewer "第一组"
-python -m agent_framework.cli review --job-id AGENT001 --skill "Kubernetes" --decision add --reviewer "第一组"
-python -m agent_framework.cli build-profile --cluster "AI Agent开发工程师"
+.venv\Scripts\python.exe -m uvicorn src.api.app:app --host 127.0.0.1 --port 8000
 ```
 
-`confirm`、`reject`、`add` 分别代表确认、驳回和人工补充。每次写入均带时间、审核人和原因，可用于比赛展示中的“反馈—校验”证据链。
+前端：
 
-## 建议的三组协作方式
+```powershell
+cd frontend
+npm run dev
+```
 
-1. 第一组持续将已核验 JD 导出为 JSON 并导入本框架。
-2. 第三组运行抽取、画像和匹配；把低置信度与人工反馈汇总交给第一组复核。
-3. 第二组用稳定的岗位画像标注简历的高/中/低匹配结果，再用 `match` 的结果进行回测。
+打开 [http://127.0.0.1:5173](http://127.0.0.1:5173)。FastAPI 文档位于 [http://127.0.0.1:8000/docs](http://127.0.0.1:8000/docs)。
 
-数据库默认位于程序旁的 `data/challenge_cup.db`。给组员共享新版程序时，如需连同已有数据一起共享，应把整个文件夹一起发给对方；不要只发送 exe。
+## 使用方法
+
+- 首页确认数据服务状态和真实性说明。
+- 在岗位分析、能力图谱和动态演化页选择重点岗位。
+- 在新岗位发现页打开候选详情，核对 `evidence_jd_ids` 和原始 JD 证据。
+- 在 JD、简历和匹配页使用默认演示文本，或替换为现场文本后提交。
+- 后端未启动时，静态展示模块降级到程序生成的真实 JSON；交互解析与匹配会给出明确提示。
+
+## 数据更新
+
+不要覆盖冻结 V1 数据。新增数据应创建新版本并更新 `config/data_sources.yaml`。随后依次执行：
+
+```powershell
+.venv\Scripts\python.exe -m src.emerging.export_emerging
+.venv\Scripts\python.exe -m src.integration.export_frontend_data
+cd frontend
+npm run build
+```
+
+后续补入 `knowledge_graph_v1.json` 或 `key_job_evolution_v1.json` 后，Adapter 会优先读取正式文件，前端页面无需修改。
+
+## 目录结构
+
+```text
+agent_framework/
+├─ config/                 算法权重与数据源配置
+├─ docs/                   部署、交付和接口说明
+├─ frontend/               React + Vite 前端
+├─ outputs/                冻结数据与程序输出
+├─ reports/                分析和系统测试报告
+├─ src/
+│  ├─ api/                 FastAPI 接口
+│  ├─ core/                已通过 QA 的核心算法
+│  ├─ emerging/            新岗位候选发现
+│  └─ integration/         图谱/演化/前端数据 Adapter
+├─ tests/                  单元与系统测试
+└─ start_system.bat        Windows 一键启动
+```
+
+## API
+
+保留原接口：
+
+- `POST /api/jd/parse`
+- `POST /api/resume/parse`
+- `POST /api/match`
+- `GET /api/jobs`
+- `GET /api/skills`
+
+新增接口：
+
+- `GET /api/system/overview`
+- `GET /api/job-analysis/{job_title}`
+- `GET /api/graph/job/{job_title}`
+- `GET /api/graph/skill/{skill_id}`
+- `GET /api/evolution/job/{job_title}`
+- `GET /api/emerging-jobs`
+- `GET /api/emerging-jobs/{candidate_id}`
+
+## 当前局限
+
+- 当前只有组员 A 的三个重点岗位正式关系 Excel，尚未接入完整 `knowledge_graph_v1.json`。
+- `key_job_evolution_v1.json` 尚未提供，因此不展示或计算任何趋势。
+- 当前新岗位结果是招聘市场候选观察，不能等同于国家正式职业分类中的“新职业”。
+- 单条 JD 一律为弱候选；部分 JD 缺少正式发布时间，近期信号按缺失处理。
+- Matching V1 直接展示真实结果，不宣传不存在的高准确率。

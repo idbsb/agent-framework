@@ -1,0 +1,19 @@
+standardized_jd_dataset:
+  path: outputs/standardized_jd_dataset_v1.xlsx
+  sheet: 标准化JD
+standard_job_title_mapping:
+  path: outputs/standard_job_title_mapping_v1.xlsx
+  sheet: 岗位名称映射
+standard_skill_dictionary:
+  path: outputs/standard_skill_dictionary_v1.xlsx
+  standard_skills_sheet: 标准技能
+  aliases_sheet: 技能别名
+standardized_resume_testset:
+  path: outputs/standardized_resume_testset_v1.xlsx
+  sheet: 标准化测试简历
+job_skill_gold:
+  path: outputs/job_skill_analysis_cleaned.xlsx
+  sheet: 技能明细
+outputs_dir: outputs
+reports_dir: reports
+
