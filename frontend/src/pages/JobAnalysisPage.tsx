@@ -10,7 +10,11 @@ const split = (value: string) => value.split(/[；;\n]+/).map((item) => item.rep
 
 export default function JobAnalysisPage() {
   const [jobs, setJobs] = useState<JobOption[]>([]); const [title, setTitle] = useState(focus[0]); const [data, setData] = useState<Analysis | null>(null); const [message, setMessage] = useState(""); const [fallbackData, setFallbackData] = useState<Analysis[]>([]);
-  useEffect(() => { getJson<{ jobs: JobOption[] }>("/api/jobs", "/data/jobs.json").then((result) => setJobs(result.data.jobs)); getJson<{ jobs: Analysis[] }>("/data/job_analysis_v1.json").then((result) => setFallbackData(result.data.jobs)); }, []);
+  useEffect(() => {
+    getJson<{ jobs: JobOption[] }>("/api/jobs", "/data/jobs.json").then((result) => setJobs(result.data.jobs));
+    // This optional generated fallback may be absent in a clean checkout.
+    getJson<{ jobs: Analysis[] }>("/data/job_analysis_v1.json").then((result) => setFallbackData(result.data.jobs)).catch(() => setFallbackData([]));
+  }, []);
   useEffect(() => { setMessage(""); getJson<Analysis>(`/api/job-analysis/${encodeURIComponent(title)}`).then((result) => setData(result.data)).catch(() => { const cached = fallbackData.find((item) => item.job_title === title); if (cached) { setData(cached); setMessage("后端暂不可用，展示程序生成的真实岗位画像。"); } else { setData(null); setMessage("后端服务未启动，请启动FastAPI服务。"); } }); }, [title, fallbackData]);
   const option = useMemo(() => ({ grid: { left: 120, right: 24, top: 16, bottom: 25 }, xAxis: { type: "value", max: 1, axisLabel: { color: "#78909e", formatter: (value: number) => `${Math.round(value * 100)}%` }, splitLine: { lineStyle: { color: "#17303e" } } }, yAxis: { type: "category", inverse: true, data: data?.skill_frequencies.slice(0, 12).map((item) => item.skill_name) || [], axisLabel: { color: "#b5cad4", width: 105, overflow: "truncate" } }, series: [{ type: "bar", data: data?.skill_frequencies.slice(0, 12).map((item) => item.frequency) || [], barWidth: 10, itemStyle: { color: "#45c9a6", borderRadius: [0, 6, 6, 0] } }], tooltip: { trigger: "axis", backgroundColor: "#102633", textStyle: { color: "#e6f5f2" } } }), [data]);
   return <><PageIntro kicker="岗位画像 · 真实频率 · 能力结构" title="从真实JD聚合岗位能力画像" description="选择标准岗位，查看职责、技能频率和Evidence来源。" index="02" />
