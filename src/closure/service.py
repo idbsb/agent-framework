@@ -1,5 +1,6 @@
 import copy
 import json
+import os
 import sqlite3
 from contextlib import contextmanager
 from datetime import date, datetime, timezone
@@ -8,6 +9,7 @@ from pathlib import Path
 import yaml
 
 from ..emerging.emerging_job_detector import EmergingJobDetector
+from .settings import production, ProfileReadError
 from .evidence import definition, definition_diff, fingerprint, load_records, normalize_record, skills_for
 
 
@@ -30,19 +32,30 @@ class ClosureService:
     def __init__(self, core, db_path, base_records=None):
         self.core = core
         self.db_path = Path(db_path)
+        initialize = not self.db_path.exists()
+        if production() and initialize:
+            if os.getenv("P1_INITIALIZE_DB") != "1":
+                raise ProfileReadError("Production database missing; explicit first-time initialization required")
         self.db_path.parent.mkdir(parents=True, exist_ok=True)
+        if production() and not self.db_path.exists():
+            sqlite3.connect(self.db_path).close()  # explicitly authorized first-time bootstrap only
         self.base = load_records(core) if base_records is None else [normalize_record(r, core.skill_index) for r in base_records]
         self.detector = EmergingJobDetector(core.loader, core.skill_index)
         root = core.loader.project_root
         self.evolution = yaml.safe_load((root / "external_modules/graph_dynamic/config/evolution_config.yaml").read_text(encoding="utf-8"))
         self.matching = yaml.safe_load((root / "config/matching_weights.yaml").read_text(encoding="utf-8"))["profile"]
         with self._db() as conn:
+            if production() and not initialize:
+                # Existing production stores must have the schema; do not silently repair data loss.
+                conn.execute("SELECT id,payload FROM evidence LIMIT 0")
+                conn.execute("SELECT kind,id,payload FROM entities LIMIT 0")
             conn.execute("CREATE TABLE IF NOT EXISTS evidence (id TEXT PRIMARY KEY, payload TEXT NOT NULL)")
             conn.execute("CREATE TABLE IF NOT EXISTS entities (kind TEXT, id TEXT, payload TEXT NOT NULL, PRIMARY KEY(kind,id))")
 
     @contextmanager
     def _db(self):
-        conn = sqlite3.connect(self.db_path, timeout=10)
+        target = self.db_path.resolve().as_uri() + "?mode=rw" if production() else self.db_path
+        conn = sqlite3.connect(target, uri=production(), timeout=10)
         try:
             conn.execute("BEGIN IMMEDIATE")
             yield conn
@@ -52,6 +65,22 @@ class ClosureService:
             raise
         finally:
             conn.close()
+
+    def check_storage(self):
+        try:
+            conn = sqlite3.connect(self.db_path.resolve().as_uri() + "?mode=rw", uri=True, timeout=10)
+            try:
+                conn.execute("BEGIN IMMEDIATE")
+                if conn.execute("PRAGMA quick_check").fetchone()[0] != "ok":
+                    raise ProfileReadError("Closure storage integrity check failed")
+                conn.execute("SELECT id,payload FROM evidence LIMIT 1").fetchall()
+                conn.execute("SELECT kind,id,payload FROM entities LIMIT 1").fetchall()
+                conn.execute("UPDATE evidence SET payload=payload WHERE 0")
+            finally:
+                conn.rollback()
+                conn.close()
+        except sqlite3.Error as exc:
+            raise ProfileReadError("Closure storage is unavailable") from exc
 
     def _records(self, conn):
         return sorted(self.base + [json.loads(r[0]) for r in conn.execute("SELECT payload FROM evidence")], key=lambda r: r["job_id"])

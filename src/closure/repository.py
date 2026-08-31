@@ -1,20 +1,10 @@
 """Read-only access to the existing P1 publication snapshots, never draft versions."""
 import json
-import os
 import sqlite3
 from pathlib import Path
 
 
-class ProfileReadError(RuntimeError):
-    """Fail explicitly instead of silently scoring against an obsolete baseline."""
-
-
-def closure_database_path(project_root):
-    root = Path(project_root).resolve()
-    path = Path(os.getenv("P1_CLOSURE_DB", str(root / "data/p1_closure.sqlite3"))).resolve()
-    if root not in path.parents or path.suffix != ".sqlite3":
-        raise ProfileReadError("P1 database must be a project-local .sqlite3 companion file")
-    return path
+from .settings import ProfileReadError, closure_database_path, production
 
 
 class PublishedProfileRepository:
@@ -24,6 +14,8 @@ class PublishedProfileRepository:
     def latest_by_job(self):
         path = Path(self.path() if callable(self.path) else self.path)
         if not path.exists():
+            if production():
+                raise ProfileReadError("Production published-profile database is missing")
             return {}
         try:
             conn = sqlite3.connect(path.resolve().as_uri() + "?mode=ro", uri=True, timeout=10)

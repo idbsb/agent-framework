@@ -1,3 +1,5 @@
+import { closureHeaders } from "./closureAccess";
+
 export class ApiUnavailableError extends Error {}
 
 const apiBaseUrl = (import.meta.env.VITE_API_BASE_URL || "").replace(/\/$/, "");
@@ -9,7 +11,7 @@ export function apiUrl(endpoint: string, baseUrl = apiBaseUrl): string {
 
 export async function getJson<T>(endpoint: string, fallback?: string): Promise<{ data: T; fallback: boolean }> {
   try {
-    const response = await fetch(apiUrl(endpoint));
+    const response = await fetch(apiUrl(endpoint), { cache: "no-store" });
     if (!response.ok) throw new Error(`HTTP ${response.status}`);
     return { data: await response.json() as T, fallback: false };
   } catch (error) {
@@ -22,7 +24,7 @@ export async function getJson<T>(endpoint: string, fallback?: string): Promise<{
 
 export async function postJson<T>(endpoint: string, payload: unknown): Promise<T> {
   try {
-    const response = await fetch(apiUrl(endpoint), { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(payload) });
+    const response = await fetch(apiUrl(endpoint), { method: "POST", headers: { "Content-Type": "application/json", ...closureHeaders(endpoint) }, body: JSON.stringify(payload) });
     if (!response.ok) {
       const value = await response.json().catch(() => null) as { detail?: unknown } | null;
       if (response.status >= 500 && !value?.detail) throw new ApiUnavailableError("后端服务未启动，请启动FastAPI服务。");

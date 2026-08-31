@@ -3,6 +3,7 @@ import { getJson, postJson } from "../api";
 import { safeEvidenceUrl, statusLabel } from "../closure";
 import type { ClosureVersion, Definition, History, JDEvidence, SkillSupport, TextEvidence, VersionDiff } from "../closure";
 import "./closure.css";
+import ClosureAccess from "./ClosureAccess";
 
 export function EvidenceList({ evidence }: { evidence: JDEvidence[] }) {
   return <div className="closure-evidence">{evidence.map(row => {
@@ -109,12 +110,13 @@ export default function ClosurePanel({ jobTitle }: { jobTitle?: string }) {
   const [error,setError] = useState(""); const [busy,setBusy] = useState(false);
   useEffect(()=>{let active=true;setItems([]);setSelected("");setError("");
     const endpoint=jobTitle?`/api/closure/profile/${encodeURIComponent(jobTitle)}`:'/api/closure/candidates';
-    getJson<ClosureVersion|ClosureVersion[]>(endpoint).then(r=>{if(active){const list=Array.isArray(r.data)?r.data:[r.data];setItems(list);setSelected(list[0]?.id||"");}}).catch(()=>{if(active)setError("尚无闭环记录，或本地后端未启动。可显式运行下方流程。");});return()=>{active=false;};
+    getJson<ClosureVersion|ClosureVersion[]>(endpoint).then(r=>{if(active){const list=Array.isArray(r.data)?r.data:[r.data];setItems(list);setSelected(list[0]?.id||"");}}).catch(()=>{if(active)setError("尚无闭环记录，或后端暂不可用。可确认写入权限后运行下方流程。");});return()=>{active=false;};
   },[jobTitle]);
   async function run(){setBusy(true);setError("");try{const data=await postJson<ClosureVersion|ClosureVersion[]>(jobTitle?'/api/closure/profiles/run':'/api/closure/discovery/run',jobTitle?{job_title:jobTitle}:{});const list=Array.isArray(data)?data:[data];setItems(list);setSelected(list.some(i=>i.id===selected)?selected:list[0]?.id||"");}catch(e){setError(e instanceof Error?e.message:String(e));}finally{setBusy(false);}}
   const item=items.find(i=>i.id===selected);
   return <section className="panel closure-panel"><h2>{jobTitle?'岗位画像更新闭环':'新岗位定义与发布闭环'}</h2>
-    <p>独立审核记录；待审内容不覆盖正式发布画像。写操作仅在显式启用的本地环境开放。</p>
+    <p>独立审核记录；待审内容不覆盖正式发布画像。生产写操作需要管理员授权。</p>
+    <ClosureAccess/>
     <EvidenceImport jobTitle={jobTitle} saved={()=>setError('新证据已追加；正式版本未改变，请重新计算。')}/>
     <button disabled={busy} onClick={run}>{busy?'计算中…':jobTitle?'重新计算能力更新':'运行新岗位发现'}</button><p role="status">{error}</p>
     {!jobTitle?<div className="closure-candidate-list">{items.map(i=><button key={i.id} aria-pressed={selected===i.id} onClick={()=>setSelected(i.id)}>{(i.manual_definition||i.auto_definition).job_name} · {statusLabel[i.status]} · V{i.version}<small>发现规则得分 {i.discovery_score}（非真实性概率） · JD {i.source_job_count} · 企业 {i.company_count} · 来源 {i.source_count}</small></button>)}</div>:null}

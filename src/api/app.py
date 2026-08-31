@@ -1,6 +1,7 @@
 from __future__ import annotations
 
-import os
+import sqlite3
+from contextlib import asynccontextmanager
 
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
@@ -9,33 +10,62 @@ from fastapi.responses import JSONResponse
 from ..schemas import JDParseRequest, JDParseResult, MatchRequest, MatchResult, ResumeParseRequest, ResumeParseResult
 from .service import get_services
 from .integration_service import get_system_data
-from .closure import router as closure_router
+from .closure import router as closure_router, get_closure
+from ..closure.settings import production, allowed_origins, validate_auth
+from ..closure.repository import PublishedProfileRepository, ProfileReadError
 from ..closure.service import ClosureError
-from ..closure.repository import ProfileReadError
+
+
+@asynccontextmanager
+async def lifespan(_app):
+    validate_auth()
+    if production():
+        service = get_closure()
+        service.check_storage()
+        PublishedProfileRepository(service.db_path).latest_by_job()
+    yield
 
 
 app = FastAPI(
+    lifespan=lifespan,
     title="挑战杯岗位技能核心算法API",
     version="1.0.0",
     description="稳定Schema：JD解析、简历解析、人岗匹配、岗位与技能数据接口。",
 )
 
-cors_origins = ["http://127.0.0.1:5173", "http://localhost:5173"]
-cors_origins.extend(
-    origin.strip().rstrip("/")
-    for origin in os.getenv("CORS_ORIGINS", "").split(",")
-    if origin.strip()
-)
+cors_origins = allowed_origins()
 
 app.add_middleware(
     CORSMiddleware,
     allow_origins=list(dict.fromkeys(cors_origins)),
     allow_credentials=False,
     allow_methods=["GET", "POST", "OPTIONS"],
-    allow_headers=["Content-Type"],
+    allow_headers=["Content-Type", "Authorization"],
 )
 
 app.include_router(closure_router)
+
+
+@app.middleware("http")
+async def prevent_stale_api_cache(request, call_next):
+    response = await call_next(request)
+    if request.url.path.startswith("/api/"):
+        response.headers["Cache-Control"] = "no-store"
+    return response
+
+
+@app.exception_handler(sqlite3.Error)
+async def storage_error_handler(_request, _exc):
+    return JSONResponse(status_code=503, content={"detail": "Closure storage unavailable; no successful write acknowledged"})
+
+
+@app.get("/api/health/ready")
+def readiness():
+    validate_auth()
+    service = get_closure()
+    service.check_storage()
+    PublishedProfileRepository(service.db_path).latest_by_job()
+    return {"status": "ready", "storage": "ok"}
 
 
 @app.exception_handler(ClosureError)
