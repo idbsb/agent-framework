@@ -21,7 +21,17 @@ class ResumeParser:
         projects = [part.strip() for part in re.split(r"\n\s*\n|；(?=\S)", request.projects) if part.strip()]
         if not projects and request.projects.strip() and request.projects.strip() != "无":
             projects = [request.projects.strip()]
-        need_review = not skills or not request.education.strip() or not request.experience.strip()
+        # Conflicting claims are preserved, but cannot silently grant credit.
+        states: dict[str, set[str]] = {}
+        for item in skills:
+            states.setdefault(item.skill_id, set()).add(item.polarity)
+        for item in skills:
+            if "affirmed" in states[item.skill_id] and "negated" in states[item.skill_id]:
+                item.accepted = False
+                item.need_human_review = True
+        need_review = (not any(item.accepted for item in skills)
+                       or any(item.need_human_review for item in skills)
+                       or not request.education.strip() or not request.experience.strip())
         return ResumeParseResult(
             resume_id=request.resume_id,
             target_job=request.target_job,

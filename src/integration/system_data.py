@@ -53,16 +53,18 @@ class SystemDataService:
                 ("required_skills_raw", row.get("required_skills_raw")),
                 ("bonus_skills_raw", row.get("bonus_skills_raw")),
             ])
-            if extracted:
+            if any(item.accepted for item in extracted):
                 evidence_covered += 1
-            skill_counts.update(item.standard_skill_name for item in extracted)
+            # A JD contributes at most once per skill, even with many evidence spans.
+            skill_counts.update({item.standard_skill_name for item in extracted if item.accepted})
         return {
             "data_version": self.loader.version.get("data_version"),
             "truth_statement": f"当前系统基于{len(rows)}条真实招聘JD构建。",
             "metrics": {
                 "jd_count": len(rows),
                 "standard_job_count": len(job_counts),
-                "standard_skill_count": len(skills),
+                "standard_skill_count": len(self.services.skill_index.skills),
+                "frozen_standard_skill_count": len(skills),
                 "graph_node_count": graph.get("summary", {}).get("node_count", 0),
                 "graph_edge_count": graph.get("summary", {}).get("edge_count", 0),
                 "resume_count": len(resumes),
