@@ -1,0 +1,9 @@
+{
+  "dataset_notice": "SYNTHETIC TEST DATA / NOT REAL RECRUITMENT DATA",
+  "rows": [
+    {"job_id":"SYNTHETIC-JD-UI-001","original_title":"合成测试岗位","company":"测试企业A","source":"synthetic_source_1","responsibilities":"维护测试服务，处理测试请求，记录测试运行日志。","required_skills_raw":"Python SQL","published_at":null,"collected_at":"2026-01-01"},
+    {"job_id":"SYNTHETIC-JD-UI-002","original_title":"合成测试岗位","company":"测试企业A","source":"synthetic_source_2","responsibilities":"维护测试服务 处理测试请求 记录测试运行日志","required_skills_raw":"Python SQL","published_at":null,"collected_at":"2026-01-02"}
+  ],
+  "different": {"job_id":"SYNTHETIC-JD-UI-003","original_title":"合成档案岗位","company":"测试企业B","source":"synthetic_source_3","responsibilities":"整理纸质测试档案","required_skills_raw":"","published_at":null,"collected_at":null},
+  "resume": {"skills_raw":"掌握 Python 和 SQL，正在学习 RAG，不会 Docker。"}
+}

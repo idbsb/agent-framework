@@ -1,0 +1,20 @@
+[
+  {
+    "id": "SYNTHETIC-RESUME-1",
+    "skills": [
+      {
+        "skill": "Python",
+        "polarity": "affirmed"
+      },
+      {
+        "skill": "Docker",
+        "polarity": "affirmed"
+      }
+    ],
+    "fields": {
+      "education": "本科",
+      "experience": "1年"
+    },
+    "dataset_notice": "SYNTHETIC TEST DATA / NOT REAL RECRUITMENT DATA"
+  }
+]

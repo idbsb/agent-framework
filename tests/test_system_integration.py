@@ -59,7 +59,11 @@ class SystemIntegrationTest(unittest.TestCase):
                 self.assertEqual(value["time_range"], ["2026-04-14T00:00:00", "2026-08-15T00:00:00"])
                 self.assertIn("不代表多年长期产业趋势", value["notice"])
                 self.assertIn("status_summary", value)
-        self.assertFalse(self.system.evolution.for_job("AI Agent开发工程师")["sample_insufficient"])
+        # P2 intentionally corrects the old one-sided guard: 1 -> 11 is insufficient.
+        agent = self.system.evolution.for_job("AI Agent开发工程师")
+        self.assertTrue(agent["sample_insufficient"])
+        self.assertEqual(agent["window_samples"], {"before": 1, "after": 11, "minimum": 3})
+        self.assertEqual(agent["declining_skills"], [])
         self.assertTrue(self.system.evolution.for_job("RAG引擎研发工程师")["sample_insufficient"])
         self.assertTrue(self.system.evolution.for_job("AI安全技术工程师")["sample_insufficient"])
 

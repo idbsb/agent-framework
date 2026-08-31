@@ -8,6 +8,8 @@ from typing import Any
 from ..api.service import CoreServices
 from .evolution_adapter import EvolutionAdapter
 from .graph_adapter import GraphAdapter
+from ..quality.loader import load_quality_records
+from ..quality.science import quality_report
 
 
 def _text(value: object) -> str:
@@ -20,7 +22,10 @@ class SystemDataService:
         self.loader = services.loader
         self.project_root = self.loader.project_root
         self.graph = GraphAdapter(self.loader, services.skill_index, effective_profiles=services.matching_engine.effective_profiles)
-        self.evolution = EvolutionAdapter(self.project_root)
+        self.evolution = EvolutionAdapter(self.project_root, records_provider=lambda: load_quality_records(self.loader))
+
+    def data_quality(self):
+        return quality_report(load_quality_records(self.loader))
 
     def _emerging(self) -> dict[str, Any]:
         path = self.project_root / "outputs" / "emerging_jobs_v1.json"

@@ -12,6 +12,7 @@ from .integration_service import get_system_data
 from .closure import router as closure_router
 from ..closure.service import ClosureError
 from ..closure.repository import ProfileReadError
+from .quality import router as quality_router
 
 
 app = FastAPI(
@@ -36,6 +37,7 @@ app.add_middleware(
 )
 
 app.include_router(closure_router)
+app.include_router(quality_router)
 
 
 @app.exception_handler(ClosureError)

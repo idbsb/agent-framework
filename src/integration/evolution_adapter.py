@@ -4,12 +4,15 @@ import json
 from pathlib import Path
 from typing import Any
 
+from ..quality.science import guard_evolution, quality_report
+
 
 class EvolutionAdapter:
     """Read formal evolution artifacts only; never calculates trends."""
 
-    def __init__(self, project_root: Path):
+    def __init__(self, project_root: Path, records_provider=None):
         self.project_root = project_root
+        self.records_provider = records_provider
 
     def _paths(self) -> list[Path]:
         return [
@@ -56,6 +59,9 @@ class EvolutionAdapter:
             return result
         if not isinstance(record, dict):
             record = {"data": record}
+        config = payload.get("meta", {}).get("config", {})
+        minimum = int(config.get("min_jd_count", 3))
+        record = guard_evolution(record, minimum)
         status_summary = record.get("status_summary") if isinstance(record.get("status_summary"), dict) else {}
 
         def records_for(label: str) -> list[dict[str, Any]]:
@@ -74,14 +80,17 @@ class EvolutionAdapter:
             return [_text for item in values if (_text := str(item.get("技能名称") or item.get("skill_name") or "").strip())]
 
         current_top = record.get("current_top") if isinstance(record.get("current_top"), list) else []
-        sample_insufficient = bool(groups["sample_insufficient"])
+        sample_insufficient = record["trend_status"] == "insufficient_sample" or bool(groups["sample_insufficient"])
         support_count = int(record.get("support_jd_count") or 0)
         if sample_insufficient:
-            sample_notice = f"正式结果支持JD {support_count}条；当前比较窗口被组员A正式结果标记为样本不足，未形成可靠的增长、下降、新增或稳定结论。"
+            sample_notice = f"正式结果支持JD {support_count}条；双窗口质量校验为样本不足，未形成可靠的增长、下降、新增或稳定结论。"
         else:
             sample_notice = f"正式结果支持JD {support_count}条；当前分类直接来自组员A正式演化结果。"
+        quality = quality_report([r for r in self.records_provider() if r.get("standard_job_title") == job_title],
+                                 float(config.get("publish_time_min_coverage", 0.60))) if self.records_provider else None
         return {
             **record,
+            "data_quality": quality,
             "available": True,
             "status": "connected",
             "job_title": job_title,

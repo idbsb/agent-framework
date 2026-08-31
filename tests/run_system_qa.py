@@ -119,7 +119,10 @@ def main() -> int:
         and evolutions["AI Agent开发工程师"].get("support_jd_count") == 12
         and evolutions["RAG引擎研发工程师"].get("support_jd_count") == 2
         and evolutions["AI安全技术工程师"].get("support_jd_count") == 9
-        and not evolutions["AI Agent开发工程师"].get("sample_insufficient")
+        # P2: the prior window contains one JD; total/current sample is not enough.
+        and evolutions["AI Agent开发工程师"].get("sample_insufficient")
+        and evolutions["AI Agent开发工程师"].get("window_samples") == {"before": 1, "after": 11, "minimum": 3}
+        and not evolutions["AI Agent开发工程师"].get("declining_skills")
         and evolutions["RAG引擎研发工程师"].get("sample_insufficient")
         and evolutions["AI安全技术工程师"].get("sample_insufficient")
     )

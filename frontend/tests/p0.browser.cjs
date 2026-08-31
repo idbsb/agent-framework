@@ -7,7 +7,8 @@ const fs = require('node:fs');
 const { chromium } = require(process.env.P0_PLAYWRIGHT_MODULE || 'playwright');
 
 const base = 'http://127.0.0.1:5173';
-const artifacts = path.resolve(__dirname, '../../.codex_artifacts/p0');
+// P2 integrity gate: opt into a fresh result path instead of overwriting old JSON.
+const artifacts = path.resolve(process.env.P0_ARTIFACT_DIR || path.resolve(__dirname, '../../.codex_artifacts/p0'));
 const results = [];
 const pageErrors = [];
 const blocked = [];

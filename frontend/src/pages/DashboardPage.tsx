@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Blocks, BriefcaseBusiness, Database, FileUser, Network, Radar } from "lucide-react";
 import { Link } from "react-router-dom";
 import { getJson } from "../api";
+import DataQualityPanel from "../components/DataQuality";
 import { StatusBanner } from "../components/Layout";
 
 type Overview = { truth_statement: string; metrics: Record<string, number>; top_jobs: Array<{ job_title: string; jd_count: number }>; top_skills: Array<{ skill_name: string; evidence_jd_count: number }>; emerging_summary: Record<string, number>; emerging_candidates: Array<{ candidate_id: string; candidate_name: string; emerging_score: number }> };
@@ -14,6 +15,7 @@ export default function DashboardPage() {
     {error ? <StatusBanner tone="error">{error}</StatusBanner> : null}{fallback ? <StatusBanner tone="warning">后端暂不可用，当前展示程序生成的真实静态结果。</StatusBanner> : null}
     <section className="hero-panel"><div><p className="kicker">真实数据 · 标准体系 · Evidence可追溯</p><h2>{data?.truth_statement || "正在读取真实招聘数据…"}</h2><p>从招聘JD到岗位能力图谱，再到简历解析、人岗匹配与新岗位候选发现。</p></div><div className="hero-index">01<span>/ 08</span></div></section>
     <section className="metric-grid">{metrics.map(([key, label, Icon]) => <article className="metric-card" key={key}><div className="metric-icon"><Icon size={19} /></div><div className="metric-value">{data?.metrics[key] ?? "—"}</div><div className="metric-label">{label}</div></article>)}</section>
+    <DataQualityPanel />
     <section className="dashboard-grid">
       <article className="panel"><div className="panel-title"><span>重点岗位</span><small>按真实JD数量</small></div><div className="rank-list">{data?.top_jobs.slice(0, 6).map((item, index) => <div className="rank-row" key={item.job_title}><b>0{index + 1}</b><span>{item.job_title}</span><em>{item.jd_count} JD</em></div>)}</div></article>
       <article className="panel"><div className="panel-title"><span>热门技能</span><small>Evidence覆盖</small></div><div className="skill-cloud">{data?.top_skills.slice(0, 10).map((item) => <span key={item.skill_name}>{item.skill_name}<b>{item.evidence_jd_count}</b></span>)}</div></article>
