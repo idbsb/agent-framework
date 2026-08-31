@@ -2,8 +2,9 @@ export class ApiUnavailableError extends Error {}
 
 const apiBaseUrl = (import.meta.env.VITE_API_BASE_URL || "").replace(/\/$/, "");
 
-function apiUrl(endpoint: string): string {
-  return `${apiBaseUrl}${endpoint}`;
+export function apiUrl(endpoint: string, baseUrl = apiBaseUrl): string {
+  // Bundled static evidence belongs to the frontend, not the separate FastAPI host.
+  return endpoint.startsWith("/data/") ? endpoint : `${baseUrl}${endpoint}`;
 }
 
 export async function getJson<T>(endpoint: string, fallback?: string): Promise<{ data: T; fallback: boolean }> {

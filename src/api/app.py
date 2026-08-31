@@ -4,10 +4,14 @@ import os
 
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import JSONResponse
 
 from ..schemas import JDParseRequest, JDParseResult, MatchRequest, MatchResult, ResumeParseRequest, ResumeParseResult
 from .service import get_services
 from .integration_service import get_system_data
+from .closure import router as closure_router
+from ..closure.service import ClosureError
+from ..closure.repository import ProfileReadError
 
 
 app = FastAPI(
@@ -30,6 +34,18 @@ app.add_middleware(
     allow_methods=["GET", "POST", "OPTIONS"],
     allow_headers=["Content-Type"],
 )
+
+app.include_router(closure_router)
+
+
+@app.exception_handler(ClosureError)
+async def closure_error_handler(_request, exc: ClosureError):
+    return JSONResponse(status_code=exc.status, content={"detail": str(exc)})
+
+
+@app.exception_handler(ProfileReadError)
+async def profile_read_error_handler(_request, exc: ProfileReadError):
+    return JSONResponse(status_code=503, content={"detail": str(exc)})
 
 
 @app.post("/api/jd/parse", response_model=JDParseResult)
@@ -58,9 +74,14 @@ def list_jobs() -> dict:
         title = str(row.get("standard_job_title", "")).strip()
         if title:
             counts[title] = counts.get(title, 0) + 1
+    effective = services.matching_engine.effective_profiles
+    publications = effective.published_profiles()
+    for title, published in publications.items():
+        counts[title] = published["source_job_count"]
     return {
         "data_version": services.loader.version.get("data_version"),
-        "jobs": [{"standard_job_title": title, "jd_count": counts[title]} for title in sorted(counts)],
+        "jobs": [{"standard_job_title": title, "jd_count": counts[title],
+                  **effective.metadata(effective.get_effective_job_profile(title, publications))} for title in sorted(counts)],
     }
 
 

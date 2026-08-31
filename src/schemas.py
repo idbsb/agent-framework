@@ -82,6 +82,10 @@ class MatchRequest(StableModel):
 
 
 class MatchResult(StableModel):
+    profile_source: Literal["static_baseline", "published_dynamic"] = "static_baseline"
+    profile_version: int | None = None
+    profile_id: str | None = None
+    profile_fingerprint: str | None = None
     resume_id: str
     job_title: str
     match_score: float = Field(ge=0, le=100)

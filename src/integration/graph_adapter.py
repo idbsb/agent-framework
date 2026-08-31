@@ -1,12 +1,14 @@
 from __future__ import annotations
 
 import json
+import copy
 import re
 from pathlib import Path
 from typing import Any
 
 from ..core.skill_extractor import SkillIndex
 from ..data_loader import DataLoader
+from ..core.effective_profiles import EffectiveJobProfiles
 
 
 GRAPH_SOURCE_LABEL = "由组员A现有正式关系表转换"
@@ -27,10 +29,11 @@ def _evidence_ids(value: object) -> list[str]:
 class GraphAdapter:
     """Prefer formal graph JSON; otherwise convert only existing formal Excel relations."""
 
-    def __init__(self, loader: DataLoader, skill_index: SkillIndex):
+    def __init__(self, loader: DataLoader, skill_index: SkillIndex, *, effective_profiles=None):
         self.loader = loader
         self.skill_index = skill_index
         self.project_root = loader.project_root
+        self.effective_profiles = effective_profiles or EffectiveJobProfiles(loader, skill_index, {})
 
     def _json_paths(self) -> list[Path]:
         return [
@@ -207,8 +210,57 @@ class GraphAdapter:
             },
         }
 
-    def for_job(self, job_title: str, limit: int | None = None) -> dict[str, Any]:
-        payload = self.load()
+    @staticmethod
+    def _is_job_skill(edge):
+        return edge.get("edge_type") == "Job_Skill" or edge.get("relation") in {"requires_skill", "prefers_skill"}
+
+    def _overlay_published(self, payload, profiles):
+        """Replace only capability edges, never mutate static files or other relations."""
+        active = {title: p for title, p in profiles.items() if p["profile_source"] == "published_dynamic"}
+        if not active:
+            return payload
+        result = copy.deepcopy(payload)
+        nodes = {n["id"]: n for n in result["nodes"]}
+        for title, profile in active.items():
+            job = next((n for n in nodes.values() if n.get("type") == "job" and n["name"] == title), None)
+            job_id = job["id"] if job else f"job:published:{profile['profile_id']}"
+            if job is None:
+                nodes[job_id] = dict(id=job_id, name=title, type="job", formal_type="Job")
+            nodes[job_id].update(self.effective_profiles.metadata(profile))
+            result["edges"] = [e for e in result["edges"] if not (self._is_job_skill(e) and job_id in {e["source"], e["target"]})]
+            seen = set()
+            for field, role in (("required_skills", "required"), ("preferred_skills", "preferred")):
+                for skill in profile["definition"][field]:
+                    sid = skill["skill_id"]
+                    if sid in seen:
+                        continue
+                    seen.add(sid)
+                    nodes.setdefault(sid, dict(id=sid, name=self.skill_index.standard_name(sid), type="skill", formal_type="Skill"))
+                    ids = list(dict.fromkeys(skill["supporting_job_ids"]))
+                    result["edges"].append(dict(id=f"published:{profile['profile_id']}:{sid}", source=job_id, target=sid,
+                        edge_type="Job_Skill", relation="requires_skill" if role == "required" else "prefers_skill",
+                        job_title=title, skill_name=self.skill_index.standard_name(sid), importance=role,
+                        frequency=skill["coverage"], mention_count=skill["evidence_count"],
+                        evidence_jd_ids=ids, evidence_count=len(ids),
+                        evidence="\n".join(s["text"] for s in skill["evidence_snippets"]),
+                        evidence_records=[r for r in profile["publication"]["evidence"] if r["job_id"] in ids],
+                        **self.effective_profiles.metadata(profile)))
+        result["nodes"] = list(nodes.values())
+        result.update(available=True, status="connected", source_label="有效岗位画像（发布优先，其他关系保留静态基线）",
+                      notice="岗位—技能关系使用最新人工发布版本；未发布岗位和非能力关系保持原图谱。",
+                      profile_versions={title: self.effective_profiles.metadata(p) for title, p in active.items()})
+        result["summary"] = dict(result["summary"], node_count=len(nodes), edge_count=len(result["edges"]),
+                                 job_skill_edge_count=sum(self._is_job_skill(e) for e in result["edges"]))
+        return result
+
+    def load_effective(self):
+        publications = self.effective_profiles.published_profiles()
+        profiles = {title: self.effective_profiles.get_effective_job_profile(title, publications) for title in publications}
+        return self._overlay_published(self.load(), profiles)
+
+    def for_job(self, job_title: str, limit: int | None = None, *, effective_profile=None) -> dict[str, Any]:
+        effective = effective_profile or self.effective_profiles.get_effective_job_profile(job_title)
+        payload = self._overlay_published(self.load(), {job_title: effective})
         job_node = next((
             node for node in payload.get("nodes", [])
             if node.get("type") == "job" and _text(node.get("name")) == job_title
@@ -221,13 +273,14 @@ class GraphAdapter:
         edges.sort(key=lambda item: (-float(item.get("frequency", 0)), str(item.get("target", ""))))
         result = self._filter_payload(payload, edges[:limit] if limit is not None else edges)
         result["job_title"] = job_title
+        result.update(self.effective_profiles.metadata(effective))
         if payload.get("available") and not edges:
             result["status"] = "job_not_found"
             result["notice"] = "当前组员A关系表中没有该岗位。"
         return result
 
     def for_skill(self, skill_id: str) -> dict[str, Any]:
-        payload = self.load()
+        payload = self.load_effective()
         edges = [
             edge for edge in payload.get("edges", [])
             if edge.get("target") == skill_id and (payload.get("source_type") != "formal_json" or edge.get("edge_type") == "Job_Skill")
