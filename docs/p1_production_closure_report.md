@@ -1,9 +1,9 @@
 # P1 Production Closure Report
 
-日期：2026-09-01  
-工作目录：`D:\Projects\agent-framework-p1-prod`  
-分支：`feature/p1-core-closure`  
-代码状态：本地改动，未 commit、未 push、未部署  
+日期：2026-09-01
+工作目录：`D:\Projects\agent-framework-p1-prod`
+分支：`feature/p1-core-closure`
+代码状态：本地改动，未 commit、未 push、未部署
 结论：`READY_FOR_PRODUCTION_DEPLOYMENT`（仅表示代码侧可交给负责人部署，不表示线上已完成）
 
 ## 1. Production Gap Map

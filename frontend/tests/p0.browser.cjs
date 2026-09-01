@@ -158,6 +158,10 @@ test('existing eight pages, formal graph/evolution and candidate drawer still re
   for (const [route, title] of Object.entries({ '/': '数据驾驶舱', '/jobs': '岗位分析', '/graph': '能力图谱', '/evolution': '动态演化', '/emerging': '新岗位发现', '/jd-parse': 'JD智能解析', '/resume-parse': '简历智能分析', '/match': '人岗匹配' })) {
     await page.goto(`${base}${route}`);
     assert.equal(await page.locator('.topbar h1').innerText(), title);
+    if (route === '/jobs') {
+      await page.locator('.analysis-grid').waitFor();
+      await page.waitForLoadState('networkidle');
+    }
     if (route === '/emerging') {
       await page.getByRole('button', { name: '查看完整证据' }).first().click();
       await page.locator('.detail-drawer').waitFor();
@@ -171,4 +175,30 @@ test('existing eight pages, formal graph/evolution and candidate drawer still re
     }
   }
   results.push({ id: 'eight-page-navigation', status: 'PASS' });
+});
+
+test('optional job analysis fallback failures leave an empty fallback and preserve the API path', async () => {
+  for (const failure of ['404', 'network', 'invalid-json']) {
+    await page.route('**/data/job_analysis_v1.json', route => failure === 'network'
+      ? route.abort('failed')
+      : route.fulfill({ status: failure === '404' ? 404 : 200, contentType: 'application/json', body: 'unavailable' }));
+    await page.route('**/api/job-analysis/*', route => route.fulfill({ status: 503, body: 'unavailable' }));
+    await page.goto(`${base}/jobs`);
+    await page.waitForLoadState('networkidle');
+    assert.equal(await page.locator('.topbar h1').innerText(), '岗位分析');
+    await page.getByText('后端服务未启动，请启动FastAPI服务。', { exact: true }).waitFor();
+    // Empty fallback: no cached profile or invented JD count when both reads fail.
+    assert.equal(await page.locator('.data-chip').first().innerText(), '0 条JD');
+    assert.equal(await page.locator('.analysis-grid').count(), 0);
+    assert.deepEqual(pageErrors, [], `${failure}: no unhandled rejection`);
+
+    await page.unroute('**/api/job-analysis/*');
+    await page.reload();
+    await page.locator('.analysis-grid').waitFor();
+    await page.waitForLoadState('networkidle');
+    assert.notEqual(await page.locator('.data-chip').first().innerText(), '0 条JD');
+    assert.deepEqual(pageErrors, [], `${failure}: real API still renders`);
+    await page.unroute('**/data/job_analysis_v1.json');
+  }
+  results.push({ id: 'optional-job-analysis-fallback', status: 'PASS' });
 });
