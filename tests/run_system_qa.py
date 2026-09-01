@@ -45,6 +45,8 @@ def request_json(method: str, path: str, payload: object | None = None) -> tuple
 def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--browser-qa-passed", action="store_true")
+    parser.add_argument("--report-dir", type=Path, default=PROJECT_ROOT / "reports",
+                        help="Optional local output directory; avoids overwriting historical QA reports.")
     args = parser.parse_args()
     root = Path(__file__).resolve().parents[1]
     services = get_services()
@@ -161,7 +163,7 @@ def main() -> int:
         },
         "missing_group_a_files": missing_group_a,
     }
-    reports = root / "reports"
+    reports = args.report_dir.resolve()
     reports.mkdir(parents=True, exist_ok=True)
     (reports / "system_qa_results_graph_dynamic_v2.json").write_text(json.dumps(result, ensure_ascii=False, indent=2), encoding="utf-8")
     status = "通过" if overall else "未通过"

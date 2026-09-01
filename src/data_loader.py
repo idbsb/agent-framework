@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import hashlib
+import json
 from datetime import date, datetime
 from pathlib import Path
 from typing import Any, Iterable
@@ -122,6 +123,25 @@ class DataLoader:
         if not source:
             return []
         return self.read_sheet(self.resolve_path("job_skill_gold"), source["sheet"])
+
+    def load_runtime_skill_dictionary(self) -> tuple[list[dict[str, Any]], list[dict[str, Any]]]:
+        """Add reviewed runtime entries without changing the frozen source data."""
+        skills, aliases = self.load_skill_dictionary()
+        path = self.project_root / "config" / "skill_dictionary_extensions.json"
+        extension = json.loads(path.read_text(encoding="utf-8"))
+        ids = {row["skill_id"] for row in skills}
+        names = {row["标准技能名称"].casefold() for row in skills}
+        for row in extension["skills"]:
+            if row["skill_id"] in ids or row["标准技能名称"].casefold() in names:
+                raise DataConfigurationError("增量技能 ID 或名称与现有词典冲突，请人工合并")
+            skills.append(row)
+            ids.add(row["skill_id"])
+            names.add(row["标准技能名称"].casefold())
+        for row in extension["aliases"]:
+            if row["skill_id"] not in ids:
+                raise DataConfigurationError("增量别名指向不存在的技能 ID")
+            aliases.append(row)
+        return skills, aliases
 
     def source_locations(self) -> dict[str, str]:
         return {key: str(self.resolve_path(key)) for key in self.FROZEN_KEYS}

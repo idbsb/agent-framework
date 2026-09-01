@@ -1,0 +1,12 @@
+{
+  "description": "P0 explicit skill coverage extension. Frozen v1 workbook and its SKILL-0001..0082 IDs are unchanged. These IDs identify skills, not candidate proficiency.",
+  "skills": [
+    {"skill_id": "SKILL-P0-SQL", "标准技能名称": "SQL", "技能类别": "编程语言", "说明": "结构化查询语言；不将 MySQL 或 PostgreSQL 产品名等价改写为 SQL。"},
+    {"skill_id": "SKILL-P0-FASTAPI", "标准技能名称": "FastAPI", "技能类别": "应用开发能力", "说明": "Python API 开发框架；不等价于所有 API 服务开发能力。"}
+  ],
+  "aliases": [
+    {"原始技能写法": "sql", "skill_id": "SKILL-P0-SQL"},
+    {"原始技能写法": "fastapi", "skill_id": "SKILL-P0-FASTAPI"},
+    {"原始技能写法": "Fast API", "skill_id": "SKILL-P0-FASTAPI"}
+  ]
+}

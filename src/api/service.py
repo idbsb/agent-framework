@@ -22,7 +22,7 @@ class CoreServices:
 @lru_cache(maxsize=1)
 def get_services() -> CoreServices:
     loader = DataLoader()
-    skills, aliases = loader.load_skill_dictionary()
+    skills, aliases = loader.load_runtime_skill_dictionary()
     skill_index = SkillIndex(skills, aliases)
     jd_parser = JDParser(loader, skill_index)
     resume_parser = ResumeParser(skill_index)

@@ -6,6 +6,7 @@ from dataclasses import dataclass
 from typing import Iterable
 
 from ..schemas import SkillEvidence
+from .skill_context import classify
 
 
 def normalize(text: object) -> str:
@@ -74,7 +75,7 @@ class SkillIndex:
         return self.skills[skill_id].name
 
     def extract_fields(self, fields: Iterable[tuple[str, object]]) -> list[SkillEvidence]:
-        best: dict[str, SkillEvidence] = {}
+        evidence: dict[tuple, SkillEvidence] = {}
         for source_field, raw_value in fields:
             text = str(raw_value or "")
             if not text.strip():
@@ -91,20 +92,26 @@ class SkillIndex:
                         record = self.skills[skill_id]
                         exact = normalize(match.group(0)) == normalize(record.name)
                         confidence = 0.98 if exact else (0.90 if multi else 0.93)
+                        polarity = classify(text, span[0], span[1], source_field)
                         item = SkillEvidence(
                             skill_id=skill_id,
                             standard_skill_name=record.name,
                             skill_type=record.category,
                             confidence=confidence,
-                            evidence=match.group(0),
+                            evidence=text,
                             source_field=source_field,
-                            accepted=True,
+                            matched_text=match.group(0),
+                            start=span[0], end=span[1],
+                            polarity=polarity,
+                            accepted=polarity == "affirmed",
+                            need_human_review=polarity == "uncertain",
                         )
-                        prior = best.get(skill_id)
+                        key = (skill_id, source_field, text, span)
+                        prior = evidence.get(key)
                         if prior is None or item.confidence > prior.confidence:
-                            best[skill_id] = item
+                            evidence[key] = item
                     used_spans.append((span[0], span[1], set(skill_ids)))
-        return sorted(best.values(), key=lambda item: (item.source_field, -item.confidence, item.standard_skill_name))
+        return sorted(evidence.values(), key=lambda item: (item.source_field, item.start, item.standard_skill_name))
 
     def extract_names(self, text: str, source_field: str = "text") -> set[str]:
         return {item.standard_skill_name for item in self.extract_fields([(source_field, text)]) if item.accepted}

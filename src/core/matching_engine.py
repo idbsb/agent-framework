@@ -21,7 +21,7 @@ def _years(text: str) -> float | None:
 
 def _education_level(text: str) -> int | None:
     value = str(text or "")
-    for label, level in (("博士", 4), ("硕士", 3), ("本科", 2), ("大专", 1), ("专科", 1)):
+    for label, level in (("博士", 4), ("硕士", 3), ("本科", 2), ("大专", 1), ("专科", 1), ("高中", 0), ("中专", 0)):
         if label in value:
             return level
     return None
@@ -53,12 +53,12 @@ class MatchingEngine:
             required, bonus = Counter(), Counter()
             education_levels, required_years = [], []
             for row in rows:
-                required.update(item.skill_id for item in self.skill_index.extract_fields([
+                required.update({item.skill_id for item in self.skill_index.extract_fields([
                     ("required_skills_raw", row.get("required_skills_raw"))
-                ]))
-                bonus.update(item.skill_id for item in self.skill_index.extract_fields([
+                ]) if item.accepted and item.polarity == "affirmed"})
+                bonus.update({item.skill_id for item in self.skill_index.extract_fields([
                     ("bonus_skills_raw", row.get("bonus_skills_raw"))
-                ]))
+                ]) if item.accepted and item.polarity == "affirmed"})
                 level = _education_level(str(row.get("education", "")))
                 years = _years(str(row.get("experience") or row.get("original_experience", "")))
                 if level is not None:
@@ -83,8 +83,8 @@ class MatchingEngine:
         return profiles
 
     @staticmethod
-    def _ratio(intersection: int, denominator: int) -> float:
-        return 100.0 if denominator == 0 else 100.0 * intersection / denominator
+    def _ratio(intersection: int, denominator: int) -> float | None:
+        return None if denominator == 0 else 100.0 * intersection / denominator
 
     def _learning_path(self, missing_names: list[str]) -> list[str]:
         recommendations = []
@@ -126,32 +126,38 @@ class MatchingEngine:
         if profile is None:
             return MatchResult(
                 resume_id=resume.resume_id, job_title=job_title, match_score=0,
-                dimension_scores={key: 0 for key in self.weights},
+                dimension_scores={key: None for key in self.weights},
+                dimension_status={key: "unknown" for key in self.weights},
                 recommendations=["目标岗位尚无可用正式JD画像，请先人工确认岗位名称。"],
                 explanation=["未找到目标岗位的正式JD聚合画像。"], need_human_review=True,
             )
-        resume_ids = {item.skill_id for item in resume.skills if item.accepted}
+        resume_ids = {item.skill_id for item in resume.skills if item.accepted and item.polarity == "affirmed"}
         required_ids, bonus_ids = set(profile["required_ids"]), set(profile["bonus_ids"])
         matched_required = required_ids & resume_ids
         matched_bonus = bonus_ids & resume_ids
-        project_ids = {item.skill_id for item in resume.skills if item.source_field == "projects" and item.accepted}
-        project_denominator = min(3, len(required_ids))
+        project_ids = {item.skill_id for item in resume.skills if item.source_field == "projects" and item.accepted and item.polarity == "affirmed"}
+        # The numerator is a subset of this same requirement set. Evidence count
+        # and section ordering never change the coverage denominator.
+        project_denominator = len(required_ids)
         dimension_scores = {
             "required_skills": self._ratio(len(matched_required), len(required_ids)),
             "bonus_skills": self._ratio(len(matched_bonus), len(bonus_ids)),
             "projects": self._ratio(len(project_ids & required_ids), project_denominator),
-            "experience": 100.0,
-            "education": 100.0,
+            "experience": None,
+            "education": None,
         }
         resume_years = _years(resume.experience + " " + resume.work_experience)
         required_years = profile["experience_years"]
-        if required_years is not None:
-            dimension_scores["experience"] = 50.0 if resume_years is None else min(100.0, 100.0 * resume_years / max(required_years, 0.5))
+        if required_years is not None and resume_years is not None:
+            dimension_scores["experience"] = 100.0 if required_years == 0 else min(100.0, 100.0 * resume_years / required_years)
         resume_education = _education_level(resume.education)
         required_education = profile["education_level"]
-        if required_education is not None:
-            dimension_scores["education"] = 50.0 if resume_education is None else min(100.0, 100.0 * resume_education / required_education)
-        score = sum(dimension_scores[key] * float(weight) for key, weight in self.weights.items())
+        if required_education is not None and resume_education is not None:
+            dimension_scores["education"] = 100.0 if required_education == 0 else min(100.0, 100.0 * resume_education / required_education)
+        evaluated = [key for key, value in dimension_scores.items() if value is not None]
+        evaluated_weight = sum(float(self.weights[key]) for key in evaluated)
+        score = (sum(dimension_scores[key] * float(self.weights[key]) for key in evaluated) / evaluated_weight
+                 if evaluated_weight else 0.0)
         missing_ids = sorted(required_ids - resume_ids, key=lambda sid: (-profile["required_frequency"].get(sid, 0), self.skill_index.standard_name(sid)))
         matched_ids = sorted((required_ids | bonus_ids) & resume_ids, key=self.skill_index.standard_name)
         advantage_ids = sorted(resume_ids - required_ids, key=self.skill_index.standard_name)
@@ -162,7 +168,8 @@ class MatchingEngine:
             f"目标岗位解析：{job_title} → {resolved_title}（置信度{title_confidence:.2f}）",
             f"必备技能：{len(matched_required)}/{len(required_ids)}",
             f"加分技能：{len(matched_bonus)}/{len(bonus_ids)}",
-            f"项目中出现的必备技能：{len(project_ids & required_ids)}",
+            f"项目中有正向证据的必备技能覆盖：{len(project_ids & required_ids)}/{project_denominator}",
+            f"可评估维度：{len(evaluated)}/{len(self.weights)}；信息不足/要求未明确的维度不计分，按可评估权重归一化。",
             f"经验要求基准：{required_years if required_years is not None else '未明确'}年；简历解析：{resume_years if resume_years is not None else '未识别'}年",
             f"学历要求等级：{required_education if required_education is not None else '未明确'}；简历学历等级：{resume_education if resume_education is not None else '未识别'}",
         ]
@@ -170,14 +177,17 @@ class MatchingEngine:
             resume_id=resume.resume_id,
             job_title=resolved_title,
             match_score=round(score, 2),
-            dimension_scores={key: round(value, 2) for key, value in dimension_scores.items()},
+            dimension_scores={key: round(value, 2) if value is not None else None for key, value in dimension_scores.items()},
+            dimension_status={key: ("unknown" if value is None else "met" if value >= 100 else "not_met") for key, value in dimension_scores.items()},
+            evaluated_dimensions=evaluated,
+            data_completeness=len(evaluated) / len(self.weights),
             matched_skills=matched_names,
             missing_skills=missing_names,
             advantage_skills=advantage_names,
             priority_skills=missing_names[:5],
             recommendations=self._learning_path(missing_names),
             explanation=explanation,
-            need_human_review=resume.need_human_review or not required_ids,
+            need_human_review=resume.need_human_review or not required_ids or len(evaluated) < len(self.weights),
         )
 
     def level_for_score(self, score: float) -> str:

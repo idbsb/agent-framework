@@ -93,7 +93,7 @@ def run_batch(project_root: Path | None = None) -> dict:
     if not frozen_validation["passed"]:
         raise RuntimeError(f"冻结数据基础检查失败：{frozen_validation}")
 
-    skill_rows, alias_rows = loader.load_skill_dictionary()
+    skill_rows, alias_rows = loader.load_runtime_skill_dictionary()
     skill_index = SkillIndex(skill_rows, alias_rows)
     weights_path = root / "config" / "matching_weights.yaml"
     jd_parser = JDParser(loader, skill_index)
@@ -271,11 +271,13 @@ def run_batch(project_root: Path | None = None) -> dict:
             "简历编号": result.resume_id,
             "目标岗位": result.job_title,
             "综合匹配度": result.match_score / 100,
-            "必备技能匹配度": result.dimension_scores["required_skills"] / 100,
-            "加分技能匹配度": result.dimension_scores["bonus_skills"] / 100,
-            "项目经验匹配度": result.dimension_scores["projects"] / 100,
-            "工作经验匹配度": result.dimension_scores["experience"] / 100,
-            "学历匹配度": result.dimension_scores["education"] / 100,
+            **{label: value / 100 if value is not None else None for label, value in (
+                ("必备技能匹配度", result.dimension_scores["required_skills"]),
+                ("加分技能匹配度", result.dimension_scores["bonus_skills"]),
+                ("项目经验匹配度", result.dimension_scores["projects"]),
+                ("工作经验匹配度", result.dimension_scores["experience"]),
+                ("学历匹配度", result.dimension_scores["education"]),
+            )},
             "已具备技能": _join(result.matched_skills),
             "缺失关键技能": _join(result.missing_skills),
             "优势技能": _join(result.advantage_skills),
