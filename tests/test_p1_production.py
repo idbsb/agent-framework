@@ -1,5 +1,6 @@
 """Production permission and storage regressions; isolated synthetic companion stores."""
 import asyncio
+import copy
 import json
 import os
 import sqlite3
@@ -13,6 +14,10 @@ from src.api.closure import get_closure
 from src.closure.service import ClosureService
 from src.closure.repository import PublishedProfileRepository
 from src.closure.settings import closure_database_path, validate_auth, production, ProfileReadError
+from src.core.effective_profiles import EffectiveJobProfiles
+from src.core.matching_engine import MatchingEngine
+from src.integration.graph_adapter import GraphAdapter
+from src.schemas import ResumeParseRequest
 import test_p1_closure as fixtures
 
 
@@ -70,7 +75,8 @@ class ProductionTest(unittest.TestCase):
 
     def test_wrong_token_and_untrusted_origin(self):
         for token in [b"Bearer wrong", b"Basic invalid", "Bearer 中文".encode()]:
-            self.assertEqual(self.call("POST","/api/closure/access/verify",token=False,extra=[(b"authorization",token)])[0],401)
+            expected = 403 if token.startswith(b"Bearer ") else 401
+            self.assertEqual(self.call("POST","/api/closure/access/verify",token=False,extra=[(b"authorization",token)])[0],expected)
         for origin in ["null","https://evil.example.test","https://ui.example.test.attacker.test"]:
             self.assertEqual(self.call("POST","/api/closure/access/verify",origin=origin)[0],403)
         self.assertEqual(self.call("POST","/api/closure/access/verify",origin=None)[0],200)
@@ -169,3 +175,82 @@ class ProductionTest(unittest.TestCase):
         with sqlite3.connect(self.path) as conn:
             self.assertEqual(conn.execute("SELECT name FROM sqlite_master WHERE name='entities'").fetchall(),[])
         conn.close()
+
+    def test_prod_04_07_08_09_11_valid_admin_flow_and_no_token_in_responses(self):
+        token = os.environ["P1_ADMIN_TOKEN"]
+        status, created, headers = self.call("POST", "/api/closure/evidence", fixtures.jd("prod-flow", title=""))
+        self.assertEqual(status, 200)
+        self.assertEqual(created["job_id"], "prod-flow")
+        rendered = json.dumps([created, {k.decode(): v.decode() for k, v in headers.items()}], ensure_ascii=False)
+        self.assertNotIn(token, rendered)
+
+        for i in range(1, 3):
+            self.call("POST", "/api/closure/evidence", fixtures.jd(f"prod-flow-{i}", title=""))
+        item = self.call("POST", "/api/closure/discovery/run")[1][0]
+        manual = copy.deepcopy(item["auto_definition"])
+        manual["job_name"] = "SYNTHETIC_PRODUCTION_AUTH_FLOW"
+        item = self.call("POST", f'/api/closure/candidate/{item["id"]}/manual', dict(
+            definition=manual, expected_version=item["version"], expected_revision=item["revision"]))[1]
+        for action in ["submit", "approve", "publish"]:
+            status, item, _ = self.call("POST", f'/api/closure/candidate/{item["id"]}/actions', dict(
+                action=action, expected_version=item["version"], expected_revision=item["revision"],
+                note="synthetic production authorization test", acknowledge_gaps=True))
+            self.assertEqual(status, 200)
+        self.assertEqual(item["status"], "published")
+
+    def test_prod_05_06_anonymous_cannot_approve_or_publish(self):
+        for action in ["approve", "publish"]:
+            status, data, _ = self.call("POST", "/api/closure/candidate/synthetic/actions", dict(
+                action=action, expected_version=1, expected_revision=0), token=False)
+            self.assertEqual(status, 401)
+            self.assertNotIn(os.environ["P1_ADMIN_TOKEN"], json.dumps(data))
+
+    def test_prod_13_to_20_file_restart_preserves_flow_and_downstream_isolation(self):
+        title = "SYNTHETIC_RESTART_PERSISTENCE_PROFILE"
+        first_id = "synthetic-restart-0"
+        for i in range(3):
+            self.service.add_evidence(dict(
+                job_id=f"synthetic-restart-{i}", original_title=title,
+                responsibilities="operate synthetic restart service",
+                required_skills_raw="Python RAG LangGraph", scenario="synthetic validation",
+                company="synthetic company", source="synthetic fixture", published_at="2026-08-31"))
+        item = next(value for value in self.service.discover() if value["auto_definition"]["job_name"] == title)
+        manual = copy.deepcopy(item["auto_definition"])
+        manual["core_responsibilities"][0]["text"] = "manually reviewed synthetic restart responsibility"
+        item = self.service.edit("candidate", item["id"], manual, item["version"], item["revision"])
+        for action in ["submit", "approve", "publish"]:
+            item = self.service.action("candidate", item["id"], action,
+                expected_version=item["version"], expected_revision=item["revision"],
+                reviewer="synthetic-admin", note="synthetic restart verification", acknowledge_gaps=True)
+        history_a = self.service.history("candidate", item["id"])
+
+        service_b = ClosureService(self.core, self.path, base_records=[])
+        self.assertEqual(service_b.evidence(first_id)["job_id"], first_id)
+        self.assertEqual(service_b.history("candidate", item["id"]), history_a)
+        self.assertEqual(service_b.published("candidate", item["id"])["profile_version"], 1)
+        app.dependency_overrides[get_closure] = lambda: service_b
+        self.assertEqual(self.call("GET", f"/api/closure/evidence/{first_id}", token=False)[1]["job_id"], first_id)
+        self.assertEqual(self.call("GET", f'/api/closure/candidate/{item["id"]}/versions', token=False)[1], history_a)
+
+        reader = EffectiveJobProfiles(self.core.loader, self.core.skill_index,
+            self.core.matching_engine.profiles, PublishedProfileRepository(self.path))
+        engine = MatchingEngine(self.core.loader, self.core.skill_index, self.core.jd_parser, effective_profiles=reader)
+        graph = GraphAdapter(self.core.loader, self.core.skill_index, effective_profiles=reader)
+        resume = self.core.resume_parser.parse(ResumeParseRequest(skills_raw="Python RAG", projects="synthetic project"))
+        published_match = engine.match(resume, title).model_dump()
+        published_graph = graph.for_job(title)
+        self.assertEqual(published_match["profile_source"], "published_dynamic")
+        self.assertEqual(published_match["profile_version"], 1)
+        self.assertEqual(published_graph["profile_version"], 1)
+        self.assertEqual(published_match["profile_fingerprint"], published_graph["profile_fingerprint"])
+
+        draft_manual = copy.deepcopy(item["manual_definition"])
+        draft_manual["core_responsibilities"][0]["text"] = "new unpublished synthetic responsibility"
+        draft = service_b.edit("candidate", item["id"], draft_manual, item["version"], item["revision"])
+        for action in [None, "submit", "approve", "reject"]:
+            if action:
+                draft = service_b.action("candidate", draft["id"], action,
+                    expected_version=draft["version"], expected_revision=draft["revision"],
+                    reviewer="synthetic-admin", note="unpublished isolation", acknowledge_gaps=True)
+            self.assertEqual(engine.match(resume, title).model_dump(), published_match)
+            self.assertEqual(graph.for_job(title), published_graph)

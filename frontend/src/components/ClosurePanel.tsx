@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { getJson, postJson } from "../api";
+import { getJson, postThenGet } from "../api";
 import { safeEvidenceUrl, statusLabel } from "../closure";
 import type { ClosureVersion, Definition, History, JDEvidence, SkillSupport, TextEvidence, VersionDiff } from "../closure";
 import "./closure.css";
@@ -59,7 +59,7 @@ function EvidenceImport({ jobTitle, saved }: { jobTitle?: string; saved: () => v
   const labels: Record<keyof typeof empty,string> = {job_id:"新JD编号",original_title:"原始岗位名称",responsibilities:"JD职责原文",required_skills_raw:"必备技能原文",bonus_skills_raw:"加分技能原文",company:"企业",source:"来源",url:"原始招聘链接",published_at:"真实发布时间",collected_at:"采集时间",industry:"行业原文",scenario:"场景原文"};
   return <details><summary>追加JD证据（不覆盖原始数据）</summary><form className="closure-editor" onSubmit={async e => {
     e.preventDefault(); setBusy(true); setMessage("");
-    try {await postJson('/api/closure/evidence',{...form,standard_job_title:jobTitle || ""});setForm(empty);setMessage("JD证据已保存。请点击运行发现或重新计算更新。");saved();}
+    try {await postThenGet<JDEvidence,JDEvidence>('/api/closure/evidence',{...form,standard_job_title:jobTitle || ""},created=>`/api/closure/evidence/${encodeURIComponent(created.job_id)}`);setForm(empty);setMessage("JD证据已保存并从后端重新读取。请点击运行发现或重新计算更新。");saved();}
     catch(error){setMessage(error instanceof Error ? error.message : String(error));}finally{setBusy(false);}
   }}><p>{jobTitle ? `归属既有岗位：${jobTitle}` : '作为未标准化新岗位证据；不假定已发现正式新职业。'} 不清楚的字段留空，不使用示例值。</p>
     {Object.entries(labels).map(([key,label]) => <label key={key}>{label}<textarea required={key==='job_id'||key==='original_title'} value={form[key as keyof typeof empty]} onChange={e => setForm({...form,[key]:e.target.value})} /></label>)}
@@ -77,7 +77,7 @@ function ReviewDetail({ item, replace }: { item: ClosureVersion; replace: (i: Cl
   },[path,item.version,item.revision]);
   const shown = history?.versions.find(v=>v.version===viewVersion) || item;
   const publication = history?.publications.at(-1);
-  async function change(endpoint:string,payload:unknown){setBusy(true);setError("");try{replace(await postJson<ClosureVersion>(path+endpoint,payload));setNote("");setAck(false);}catch(e){setError(e instanceof Error?e.message:String(e));}finally{setBusy(false);}}
+  async function change(endpoint:string,payload:unknown){setBusy(true);setError("");try{replace(await postThenGet<ClosureVersion,ClosureVersion>(path+endpoint,payload,()=>path));setNote("");setAck(false);}catch(e){setError(e instanceof Error?e.message:String(e));}finally{setBusy(false);}}
   const expected = {expected_version:item.version,expected_revision:item.revision};
   return <article className="closure-detail" data-testid="closure-detail"><h3>{(shown.manual_definition||shown.auto_definition).job_name}</h3>
     <p data-testid="closure-status">{statusLabel[shown.status]} · 草稿内容 V{shown.version} · 前版本 {shown.previous_version ?? "无"} · {shown.source_job_count} 条JD</p>
@@ -112,7 +112,7 @@ export default function ClosurePanel({ jobTitle }: { jobTitle?: string }) {
     const endpoint=jobTitle?`/api/closure/profile/${encodeURIComponent(jobTitle)}`:'/api/closure/candidates';
     getJson<ClosureVersion|ClosureVersion[]>(endpoint).then(r=>{if(active){const list=Array.isArray(r.data)?r.data:[r.data];setItems(list);setSelected(list[0]?.id||"");}}).catch(()=>{if(active)setError("尚无闭环记录，或后端暂不可用。可确认写入权限后运行下方流程。");});return()=>{active=false;};
   },[jobTitle]);
-  async function run(){setBusy(true);setError("");try{const data=await postJson<ClosureVersion|ClosureVersion[]>(jobTitle?'/api/closure/profiles/run':'/api/closure/discovery/run',jobTitle?{job_title:jobTitle}:{});const list=Array.isArray(data)?data:[data];setItems(list);setSelected(list.some(i=>i.id===selected)?selected:list[0]?.id||"");}catch(e){setError(e instanceof Error?e.message:String(e));}finally{setBusy(false);}}
+  async function run(){setBusy(true);setError("");try{const refreshed=await postThenGet<ClosureVersion|ClosureVersion[],ClosureVersion|ClosureVersion[]>(jobTitle?'/api/closure/profiles/run':'/api/closure/discovery/run',jobTitle?{job_title:jobTitle}:{},()=>jobTitle?`/api/closure/profile/${encodeURIComponent(jobTitle)}`:'/api/closure/candidates');const list=Array.isArray(refreshed)?refreshed:[refreshed];setItems(list);setSelected(list.some(i=>i.id===selected)?selected:list[0]?.id||"");}catch(e){setError(e instanceof Error?e.message:String(e));}finally{setBusy(false);}}
   const item=items.find(i=>i.id===selected);
   return <section className="panel closure-panel"><h2>{jobTitle?'岗位画像更新闭环':'新岗位定义与发布闭环'}</h2>
     <p>独立审核记录；待审内容不覆盖正式发布画像。生产写操作需要管理员授权。</p>

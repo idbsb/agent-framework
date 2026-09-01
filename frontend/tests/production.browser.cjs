@@ -73,6 +73,8 @@ before(async()=>{
   fs.mkdirSync(artifacts,{recursive:true});
   // Builds real Vite assets with a separate API origin, no development proxy.
   command(process.execPath,['node_modules/vite/bin/vite.js','build','--config','vite.config.ts'],{env:{...process.env,VERCEL:'0',VITE_API_BASE_URL:api}});
+  const built=[];const visit=dir=>fs.readdirSync(dir,{withFileTypes:true}).forEach(entry=>entry.isDirectory()?visit(path.join(dir,entry.name)):built.push(path.join(dir,entry.name)));visit(path.join(front,'dist'));
+  assert.ok(built.every(file=>!fs.readFileSync(file).includes(secret)),'runtime administrator token leaked into frontend build');
   const key=path.join(storage,'test.key'),cert=path.join(storage,'test.crt'),config=path.join(storage,'openssl.cnf');
   fs.writeFileSync(config,'[req]\ndistinguished_name=reqdn\n[reqdn]\n');
   command(process.env.P1_OPENSSL||'openssl',['req','-config',config,'-x509','-newkey','rsa:2048','-nodes','-keyout',key,'-out',cert,

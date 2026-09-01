@@ -19,7 +19,7 @@ def get_closure():
     return ClosureService(core, closure_database_path(core.loader.project_root))
 
 
-def local_write(request: Request):
+def require_p1_admin(request: Request):
     if os.getenv("P1_CLOSURE_WRITES") != "1":
         raise HTTPException(403, "P1 writes are disabled")
     if production():
@@ -28,9 +28,13 @@ def local_write(request: Request):
         if origin and origin not in allowed_origins():
             raise HTTPException(403, "untrusted origin")
         authorization = request.headers.get("authorization", "")
+        if not authorization:
+            raise HTTPException(401, "Administrator credential required", headers={"WWW-Authenticate": "Bearer"})
         scheme, _, token = authorization.partition(" ")
-        if scheme.lower() != "bearer" or not secrets.compare_digest(token.encode(), os.environ["P1_ADMIN_TOKEN"].encode()):
-            raise HTTPException(401, "Valid administrator credential required", headers={"WWW-Authenticate": "Bearer"})
+        if scheme.lower() != "bearer" or not token:
+            raise HTTPException(401, "Administrator Bearer credential required", headers={"WWW-Authenticate": "Bearer"})
+        if not secrets.compare_digest(token.encode(), os.environ["P1_ADMIN_TOKEN"].encode()):
+            raise HTTPException(403, "Administrator credential rejected")
         return os.environ["P1_ADMIN_NAME"].strip()
     if not request.client or request.client.host not in {"127.0.0.1", "::1"}:
         raise HTTPException(403, "Local P1 writes require loopback")
@@ -41,7 +45,7 @@ def local_write(request: Request):
 
 
 router = APIRouter(prefix="/api/closure", tags=["P1 closure"])
-write_guard = [Depends(local_write)]
+write_guard = [Depends(require_p1_admin)]
 
 
 @router.get("/access")
@@ -50,8 +54,8 @@ def access():
             "auth_mode": "bearer" if production() else "local"}
 
 
-@router.post("/access/verify", dependencies=write_guard)
-def verify_access(actor=Depends(local_write)):
+@router.post("/access/verify")
+def verify_access(actor=Depends(require_p1_admin)):
     return {"authorized": True, "actor": actor}
 
 
@@ -147,8 +151,8 @@ def manual(kind: str, identifier: str, body: ManualInput, service=Depends(get_cl
     return service.edit(kind, identifier, body.definition, body.expected_version, body.expected_revision)
 
 
-@router.post("/{kind}/{identifier}/actions", dependencies=write_guard)
-def action(kind: str, identifier: str, body: ActionInput, service=Depends(get_closure), actor=Depends(local_write)):
+@router.post("/{kind}/{identifier}/actions")
+def action(kind: str, identifier: str, body: ActionInput, service=Depends(get_closure), actor=Depends(require_p1_admin)):
     values = body.model_dump()
     if actor:
         values["reviewer"] = actor
