@@ -1,0 +1,473 @@
+{
+  "data_version": "1.0",
+  "jobs": [
+    {
+      "standard_job_title": "3D数字人算法工程师",
+      "jd_count": 1
+    },
+    {
+      "standard_job_title": "AI Agent优化工程师",
+      "jd_count": 1
+    },
+    {
+      "standard_job_title": "AI Agent开发工程师",
+      "jd_count": 12
+    },
+    {
+      "standard_job_title": "AI For Science算法专家",
+      "jd_count": 1
+    },
+    {
+      "standard_job_title": "AIGC多模态内容生成算法研究员",
+      "jd_count": 1
+    },
+    {
+      "standard_job_title": "AIGC视频生成算法工程师",
+      "jd_count": 1
+    },
+    {
+      "standard_job_title": "AIoT测试工程师",
+      "jd_count": 1
+    },
+    {
+      "standard_job_title": "AI产品经理",
+      "jd_count": 2
+    },
+    {
+      "standard_job_title": "AI全栈工程师",
+      "jd_count": 1
+    },
+    {
+      "standard_job_title": "AI前沿材料专家",
+      "jd_count": 1
+    },
+    {
+      "standard_job_title": "AI基础设施工程师",
+      "jd_count": 1
+    },
+    {
+      "standard_job_title": "AI安全与隐私工程师",
+      "jd_count": 1
+    },
+    {
+      "standard_job_title": "AI安全合规工程师",
+      "jd_count": 1
+    },
+    {
+      "standard_job_title": "AI安全工程师",
+      "jd_count": 2
+    },
+    {
+      "standard_job_title": "AI安全技术工程师",
+      "jd_count": 9
+    },
+    {
+      "standard_job_title": "AI安全攻防工程师",
+      "jd_count": 4
+    },
+    {
+      "standard_job_title": "AI安全验证工程师",
+      "jd_count": 1
+    },
+    {
+      "standard_job_title": "AI工作流搭建师",
+      "jd_count": 1
+    },
+    {
+      "standard_job_title": "AI应用工程师",
+      "jd_count": 1
+    },
+    {
+      "standard_job_title": "AI应用开发工程师",
+      "jd_count": 2
+    },
+    {
+      "standard_job_title": "AI应用研发工程师",
+      "jd_count": 1
+    },
+    {
+      "standard_job_title": "AI应用研究员",
+      "jd_count": 1
+    },
+    {
+      "standard_job_title": "AI攻防技术专家",
+      "jd_count": 2
+    },
+    {
+      "standard_job_title": "AI数字人开发工程师",
+      "jd_count": 1
+    },
+    {
+      "standard_job_title": "AI数据治理工程师",
+      "jd_count": 1
+    },
+    {
+      "standard_job_title": "AI智能体应用开发工程师",
+      "jd_count": 4
+    },
+    {
+      "standard_job_title": "AI模型工程师",
+      "jd_count": 1
+    },
+    {
+      "standard_job_title": "AI模型研究员",
+      "jd_count": 1
+    },
+    {
+      "standard_job_title": "AI模型部署与性能优化工程师",
+      "jd_count": 1
+    },
+    {
+      "standard_job_title": "AI测试开发工程师",
+      "jd_count": 2
+    },
+    {
+      "standard_job_title": "AI渲染研究员",
+      "jd_count": 1
+    },
+    {
+      "standard_job_title": "AI研发工程师",
+      "jd_count": 1
+    },
+    {
+      "standard_job_title": "AI端侧大模型开发工程师",
+      "jd_count": 1
+    },
+    {
+      "standard_job_title": "AI算法工程师",
+      "jd_count": 1
+    },
+    {
+      "standard_job_title": "AI算法测试开发工程师",
+      "jd_count": 5
+    },
+    {
+      "standard_job_title": "AI视频评测工程师",
+      "jd_count": 2
+    },
+    {
+      "standard_job_title": "AI训练师",
+      "jd_count": 1
+    },
+    {
+      "standard_job_title": "AI评测工程师",
+      "jd_count": 5
+    },
+    {
+      "standard_job_title": "Agent基础设施工程师",
+      "jd_count": 1
+    },
+    {
+      "standard_job_title": "Agent研发工程师",
+      "jd_count": 1
+    },
+    {
+      "standard_job_title": "Agent评测产品经理",
+      "jd_count": 1
+    },
+    {
+      "standard_job_title": "LLM模型算法研究员",
+      "jd_count": 1
+    },
+    {
+      "standard_job_title": "RAG引擎研发工程师",
+      "jd_count": 2
+    },
+    {
+      "standard_job_title": "RAG技术负责人",
+      "jd_count": 1
+    },
+    {
+      "standard_job_title": "RAG知识库开发工程师",
+      "jd_count": 2
+    },
+    {
+      "standard_job_title": "RAG知识库落地工程师",
+      "jd_count": 1
+    },
+    {
+      "standard_job_title": "RPA智能体开发工程师",
+      "jd_count": 1
+    },
+    {
+      "standard_job_title": "UI/UX设计师",
+      "jd_count": 1
+    },
+    {
+      "standard_job_title": "云端Agent技术专家",
+      "jd_count": 1
+    },
+    {
+      "standard_job_title": "仿真与数据合成工程师",
+      "jd_count": 1
+    },
+    {
+      "standard_job_title": "具身多模态交互算法工程师",
+      "jd_count": 1
+    },
+    {
+      "standard_job_title": "具身数据评估工程师",
+      "jd_count": 1
+    },
+    {
+      "standard_job_title": "具身智能仿真与数据工程师",
+      "jd_count": 1
+    },
+    {
+      "standard_job_title": "具身智能仿真数据采集工程师",
+      "jd_count": 1
+    },
+    {
+      "standard_job_title": "具身智能仿真算法实习生",
+      "jd_count": 1
+    },
+    {
+      "standard_job_title": "具身智能工程师",
+      "jd_count": 6
+    },
+    {
+      "standard_job_title": "具身智能算法工程师",
+      "jd_count": 5
+    },
+    {
+      "standard_job_title": "具身智能算法研究员",
+      "jd_count": 3
+    },
+    {
+      "standard_job_title": "具身智能系统工程师",
+      "jd_count": 2
+    },
+    {
+      "standard_job_title": "具身智能规划控制工程师",
+      "jd_count": 1
+    },
+    {
+      "standard_job_title": "具身智能软件工程师",
+      "jd_count": 1
+    },
+    {
+      "standard_job_title": "医疗大模型医学专家",
+      "jd_count": 1
+    },
+    {
+      "standard_job_title": "原生多模态算法研究员",
+      "jd_count": 1
+    },
+    {
+      "standard_job_title": "后端工程师",
+      "jd_count": 1
+    },
+    {
+      "standard_job_title": "图像算法工程师",
+      "jd_count": 1
+    },
+    {
+      "standard_job_title": "多模态大模型后训练算法工程师",
+      "jd_count": 1
+    },
+    {
+      "standard_job_title": "多模态大模型算法研究员",
+      "jd_count": 1
+    },
+    {
+      "standard_job_title": "多模态大模型评估师",
+      "jd_count": 2
+    },
+    {
+      "standard_job_title": "多模态数据算法工程师",
+      "jd_count": 1
+    },
+    {
+      "standard_job_title": "多模态智能体算法工程师",
+      "jd_count": 1
+    },
+    {
+      "standard_job_title": "多模态深度鉴伪算法研究员",
+      "jd_count": 1
+    },
+    {
+      "standard_job_title": "多模态算法研究员",
+      "jd_count": 1
+    },
+    {
+      "standard_job_title": "大模型安全攻防工程师",
+      "jd_count": 3
+    },
+    {
+      "standard_job_title": "大模型幻觉测评专员",
+      "jd_count": 1
+    },
+    {
+      "standard_job_title": "大模型应用工程师",
+      "jd_count": 1
+    },
+    {
+      "standard_job_title": "大模型应用开发工程师",
+      "jd_count": 2
+    },
+    {
+      "standard_job_title": "大模型微调工程师",
+      "jd_count": 1
+    },
+    {
+      "standard_job_title": "大模型推理研发工程师",
+      "jd_count": 1
+    },
+    {
+      "standard_job_title": "大模型推理算法工程师",
+      "jd_count": 1
+    },
+    {
+      "standard_job_title": "大模型推理系统工程师",
+      "jd_count": 1
+    },
+    {
+      "standard_job_title": "大模型数据科学家",
+      "jd_count": 1
+    },
+    {
+      "standard_job_title": "大模型智能体安全研究员",
+      "jd_count": 2
+    },
+    {
+      "standard_job_title": "大模型智能体架构师",
+      "jd_count": 1
+    },
+    {
+      "standard_job_title": "大模型算法工程师",
+      "jd_count": 1
+    },
+    {
+      "standard_job_title": "大模型行业研究员",
+      "jd_count": 1
+    },
+    {
+      "standard_job_title": "大模型训练研发工程师",
+      "jd_count": 1
+    },
+    {
+      "standard_job_title": "大模型评测工程师",
+      "jd_count": 2
+    },
+    {
+      "standard_job_title": "大模型评测算法工程师",
+      "jd_count": 2
+    },
+    {
+      "standard_job_title": "大模型部署工程师",
+      "jd_count": 1
+    },
+    {
+      "standard_job_title": "大语言模型后训练算法工程师",
+      "jd_count": 1
+    },
+    {
+      "standard_job_title": "工业AI工程师",
+      "jd_count": 1
+    },
+    {
+      "standard_job_title": "工业解决方案工程师",
+      "jd_count": 1
+    },
+    {
+      "standard_job_title": "建模工程师",
+      "jd_count": 1
+    },
+    {
+      "standard_job_title": "提示词工程师",
+      "jd_count": 1
+    },
+    {
+      "standard_job_title": "数字人研发工程师",
+      "jd_count": 1
+    },
+    {
+      "standard_job_title": "数字孪生开发工程师",
+      "jd_count": 1
+    },
+    {
+      "standard_job_title": "无人机集群调度平台工程师",
+      "jd_count": 1
+    },
+    {
+      "standard_job_title": "智能体研发工程师",
+      "jd_count": 1
+    },
+    {
+      "standard_job_title": "智能体策略研发工程师",
+      "jd_count": 1
+    },
+    {
+      "standard_job_title": "智能座舱大模型算法工程师",
+      "jd_count": 1
+    },
+    {
+      "standard_job_title": "机器人VLA算法工程师",
+      "jd_count": 1
+    },
+    {
+      "standard_job_title": "机器人学习算法工程师",
+      "jd_count": 1
+    },
+    {
+      "standard_job_title": "机器人感知算法工程师",
+      "jd_count": 2
+    },
+    {
+      "standard_job_title": "机器人数据工程师",
+      "jd_count": 2
+    },
+    {
+      "standard_job_title": "机器人数据运营工程师",
+      "jd_count": 1
+    },
+    {
+      "standard_job_title": "机器人物理角色动画算法工程师",
+      "jd_count": 1
+    },
+    {
+      "standard_job_title": "模型加速与部署工程师",
+      "jd_count": 1
+    },
+    {
+      "standard_job_title": "模型训练优化工程师",
+      "jd_count": 1
+    },
+    {
+      "standard_job_title": "网络安全大模型算法工程师",
+      "jd_count": 1
+    },
+    {
+      "standard_job_title": "网页预训练数据研究工程师",
+      "jd_count": 1
+    },
+    {
+      "standard_job_title": "自动驾驶数据闭环工程师",
+      "jd_count": 1
+    },
+    {
+      "standard_job_title": "自动驾驶算法优化工程师",
+      "jd_count": 1
+    },
+    {
+      "standard_job_title": "行业大模型微调工程师",
+      "jd_count": 1
+    },
+    {
+      "standard_job_title": "语言大模型研究员",
+      "jd_count": 1
+    },
+    {
+      "standard_job_title": "软件缺陷检测研究工程师",
+      "jd_count": 1
+    },
+    {
+      "standard_job_title": "边缘AI芯片算法部署工程师",
+      "jd_count": 1
+    },
+    {
+      "standard_job_title": "金融科技多模态大模型算法工程师",
+      "jd_count": 1
+    }
+  ]
+}

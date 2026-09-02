@@ -2,10 +2,11 @@ from __future__ import annotations
 
 import sqlite3
 from contextlib import asynccontextmanager
+from pathlib import Path
 
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import JSONResponse
+from fastapi.responses import FileResponse, JSONResponse
 
 from ..schemas import JDParseRequest, JDParseResult, MatchRequest, MatchResult, ResumeParseRequest, ResumeParseResult
 from .service import get_services
@@ -163,3 +164,21 @@ def emerging_job_detail(candidate_id: str) -> dict:
     if value is None:
         raise HTTPException(status_code=404, detail="未找到该新岗位候选")
     return value
+
+
+# The free Render deployment uses one service and one public URL.  The Vite
+# bundle is committed deliberately so the Python runtime does not need Node.js.
+_frontend_dist = Path(__file__).resolve().parents[2] / "frontend" / "dist"
+
+
+@app.get("/{frontend_path:path}", include_in_schema=False)
+def serve_frontend(frontend_path: str):
+    if frontend_path == "api" or frontend_path.startswith("api/"):
+        raise HTTPException(status_code=404, detail="API endpoint not found")
+    candidate = (_frontend_dist / frontend_path).resolve()
+    if frontend_path and _frontend_dist.resolve() in candidate.parents and candidate.is_file():
+        return FileResponse(candidate)
+    index = _frontend_dist / "index.html"
+    if not index.is_file():
+        raise HTTPException(status_code=503, detail="Frontend build is unavailable")
+    return FileResponse(index)

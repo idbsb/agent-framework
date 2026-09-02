@@ -45,11 +45,11 @@ test('every successful closure write is followed by an uncached authoritative GE
   } finally {globalThis.fetch=previous;access.setClosureCredential('');}
 });
 
-test('Vercel build rejects absent, insecure and non-root API URLs', async () => {
+test('Render build rejects absent, insecure and non-root API URLs', async () => {
   const {spawnSync}=await import('node:child_process');
   for(const value of ['', 'http://api.example.test', 'https://api.example.test/api', 'https://localhost']) {
     const result=spawnSync(process.execPath,['node_modules/vite/bin/vite.js','build','--config','vite.config.ts'],{
-      encoding:'utf8',env:{...process.env,VERCEL:'1',VITE_API_BASE_URL:value}
+      encoding:'utf8',env:{...process.env,RENDER:'true',VERCEL:'',VITE_API_BASE_URL:value}
     });
     assert.notEqual(result.status,0,`unexpected success for ${value}`);
     assert.match(result.stderr,/VITE_API_BASE_URL/);
@@ -60,7 +60,7 @@ test('valid production API base builds and backend-only admin token is absent fr
   const {spawnSync}=await import('node:child_process');
   const marker='TEST_ADMIN_TOKEN_MUST_NOT_ENTER_FRONTEND_BUNDLE';
   const result=spawnSync(process.execPath,['node_modules/vite/bin/vite.js','build','--config','vite.config.ts'],{
-    cwd:join(process.cwd()),encoding:'utf8',env:{...process.env,VERCEL:'1',
+    cwd:join(process.cwd()),encoding:'utf8',env:{...process.env,RENDER:'true',VERCEL:'',
       VITE_API_BASE_URL:'https://api.example.test',P1_ADMIN_TOKEN:marker}
   });
   assert.equal(result.status,0,result.stderr||result.stdout);

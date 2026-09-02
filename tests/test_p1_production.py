@@ -13,7 +13,7 @@ from src.api.app import app
 from src.api.closure import get_closure
 from src.closure.service import ClosureService
 from src.closure.repository import PublishedProfileRepository
-from src.closure.settings import closure_database_path, validate_auth, production, ProfileReadError
+from src.closure.settings import closure_database_path, free_readonly, validate_auth, production, ProfileReadError
 from src.core.effective_profiles import EffectiveJobProfiles
 from src.core.matching_engine import MatchingEngine
 from src.integration.graph_adapter import GraphAdapter
@@ -118,6 +118,18 @@ class ProductionTest(unittest.TestCase):
             self.assertTrue(production())
             with self.assertRaises(ProfileReadError):
                 closure_database_path(self.core.loader.project_root)
+
+    def test_render_free_readonly_never_enables_ephemeral_writes(self):
+        with patch.dict(os.environ, RENDER="true", P1_ENV="local", P1_FREE_READONLY="1",
+                        P1_CLOSURE_WRITES="0", P1_CLOSURE_DB="",
+                        CORS_ORIGINS="https://ui.example.test"):
+            self.assertTrue(free_readonly())
+            self.assertFalse(production())
+            self.assertEqual(closure_database_path(self.core.loader.project_root),
+                             self.core.loader.project_root / "data/p1_closure.sqlite3")
+        with patch.dict(os.environ, RENDER="true", P1_FREE_READONLY="1", P1_CLOSURE_WRITES="1"):
+            self.assertFalse(free_readonly())
+            self.assertTrue(production())
 
     def test_missing_store_never_silently_reverts_to_static_or_recreates(self):
         self.path.unlink()

@@ -148,3 +148,7 @@ agent_framework/
 P1 的线上生产闭环仍需负责人部署验收；本地测试通过不等于 P1 COMPLETE。
 
 配置、首次持久库初始化、管理员权限、备份及线上验收步骤见 [P1 生产部署说明](docs/p1_production_deployment.md)。
+
+## 免费公开部署（不使用 Vercel）
+
+比赛展示可使用 Render 免费静态前端 + 免费 API。该模式支持公开查询、解析、匹配和展示，但关闭无法持久化的在线 SQLite 写入。部署方法和限制见 [Render 免费部署说明](docs/render_free_deployment.md)。

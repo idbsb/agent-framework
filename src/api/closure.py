@@ -9,7 +9,7 @@ from pydantic import BaseModel, ConfigDict, Field
 
 from ..closure.service import ClosureService
 from ..closure.repository import closure_database_path
-from ..closure.settings import production, allowed_origins, validate_auth
+from ..closure.settings import free_readonly, production, allowed_origins, validate_auth
 from .service import get_services
 
 
@@ -51,7 +51,7 @@ write_guard = [Depends(require_p1_admin)]
 @router.get("/access")
 def access():
     return {"writes_enabled": os.getenv("P1_CLOSURE_WRITES") == "1",
-            "auth_mode": "bearer" if production() else "local"}
+            "auth_mode": "read_only" if free_readonly() else ("bearer" if production() else "local")}
 
 
 @router.post("/access/verify")

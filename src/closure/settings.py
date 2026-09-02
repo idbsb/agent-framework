@@ -8,10 +8,25 @@ class ProfileReadError(RuntimeError):
     """Fail closed when the formal profile store is unavailable."""
 
 
+def free_readonly():
+    """Allow a Render Free demo only when the P1 write switch is off.
+
+    Render Free has no persistent disk.  This mode intentionally falls back to
+    the frozen repository data and never presents ephemeral SQLite writes as
+    durable production data.
+    """
+    requested = os.getenv("P1_FREE_READONLY") == "1"
+    safe_render_default = (os.getenv("RENDER") == "true"
+                           and not os.getenv("P1_STORAGE_DIR"))
+    return (requested or safe_render_default) and os.getenv("P1_CLOSURE_WRITES") != "1"
+
+
 def production():
     mode = os.getenv("P1_ENV", "local")
     if mode not in {"local", "production"}:
         raise ProfileReadError("P1_ENV must be local or production")
+    if free_readonly():
+        return False
     return mode == "production" or os.getenv("RENDER") == "true"
 
 

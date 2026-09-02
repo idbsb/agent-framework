@@ -1,0 +1,850 @@
+{
+  "jobs": [
+    {
+      "available": true,
+      "job_title": "AI Agent开发工程师",
+      "jd_count": 25,
+      "core_responsibilities": "1. 结合业务场景设计AI Agent架构，负责Agent核心逻辑实现，包括高效人机交互、任务规划、自动化执行、代码编写等场景。主导智能体主链编排体系搭建，覆盖意图理解接入、对象关联、分析范围圈定、模型调用编排及结果写回的全流程闭环；\n2. 参与Agent Runtime/Harness核心模块研发，包括Agent Loop、任务规划与执行、工具调度、状态管理、流式输出、错误恢复及任务暂停恢复。构建Blackboard共享工作记忆系统，完成多步骤推理中间结果的结构化存储、读写权限控制与任务上下文管理；\n3. 基于Function Calling、MCP等技术封装自研工具集与API标准化，实现Agent与现有业务系统的高效集成。设计并实现Harness护栏工程体系，包括指令动态注入、状态机管理、权限范围控制、输出格式校验与自动修复、会话生命周期管理；\n4. 参与上下文、记忆和工具扩展体系建设，探索上下文压缩、Token预算、长期记忆、Skills、MCP、权限控制及沙箱执行；\n5. 参与Agent评测与可观测性建设，通过任务成功率、工具调用正确率、执行轨迹、延迟和成本等指标定位并改善Agent失败问题。建设智能体运行时可观测体系，实现可回溯的trace/运行轨迹；\n6. 构建多智能体协作系统，攻克任务分解、知识共享、动态协调等群体智能难题。优化长期记忆与推理机制，实现复杂场景下的自主学习能力与策略泛化；\n7. 参与大模型微调、推理部署及性能优化，提升模型效果、响应速度和稳定性；\n8. 跟踪业界前沿技术的发展，探索大模型在企业智能场景下的应用前景。持续跟进前沿技术和开源社区动态，将先进框架和实践转化为内部技术能力。",
+      "required_skills_text": "1. 精通Python、Java、JavaScript/TypeScript中至少一种编程语言，具备良好的工程化开发能力；\n2. 掌握LangChain、LangGraph、Dify、Coze、OpenClaw、Hermes、AutoGen等主流Agent开发框架中的至少一种，具备源码阅读和二次开发能力；\n3. 精通Prompt Engineering、RAG系统设计、Workflow编排、Agent构建，支持意图识别、Function Calling、MCP及多步推理，熟悉ReAct、Plan-Execute等Agent编排模式；\n4. 熟悉主流大语言模型（如Qwen、DeepSeek、Gemini）及多模态模型，具备模型选型、微调、部署与性能调优能力；\n5. 熟悉微服务架构、分布式系统、消息中间件、异步编程及API设计，掌握Docker容器化部署；\n6. 熟悉MySQL/PostgreSQL、Redis及至少一种向量数据库；\n7. 熟悉Git、Docker、Linux常用命令，具备独立完成开发、部署、上线、运维的工程实践能力；\n8.了解上下文管理、记忆系统、KV Cache、RAG、Embedding、向量检索等技术原理与实践。",
+      "bonus_skills_text": "1. 有完整AI Agent项目从0到1落地经验，能说明系统调用规模、失败模式及处置方案；\n2. 有偏好数据处理或DPO/RLHF微调实践经验；\n3. 有MCP协议开发经验，或构建过MCP Server接入第三方工具（如Jira、飞书、钉钉等）；\n4. 有异步任务、分布式系统、沙箱执行、权限控制或可观测性相关经验；\n5. 有开源项目贡献、GitHub高质量项目或技术竞赛经验或个人Agent产品；\n6. 熟练使用Cursor、Claude Code等AI编程工具，有AI-Native开发实践经验；\n7. 有行业数字员工、AI租赁、SaaS智能体落地经验；\n8. 了解或使用过A2A、插件系统、企业系统连接器等新兴AI工程化技术。\n9.具备良好的英文阅读能力，能参与开源社区讨论或与海外开发者交流。",
+      "project_experience": "1. 有独立完成AI Agent项目并真正上线运行的经历；\n2. 开发或深度改造过Agent、MCP Server、AI Coding工具、Agent Framework或多智能体系统；\n3. 有上下文管理、记忆系统、工具调用、模型评测、数据构造或KV Cache相关实践；\n4. 有完整AI Agent系统B端项目经验，特别是从0到1搭建过Agent平台或复杂Agent应用。",
+      "education": "本科及以上学历，计算机、软件工程、人工智能等相关专业优先",
+      "experience": "1-3年（部分资深岗位要求3-5年或5年以上，校招岗位接受0年经验）",
+      "skill_frequencies": [
+        {
+          "skill_id": "SKILL-0036",
+          "skill_name": "Python",
+          "frequency": 0.8333333333333334,
+          "importance": "★★★★★",
+          "skill_level": "基础工程能力",
+          "evidence_jd_ids": [
+            "JD-001",
+            "JD-137",
+            "JD-139",
+            "JD-140",
+            "JD-141",
+            "JD-142",
+            "JD-143",
+            "JD-149",
+            "JD-150",
+            "JD-151"
+          ]
+        },
+        {
+          "skill_id": "SKILL-0038",
+          "skill_name": "RAG",
+          "frequency": 0.75,
+          "importance": "",
+          "skill_level": "",
+          "evidence_jd_ids": [
+            "JD-001",
+            "JD-137",
+            "JD-138",
+            "JD-139",
+            "JD-140",
+            "JD-141",
+            "JD-144",
+            "JD-150",
+            "JD-151"
+          ]
+        },
+        {
+          "skill_id": "SKILL-0059",
+          "skill_name": "大语言模型（LLM）",
+          "frequency": 0.75,
+          "importance": "",
+          "skill_level": "",
+          "evidence_jd_ids": [
+            "JD-001",
+            "JD-137",
+            "JD-139",
+            "JD-140",
+            "JD-141",
+            "JD-142",
+            "JD-144",
+            "JD-150",
+            "JD-151"
+          ]
+        },
+        {
+          "skill_id": "SKILL-0023",
+          "skill_name": "LangChain",
+          "frequency": 0.6666666666666666,
+          "importance": "",
+          "skill_level": "",
+          "evidence_jd_ids": [
+            "JD-001",
+            "JD-139",
+            "JD-140",
+            "JD-141",
+            "JD-142",
+            "JD-144",
+            "JD-150",
+            "JD-151"
+          ]
+        },
+        {
+          "skill_id": "SKILL-0024",
+          "skill_name": "LangGraph",
+          "frequency": 0.6666666666666666,
+          "importance": "",
+          "skill_level": "",
+          "evidence_jd_ids": [
+            "JD-137",
+            "JD-139",
+            "JD-140",
+            "JD-141",
+            "JD-142",
+            "JD-144",
+            "JD-150",
+            "JD-151"
+          ]
+        },
+        {
+          "skill_id": "SKILL-0018",
+          "skill_name": "Git",
+          "frequency": 0.5833333333333334,
+          "importance": "",
+          "skill_level": "",
+          "evidence_jd_ids": [
+            "JD-137",
+            "JD-139",
+            "JD-140",
+            "JD-141",
+            "JD-143",
+            "JD-144",
+            "JD-151"
+          ]
+        },
+        {
+          "skill_id": "SKILL-0029",
+          "skill_name": "MCP",
+          "frequency": 0.5833333333333334,
+          "importance": "",
+          "skill_level": "",
+          "evidence_jd_ids": [
+            "JD-001",
+            "JD-137",
+            "JD-139",
+            "JD-141",
+            "JD-144",
+            "JD-150",
+            "JD-151"
+          ]
+        },
+        {
+          "skill_id": "SKILL-0035",
+          "skill_name": "Prompt Engineering（提示词工程）",
+          "frequency": 0.5833333333333334,
+          "importance": "",
+          "skill_level": "",
+          "evidence_jd_ids": [
+            "JD-001",
+            "JD-138",
+            "JD-139",
+            "JD-140",
+            "JD-141",
+            "JD-142",
+            "JD-151"
+          ]
+        },
+        {
+          "skill_id": "SKILL-0017",
+          "skill_name": "Function Calling",
+          "frequency": 0.5,
+          "importance": "★★★★★",
+          "skill_level": "",
+          "evidence_jd_ids": [
+            "JD-001",
+            "JD-139",
+            "JD-141",
+            "JD-142",
+            "JD-150",
+            "JD-151"
+          ]
+        },
+        {
+          "skill_id": "SKILL-0020",
+          "skill_name": "Java",
+          "frequency": 0.5,
+          "importance": "★★★☆☆",
+          "skill_level": "",
+          "evidence_jd_ids": [
+            "JD-001",
+            "JD-137",
+            "JD-139",
+            "JD-140",
+            "JD-143",
+            "JD-149"
+          ]
+        },
+        {
+          "skill_id": "SKILL-0014",
+          "skill_name": "Docker",
+          "frequency": 0.3333333333333333,
+          "importance": "",
+          "skill_level": "",
+          "evidence_jd_ids": [
+            "JD-140",
+            "JD-141",
+            "JD-144",
+            "JD-151"
+          ]
+        },
+        {
+          "skill_id": "SKILL-0016",
+          "skill_name": "Embedding",
+          "frequency": 0.3333333333333333,
+          "importance": "",
+          "skill_level": "",
+          "evidence_jd_ids": [
+            "JD-001",
+            "JD-138",
+            "JD-139",
+            "JD-141"
+          ]
+        },
+        {
+          "skill_id": "SKILL-0042",
+          "skill_name": "React",
+          "frequency": 0.3333333333333333,
+          "importance": "",
+          "skill_level": "",
+          "evidence_jd_ids": [
+            "JD-139",
+            "JD-142",
+            "JD-143",
+            "JD-151"
+          ]
+        },
+        {
+          "skill_id": "SKILL-0065",
+          "skill_name": "微服务",
+          "frequency": 0.3333333333333333,
+          "importance": "",
+          "skill_level": "",
+          "evidence_jd_ids": [
+            "JD-139",
+            "JD-142",
+            "JD-144",
+            "JD-151"
+          ]
+        },
+        {
+          "skill_id": "SKILL-0013",
+          "skill_name": "Dify",
+          "frequency": 0.25,
+          "importance": "",
+          "skill_level": "",
+          "evidence_jd_ids": [
+            "JD-001",
+            "JD-139",
+            "JD-140"
+          ]
+        },
+        {
+          "skill_id": "SKILL-0025",
+          "skill_name": "Linux",
+          "frequency": 0.25,
+          "importance": "",
+          "skill_level": "",
+          "evidence_jd_ids": [
+            "JD-001",
+            "JD-141",
+            "JD-151"
+          ]
+        },
+        {
+          "skill_id": "SKILL-0043",
+          "skill_name": "Redis",
+          "frequency": 0.25,
+          "importance": "",
+          "skill_level": "",
+          "evidence_jd_ids": [
+            "JD-139",
+            "JD-144",
+            "JD-151"
+          ]
+        },
+        {
+          "skill_id": "SKILL-0049",
+          "skill_name": "Vue",
+          "frequency": 0.25,
+          "importance": "",
+          "skill_level": "",
+          "evidence_jd_ids": [
+            "JD-139",
+            "JD-143",
+            "JD-151"
+          ]
+        },
+        {
+          "skill_id": "SKILL-0004",
+          "skill_name": "Agent Runtime",
+          "frequency": 0.16666666666666666,
+          "importance": "",
+          "skill_level": "",
+          "evidence_jd_ids": [
+            "JD-137",
+            "JD-139"
+          ]
+        },
+        {
+          "skill_id": "SKILL-0011",
+          "skill_name": "C",
+          "frequency": 0.16666666666666666,
+          "importance": "",
+          "skill_level": "",
+          "evidence_jd_ids": [
+            "JD-141",
+            "JD-150"
+          ]
+        },
+        {
+          "skill_id": "SKILL-0012",
+          "skill_name": "C++",
+          "frequency": 0.16666666666666666,
+          "importance": "",
+          "skill_level": "",
+          "evidence_jd_ids": [
+            "JD-141",
+            "JD-150"
+          ]
+        },
+        {
+          "skill_id": "SKILL-0021",
+          "skill_name": "JavaScript",
+          "frequency": 0.16666666666666666,
+          "importance": "",
+          "skill_level": "",
+          "evidence_jd_ids": [
+            "JD-137",
+            "JD-143"
+          ]
+        },
+        {
+          "skill_id": "SKILL-0022",
+          "skill_name": "Kubernetes",
+          "frequency": 0.16666666666666666,
+          "importance": "",
+          "skill_level": "",
+          "evidence_jd_ids": [
+            "JD-144",
+            "JD-151"
+          ]
+        },
+        {
+          "skill_id": "SKILL-0030",
+          "skill_name": "MCP Server开发",
+          "frequency": 0.16666666666666666,
+          "importance": "",
+          "skill_level": "",
+          "evidence_jd_ids": [
+            "JD-139",
+            "JD-144"
+          ]
+        },
+        {
+          "skill_id": "SKILL-0037",
+          "skill_name": "PyTorch",
+          "frequency": 0.16666666666666666,
+          "importance": "",
+          "skill_level": "",
+          "evidence_jd_ids": [
+            "JD-140",
+            "JD-150"
+          ]
+        },
+        {
+          "skill_id": "SKILL-0048",
+          "skill_name": "TypeScript",
+          "frequency": 0.16666666666666666,
+          "importance": "",
+          "skill_level": "",
+          "evidence_jd_ids": [
+            "JD-137",
+            "JD-143"
+          ]
+        },
+        {
+          "skill_id": "SKILL-0055",
+          "skill_name": "向量数据库",
+          "frequency": 0.16666666666666666,
+          "importance": "",
+          "skill_level": "",
+          "evidence_jd_ids": [
+            "JD-138",
+            "JD-151"
+          ]
+        },
+        {
+          "skill_id": "SKILL-0002",
+          "skill_name": "Agent Harness",
+          "frequency": 0.08333333333333333,
+          "importance": "",
+          "skill_level": "",
+          "evidence_jd_ids": [
+            "JD-139"
+          ]
+        },
+        {
+          "skill_id": "SKILL-0019",
+          "skill_name": "Go",
+          "frequency": 0.08333333333333333,
+          "importance": "",
+          "skill_level": "",
+          "evidence_jd_ids": [
+            "JD-139"
+          ]
+        },
+        {
+          "skill_id": "SKILL-0032",
+          "skill_name": "MySQL",
+          "frequency": 0.08333333333333333,
+          "importance": "",
+          "skill_level": "",
+          "evidence_jd_ids": [
+            "JD-139"
+          ]
+        }
+      ],
+      "graph_source_label": "组员A正式知识图谱",
+      "message": ""
+    },
+    {
+      "available": true,
+      "job_title": "RAG引擎研发工程师",
+      "jd_count": 10,
+      "core_responsibilities": "1. 负责构建和优化基于RAG架构的智能问答、知识推理系统。设计RAG知识库的解析、切片、元数据管理、索引、检索、重排、生成、引用溯源全链路环节。覆盖文档解析（PDF/Word/Excel/HTML/Markdown/OCR）、切分、清洗、Embedding、混合检索、Rerank、生成、评估全链路；\n2. 开发高效的多模态数据（文本/图像/结构化数据）检索模块，优化Embedding模型与索引算法；\n3. 设计生成模型（如LLM）与检索系统的协同机制，提升结果相关性与逻辑连贯性；\n4. 探索混合检索策略（密集检索+稀疏检索），优化召回率与排序精度，设计结构化知识、非结构化文档、图谱知识、业务数据库的统一检索方案；\n5. 建设知识库质量评测体系，包括召回率、准确率、引用正确率、答案忠实度。构建端到端性能评估体系，设计AB实验验证系统迭代效果；\n6. 负责向量库、全文检索、图数据库等存储选型和性能优化，评估并集成向量数据库方案；\n7. 与智能体工程师协作，使Agent能够可靠调用知识库、读取业务资料、更新长期记忆；\n8. 跟踪LangChain、LlamaIndex等RAG技术生态，推动前沿技术落地。",
+      "required_skills_text": "1. 精通Python，或精通C/C++/Java中至少一种编程语言，有良好的编程习惯；\n2. 基础知识扎实，熟悉计算机系统结构、操作系统内核、网络、分布式系统、算法等领域；\n3. 深入理解RAG技术原理，熟悉RAG全链路流程（Loader、Parser、Chunking、Embedding、Retrieval、Rerank、Generation）；\n4. 熟悉Milvus、Qdrant、Weaviate、pgvector、Elasticsearch、OpenSearch等检索系统之一；\n5. 理解向量嵌入模型和相似度检索的基本原理，了解检索排序模型（如BM25、DPR、ColBERT）；\n6. 熟悉PDF、Word、Excel、HTML、Markdown、图片OCR等文档解析场景；\n7. 熟悉Unix/Linux环境下编程，熟练使用调试工具，熟悉Git、Docker等工程化工具。",
+      "bonus_skills_text": "1. 参与过RAG、LangChain、LlamaIndex等相关项目实践；\n2. 使用过Sentence-BERT、BGE、OpenAI Embeddings等Embedding模型；\n3. 接触过向量数据库（FAISS、Milvus、Pinecone、Chroma、pgvector、Qdrant等）；\n4. 了解重排序模型（Cross-Encoder、Cohere Rerank等）；\n5. 有企业知识库、智能客服、合同分析、技术文档问答项目经验；\n6. 熟悉知识图谱、Graph RAG、实体关系抽取；\n7. 有文档版面分析、表格解析、OCR、多模态检索经验；\n8. 了解TiDB或其他分布式SQL/HTAP数据库；\n9. 在GitHub有开源项目或技术博客者优先；\n10. 有流式推理和低延迟API优化经验。",
+      "project_experience": "1. 有RAG流程或语义检索系统的实际构建经验；\n2. 参与过RAG、LangChain、LlamaIndex等相关项目实践；\n3. 有信息检索项目经验；\n4. 有企业知识库、智能客服项目落地经验。",
+      "education": "本科及以上学历，计算机、人工智能、软件工程、数学或相关专业（部分岗位要求硕士及以上）",
+      "experience": "0-3年（校招岗接受0年，社招岗要求1-3年或3年以上）",
+      "skill_frequencies": [
+        {
+          "skill_id": "SKILL-0016",
+          "skill_name": "Embedding",
+          "frequency": 1.0,
+          "importance": "",
+          "skill_level": "",
+          "evidence_jd_ids": [
+            "JD-019",
+            "JD-047"
+          ]
+        },
+        {
+          "skill_id": "SKILL-0038",
+          "skill_name": "RAG",
+          "frequency": 1.0,
+          "importance": "",
+          "skill_level": "",
+          "evidence_jd_ids": [
+            "JD-019",
+            "JD-047"
+          ]
+        },
+        {
+          "skill_id": "SKILL-0011",
+          "skill_name": "C",
+          "frequency": 0.5,
+          "importance": "",
+          "skill_level": "",
+          "evidence_jd_ids": [
+            "JD-019"
+          ]
+        },
+        {
+          "skill_id": "SKILL-0012",
+          "skill_name": "C++",
+          "frequency": 0.5,
+          "importance": "★★★★☆",
+          "skill_level": "",
+          "evidence_jd_ids": [
+            "JD-019"
+          ]
+        },
+        {
+          "skill_id": "SKILL-0015",
+          "skill_name": "Elasticsearch",
+          "frequency": 0.5,
+          "importance": "",
+          "skill_level": "",
+          "evidence_jd_ids": [
+            "JD-047"
+          ]
+        },
+        {
+          "skill_id": "SKILL-0018",
+          "skill_name": "Git",
+          "frequency": 0.5,
+          "importance": "",
+          "skill_level": "",
+          "evidence_jd_ids": [
+            "JD-019"
+          ]
+        },
+        {
+          "skill_id": "SKILL-0020",
+          "skill_name": "Java",
+          "frequency": 0.5,
+          "importance": "★★★☆☆",
+          "skill_level": "",
+          "evidence_jd_ids": [
+            "JD-019"
+          ]
+        },
+        {
+          "skill_id": "SKILL-0023",
+          "skill_name": "LangChain",
+          "frequency": 0.5,
+          "importance": "",
+          "skill_level": "",
+          "evidence_jd_ids": [
+            "JD-019"
+          ]
+        },
+        {
+          "skill_id": "SKILL-0025",
+          "skill_name": "Linux",
+          "frequency": 0.5,
+          "importance": "",
+          "skill_level": "",
+          "evidence_jd_ids": [
+            "JD-019"
+          ]
+        },
+        {
+          "skill_id": "SKILL-0033",
+          "skill_name": "OpenSearch",
+          "frequency": 0.5,
+          "importance": "",
+          "skill_level": "",
+          "evidence_jd_ids": [
+            "JD-047"
+          ]
+        },
+        {
+          "skill_id": "SKILL-0036",
+          "skill_name": "Python",
+          "frequency": 0.5,
+          "importance": "★★★★★",
+          "skill_level": "基础工程能力",
+          "evidence_jd_ids": [
+            "JD-047"
+          ]
+        },
+        {
+          "skill_id": "SKILL-0039",
+          "skill_name": "RAG技术",
+          "frequency": 0.5,
+          "importance": "",
+          "skill_level": "",
+          "evidence_jd_ids": [
+            "JD-019"
+          ]
+        },
+        {
+          "skill_id": "SKILL-0054",
+          "skill_name": "分布式系统",
+          "frequency": 0.5,
+          "importance": "★★★★★",
+          "skill_level": "",
+          "evidence_jd_ids": [
+            "JD-019"
+          ]
+        },
+        {
+          "skill_id": "SKILL-0055",
+          "skill_name": "向量数据库",
+          "frequency": 0.5,
+          "importance": "★★★★★",
+          "skill_level": "",
+          "evidence_jd_ids": [
+            "JD-019"
+          ]
+        },
+        {
+          "skill_id": "SKILL-0056",
+          "skill_name": "图数据库",
+          "frequency": 0.5,
+          "importance": "",
+          "skill_level": "",
+          "evidence_jd_ids": [
+            "JD-047"
+          ]
+        },
+        {
+          "skill_id": "SKILL-0059",
+          "skill_name": "大语言模型（LLM）",
+          "frequency": 0.5,
+          "importance": "",
+          "skill_level": "",
+          "evidence_jd_ids": [
+            "JD-019"
+          ]
+        },
+        {
+          "skill_id": "SKILL-0070",
+          "skill_name": "文档解析",
+          "frequency": 0.5,
+          "importance": "★★★★★",
+          "skill_level": "Agent核心能力",
+          "evidence_jd_ids": [
+            "JD-047"
+          ]
+        },
+        {
+          "skill_id": "SKILL-0074",
+          "skill_name": "混合检索策略",
+          "frequency": 0.5,
+          "importance": "★★★★★",
+          "skill_level": "",
+          "evidence_jd_ids": [
+            "JD-019"
+          ]
+        },
+        {
+          "skill_id": "SKILL-0076",
+          "skill_name": "知识图谱",
+          "frequency": 0.5,
+          "importance": "",
+          "skill_level": "",
+          "evidence_jd_ids": [
+            "JD-047"
+          ]
+        },
+        {
+          "skill_id": "SKILL-0077",
+          "skill_name": "知识库质量评测体系",
+          "frequency": 0.5,
+          "importance": "★★★★☆",
+          "skill_level": "应用开发能力",
+          "evidence_jd_ids": [
+            "JD-047"
+          ]
+        },
+        {
+          "skill_id": "SKILL-0082",
+          "skill_name": "重排序",
+          "frequency": 0.5,
+          "importance": "",
+          "skill_level": "",
+          "evidence_jd_ids": [
+            "JD-047"
+          ]
+        }
+      ],
+      "graph_source_label": "组员A正式知识图谱",
+      "message": ""
+    },
+    {
+      "available": true,
+      "job_title": "AI安全技术工程师",
+      "jd_count": 30,
+      "core_responsibilities": "1. 深入研究大模型及机器学习模型自身安全脆弱性，主导对抗样本、数据投毒、模型窃取、提示注入、越狱、后门攻击等前沿攻防技术研究与防御体系建设。跟踪国内外AI安全最新研究成果、攻击与防御技术，并转化为对内业务能力；\n2. 设计和实现面向安全任务的Agent Harness、工具调用与编排框架，接入代码扫描、漏洞验证、流量/日志分析、威胁情报、沙箱/靶场等工具，使智能体能够完成任务拆解、证据收集、推理规划、复现验证和结果归因；\n3. 建设用于安全大模型训练和评测的数据管道，围绕漏洞样本、代码变更、攻击路径、SOC告警、处置剧本、安全工单等进行采集、清洗、脱敏、标注和质量评估，沉淀可复用的数据集、任务轨迹和评测基准；\n4. 研究并防御大模型和智能体系统面临的新型风险，包括提示注入、越狱、数据投毒、模型供应链风险、越权工具调用、沙箱逃逸、Agent身份与权限边界失效等。参与安全评审、红队测试、隔离与授权机制设计；\n5. 设计可复现、可度量、抗污染的安全任务评测体系，围绕漏洞发现率、复现成功率、误报率、处置时长、工具调用质量等指标持续迭代模型、智能体和数据；\n6. 探索大模型及Agent技术在自动化漏洞挖掘、智能代码审计、告警降噪、攻击链溯源、事件响应辅助等场景的应用，研发高阶智能化红蓝对抗武器；\n7. 负责AI全生命周期安全管理制度及规范制定，涵盖研发、部署、运营各环节，建立模型安全测试、监控、防护与应急响应机制。跟踪国内外AI安全法规与标准（如NIST AI RMF、EU AI Act、ISO 42001等），确保AI系统合规性。",
+      "required_skills_text": "1. 计算机、网络空间安全、人工智能、信息安全、数学等相关专业，本科及以上学历（硕士/博士优先）；\n2. 熟练使用Python，具备扎实的数据结构、系统编程和工程实现能力；\n3. 理解Web、主机、网络、云原生、代码安全等常见攻击面，熟悉OWASP Top 10、MITRE ATT&CK或云安全攻防方法。了解常见攻击类型、防御体系和威胁情报体系；\n4. 了解LLM/Agent的基本工作方式，熟悉RAG、工具调用、任务编排、上下文管理、评测框架等实践。了解主流AI框架（PyTorch、TensorFlow）及大模型应用开发框架（LangChain、LlamaIndex等）；\n5. 具备数据清洗、脱敏、标注、质量评估、指标设计和自动化pipeline能力。了解大模型安全评测、红队测试、Benchmark建设方法；\n6. 关注提示注入、越狱、数据泄露、模型供应链、工具权限、Agent身份与沙箱隔离等风险，能够从攻击者和防守者两个视角分析问题；\n7. 熟悉Linux系统安全、容器化技术（Docker/K8s）及云原生安全架构。",
+      "bonus_skills_text": "1. 有安全大模型、安全智能体、AI红队、LLM安全评估、AI Bug Bounty或安全Benchmark项目经验；\n2. 有高质量开源项目、CVE/漏洞致谢、CTF/安全竞赛成绩、顶会论文或技术文章；\n3. 熟悉云原生安全、供应链安全、二进制/内核漏洞、SOC/SIEM/EDR/XDR、MCP/Tool安全、Agent身份与权限治理；\n4. 熟悉PyTorch、TensorFlow、Hugging Face、LangChain、LlamaIndex、LangGraph、Kubernetes、Spark/Flink/Kafka等技术栈；\n5. 有漏洞挖掘、渗透测试、CTF、恶意样本分析、威胁狩猎、检测规则研发经验；\n6. 有SFT、RL、模型评测、Agent框架或Harness开发经验；\n7. 有日志、代码、漏洞样本、攻防轨迹等安全数据处理经验，或建设过靶场、沙箱、自动化评测平台；\n8. 熟悉Go、Rust、Java、C/C++中任一语言；\n9. 了解可信计算（TEE/SGX）在AI领域的应用；\n10. 在AI或安全顶会（如CCS、NDSS、USENIX Security、S&P、CVPR、NeurIPS等）发表过论文。",
+      "project_experience": "1. 有安全大模型、安全智能体、AI红队、LLM安全评估、AI Bug Bounty或安全Benchmark项目经验；\n2. 有漏洞挖掘、渗透测试、CTF、恶意样本分析、威胁狩猎、检测规则研发经验；\n3. 有SFT、RL、模型评测、Agent框架或Harness开发经验；\n4. 有日志、代码、漏洞样本、攻防轨迹等安全数据处理经验，或建设过靶场、沙箱、自动化评测平台；\n5. 有大模型应用或智能体系统的安全研究、攻防测试或安全治理的实战经验。",
+      "education": "本科及以上学历，计算机、网络空间安全、人工智能、信息安全、数学等相关专业（硕士/博士优先）",
+      "experience": "0-5年以上（校招岗接受0年，社招岗要求1-3年、3-5年或5年以上）",
+      "skill_frequencies": [
+        {
+          "skill_id": "SKILL-0059",
+          "skill_name": "大语言模型（LLM）",
+          "frequency": 0.6666666666666666,
+          "importance": "",
+          "skill_level": "",
+          "evidence_jd_ids": [
+            "JD-006",
+            "JD-045",
+            "JD-172",
+            "JD-180",
+            "JD-182",
+            "JD-190"
+          ]
+        },
+        {
+          "skill_id": "SKILL-0020",
+          "skill_name": "Java",
+          "frequency": 0.4444444444444444,
+          "importance": "",
+          "skill_level": "",
+          "evidence_jd_ids": [
+            "JD-006",
+            "JD-172",
+            "JD-183",
+            "JD-187"
+          ]
+        },
+        {
+          "skill_id": "SKILL-0036",
+          "skill_name": "Python",
+          "frequency": 0.4444444444444444,
+          "importance": "★★★★★",
+          "skill_level": "基础工程能力",
+          "evidence_jd_ids": [
+            "JD-006",
+            "JD-172",
+            "JD-180",
+            "JD-187"
+          ]
+        },
+        {
+          "skill_id": "SKILL-0038",
+          "skill_name": "RAG",
+          "frequency": 0.4444444444444444,
+          "importance": "",
+          "skill_level": "",
+          "evidence_jd_ids": [
+            "JD-006",
+            "JD-180",
+            "JD-187",
+            "JD-190"
+          ]
+        },
+        {
+          "skill_id": "SKILL-0011",
+          "skill_name": "C",
+          "frequency": 0.3333333333333333,
+          "importance": "",
+          "skill_level": "",
+          "evidence_jd_ids": [
+            "JD-006",
+            "JD-172",
+            "JD-183"
+          ]
+        },
+        {
+          "skill_id": "SKILL-0012",
+          "skill_name": "C++",
+          "frequency": 0.3333333333333333,
+          "importance": "",
+          "skill_level": "",
+          "evidence_jd_ids": [
+            "JD-006",
+            "JD-172",
+            "JD-183"
+          ]
+        },
+        {
+          "skill_id": "SKILL-0029",
+          "skill_name": "MCP",
+          "frequency": 0.3333333333333333,
+          "importance": "",
+          "skill_level": "",
+          "evidence_jd_ids": [
+            "JD-006",
+            "JD-187",
+            "JD-190"
+          ]
+        },
+        {
+          "skill_id": "SKILL-0023",
+          "skill_name": "LangChain",
+          "frequency": 0.2222222222222222,
+          "importance": "",
+          "skill_level": "",
+          "evidence_jd_ids": [
+            "JD-006",
+            "JD-180"
+          ]
+        },
+        {
+          "skill_id": "SKILL-0037",
+          "skill_name": "PyTorch",
+          "frequency": 0.2222222222222222,
+          "importance": "",
+          "skill_level": "",
+          "evidence_jd_ids": [
+            "JD-006",
+            "JD-180"
+          ]
+        },
+        {
+          "skill_id": "SKILL-0047",
+          "skill_name": "TensorFlow",
+          "frequency": 0.2222222222222222,
+          "importance": "",
+          "skill_level": "",
+          "evidence_jd_ids": [
+            "JD-006",
+            "JD-180"
+          ]
+        },
+        {
+          "skill_id": "SKILL-0002",
+          "skill_name": "Agent Harness",
+          "frequency": 0.1111111111111111,
+          "importance": "",
+          "skill_level": "",
+          "evidence_jd_ids": [
+            "JD-006"
+          ]
+        },
+        {
+          "skill_id": "SKILL-0018",
+          "skill_name": "Git",
+          "frequency": 0.1111111111111111,
+          "importance": "",
+          "skill_level": "",
+          "evidence_jd_ids": [
+            "JD-187"
+          ]
+        },
+        {
+          "skill_id": "SKILL-0019",
+          "skill_name": "Go",
+          "frequency": 0.1111111111111111,
+          "importance": "★★☆☆☆",
+          "skill_level": "",
+          "evidence_jd_ids": [
+            "JD-006"
+          ]
+        },
+        {
+          "skill_id": "SKILL-0022",
+          "skill_name": "Kubernetes",
+          "frequency": 0.1111111111111111,
+          "importance": "",
+          "skill_level": "",
+          "evidence_jd_ids": [
+            "JD-006"
+          ]
+        },
+        {
+          "skill_id": "SKILL-0024",
+          "skill_name": "LangGraph",
+          "frequency": 0.1111111111111111,
+          "importance": "",
+          "skill_level": "",
+          "evidence_jd_ids": [
+            "JD-006"
+          ]
+        },
+        {
+          "skill_id": "SKILL-0076",
+          "skill_name": "知识图谱",
+          "frequency": 0.1111111111111111,
+          "importance": "",
+          "skill_level": "",
+          "evidence_jd_ids": [
+            "JD-180"
+          ]
+        },
+        {
+          "skill_id": "SKILL-0079",
+          "skill_name": "自然语言处理（NLP）",
+          "frequency": 0.1111111111111111,
+          "importance": "",
+          "skill_level": "",
+          "evidence_jd_ids": [
+            "JD-180"
+          ]
+        }
+      ],
+      "graph_source_label": "组员A正式知识图谱",
+      "message": ""
+    }
+  ]
+}

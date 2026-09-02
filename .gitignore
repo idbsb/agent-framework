@@ -19,7 +19,9 @@ venv/
 node_modules/
 .npm-cache/
 frontend/node_modules/
-frontend/dist/
+# The free Render service serves this reviewed production bundle directly.
+!frontend/dist/
+!frontend/dist/**
 *.tsbuildinfo
 frontend/vite.config.js
 frontend/vite.config.d.ts
