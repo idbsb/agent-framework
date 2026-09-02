@@ -12,6 +12,7 @@ from ..data_loader import DataLoader
 from ..schemas import MatchResult, ResumeParseResult
 from .jd_parser import JDParser
 from .skill_extractor import SkillIndex
+from .effective_profiles import EffectiveJobProfiles
 
 
 def _years(text: str) -> float | None:
@@ -28,7 +29,7 @@ def _education_level(text: str) -> int | None:
 
 
 class MatchingEngine:
-    def __init__(self, loader: DataLoader, skill_index: SkillIndex, jd_parser: JDParser, config_path: str | Path | None = None):
+    def __init__(self, loader: DataLoader, skill_index: SkillIndex, jd_parser: JDParser, config_path: str | Path | None = None, *, effective_profiles=None):
         default = loader.project_root / "config" / "matching_weights.yaml"
         self.config_path = Path(config_path or default)
         self.config = yaml.safe_load(self.config_path.read_text(encoding="utf-8"))
@@ -41,6 +42,7 @@ class MatchingEngine:
         self.skill_index = skill_index
         self.jd_parser = jd_parser
         self.profiles = self._build_profiles()
+        self.effective_profiles = effective_profiles or EffectiveJobProfiles(loader, skill_index, self.profiles)
 
     def _build_profiles(self) -> dict[str, dict]:
         grouped: dict[str, list[dict]] = defaultdict(list)
@@ -108,8 +110,9 @@ class MatchingEngine:
             recommendations.append("当前核心技能覆盖较好，可通过综合项目和部署实践继续巩固")
         return [f"{index}. {text}" for index, text in enumerate(recommendations, start=1)]
 
-    def resolve_job_title(self, job_title: str) -> tuple[str, float]:
-        if job_title in self.profiles:
+    def resolve_job_title(self, job_title: str, publications=None) -> tuple[str, float]:
+        publications = self.effective_profiles.published_profiles() if publications is None else publications
+        if job_title in self.profiles or job_title in publications:
             return job_title, 1.0
         best_title, best_score = "", 0.0
         compact = re.sub(r"[\s/（）()_-]+", "", job_title).casefold()
@@ -121,8 +124,11 @@ class MatchingEngine:
         return (best_title, best_score) if best_score >= 0.65 else (job_title, best_score)
 
     def match(self, resume: ResumeParseResult, job_title: str) -> MatchResult:
-        resolved_title, title_confidence = self.resolve_job_title(job_title)
-        profile = self.profiles.get(resolved_title)
+        publications = self.effective_profiles.published_profiles()
+        resolved_title, title_confidence = self.resolve_job_title(job_title, publications)
+        effective = self.effective_profiles.get_effective_job_profile(resolved_title, publications)
+        profile = effective["matching_profile"]
+        metadata = self.effective_profiles.metadata(effective)
         if profile is None:
             return MatchResult(
                 resume_id=resume.resume_id, job_title=job_title, match_score=0,
@@ -130,6 +136,7 @@ class MatchingEngine:
                 dimension_status={key: "unknown" for key in self.weights},
                 recommendations=["目标岗位尚无可用正式JD画像，请先人工确认岗位名称。"],
                 explanation=["未找到目标岗位的正式JD聚合画像。"], need_human_review=True,
+                **metadata,
             )
         resume_ids = {item.skill_id for item in resume.skills if item.accepted and item.polarity == "affirmed"}
         required_ids, bonus_ids = set(profile["required_ids"]), set(profile["bonus_ids"])
@@ -173,7 +180,10 @@ class MatchingEngine:
             f"经验要求基准：{required_years if required_years is not None else '未明确'}年；简历解析：{resume_years if resume_years is not None else '未识别'}年",
             f"学历要求等级：{required_education if required_education is not None else '未明确'}；简历学历等级：{resume_education if resume_education is not None else '未识别'}",
         ]
+        if effective["profile_source"] == "published_dynamic":
+            explanation.append(f"使用已发布岗位画像 V{effective['profile_version']}；技能要求来自发布快照，学历/经验沿用原静态要求（无原要求时为未知）。")
         return MatchResult(
+            **metadata,
             resume_id=resume.resume_id,
             job_title=resolved_title,
             match_score=round(score, 2),

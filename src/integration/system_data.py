@@ -19,7 +19,7 @@ class SystemDataService:
         self.services = services
         self.loader = services.loader
         self.project_root = self.loader.project_root
-        self.graph = GraphAdapter(self.loader, services.skill_index)
+        self.graph = GraphAdapter(self.loader, services.skill_index, effective_profiles=services.matching_engine.effective_profiles)
         self.evolution = EvolutionAdapter(self.project_root)
 
     def _emerging(self) -> dict[str, Any]:
@@ -80,13 +80,15 @@ class SystemDataService:
         }
 
     def job_analysis(self, job_title: str) -> dict[str, Any]:
+        reader = self.services.matching_engine.effective_profiles
+        effective = reader.get_effective_job_profile(job_title)
         profile_path = self.project_root / "outputs" / "job_profiles_cleaned.xlsx"
         profile = None
         if profile_path.exists():
             rows = self.loader.read_sheet(profile_path, "岗位能力画像")
             profile = next((row for row in rows if _text(row.get("岗位名称")) == job_title), None)
-        matching_profile = self.services.matching_engine.profiles.get(job_title, {})
-        graph = self.graph.for_job(job_title, limit=30)
+        matching_profile = effective["matching_profile"] or {}
+        graph = self.graph.for_job(job_title, limit=30, effective_profile=effective)
         skills_by_id = {node.get("id"): node.get("name") for node in graph.get("nodes", []) if node.get("type") == "skill"}
         frequencies = [
             {
@@ -99,7 +101,7 @@ class SystemDataService:
             }
             for edge in graph.get("edges", [])
         ]
-        return {
+        result = {
             "available": bool(profile or matching_profile),
             "job_title": job_title,
             "jd_count": int((profile or {}).get("JD数量") or matching_profile.get("jd_count") or 0),
@@ -113,3 +115,12 @@ class SystemDataService:
             "graph_source_label": graph.get("source_label", ""),
             "message": "" if profile or matching_profile else "当前岗位尚无正式能力画像。",
         }
+        result.update(reader.metadata(effective))
+        if effective["profile_source"] == "published_dynamic":
+            d = effective["definition"]
+            result.update(available=True, jd_count=matching_profile["jd_count"],
+                          core_responsibilities="；".join(r["text"] for r in d["core_responsibilities"]),
+                          required_skills_text="；".join(s["skill_name"] for s in d["required_skills"]),
+                          bonus_skills_text="；".join(s["skill_name"] for s in d["preferred_skills"]),
+                          published_profile=effective["publication"])
+        return result

@@ -2,12 +2,32 @@ services:
   - type: web
     name: challenge-cup-agent-framework-api
     runtime: python
-    plan: free
+    branch: main
+    plan: starter
+    numInstances: 1
     buildCommand: pip install -r requirements.txt
-    startCommand: uvicorn src.api.app:app --host 0.0.0.0 --port $PORT
-    healthCheckPath: /docs
+    startCommand: uvicorn src.api.app:app --host 0.0.0.0 --port $PORT --workers 1
+    healthCheckPath: /api/health/ready
+    disk:
+      name: p1-closure-data
+      mountPath: /var/data/p1
+      sizeGB: 1
     envVars:
       - key: PYTHON_VERSION
         value: 3.12.13
+      - key: P1_ENV
+        value: production
+      - key: P1_CLOSURE_WRITES
+        value: "1"
+      - key: P1_STORAGE_DIR
+        value: /var/data/p1
+      - key: P1_CLOSURE_DB
+        value: /var/data/p1/closure.sqlite3
+      - key: P1_INITIALIZE_DB
+        value: "0"
+      - key: P1_ADMIN_TOKEN
+        sync: false
+      - key: P1_ADMIN_NAME
+        sync: false
       - key: CORS_ORIGINS
         sync: false
