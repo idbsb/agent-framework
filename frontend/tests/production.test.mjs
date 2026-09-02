@@ -45,6 +45,20 @@ test('every successful closure write is followed by an uncached authoritative GE
   } finally {globalThis.fetch=previous;access.setClosureCredential('');}
 });
 
+test('resume upload uses multipart form data without forcing a content-type header', async () => {
+  const api=await server.ssrLoadModule('/src/api.ts');
+  const previous=globalThis.fetch; let call;
+  globalThis.fetch=async (url,options) => {call={url,options};return {ok:true,json:async()=>({file_name:'resume.txt'})};};
+  try {
+    const file=new File(['Python'], 'resume.txt', {type:'text/plain'});
+    await api.postFile('/api/resume/extract',file);
+    assert.equal(call.url,'/api/resume/extract');
+    assert.equal(call.options.method,'POST');
+    assert.ok(call.options.body instanceof FormData);
+    assert.equal(call.options.headers,undefined);
+  } finally {globalThis.fetch=previous;}
+});
+
 test('Render build rejects absent, insecure and non-root API URLs', async () => {
   const {spawnSync}=await import('node:child_process');
   for(const value of ['', 'http://api.example.test', 'https://api.example.test/api', 'https://localhost']) {

@@ -65,6 +65,7 @@ result = services.matching_engine.match(resume, "AI Agent开发工程师")
 
 - `POST /api/jd/parse`
 - `POST /api/resume/parse`
+- `POST /api/resume/extract`：multipart 字段名为 `file`；支持 PDF、DOCX、TXT，最大 8MB。返回可人工修订的文本与结构化字段草稿，文件不落盘。
 - `POST /api/match`
 - `GET /api/jobs`
 - `GET /api/skills`

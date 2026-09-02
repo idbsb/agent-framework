@@ -1,0 +1,8 @@
+教育背景
+硕士，人工智能专业
+工作经历
+3年开发经验，负责使用 Python 和 FastAPI 开发智能体平台。
+项目经历
+使用 LangGraph、RAG 和向量数据库构建知识库 Agent，并通过 Docker 部署。
+专业技能
+Python、FastAPI、LangGraph、RAG、向量数据库、Docker

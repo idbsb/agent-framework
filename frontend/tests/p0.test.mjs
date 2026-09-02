@@ -36,6 +36,14 @@ test('JD bonus and match work experience are visible editable fields', async () 
   assert.match(match, /<label[^>]*>工作经历<textarea/);
 });
 
+test('resume page exposes an in-memory PDF DOCX TXT upload control', async () => {
+  const html = await renderPage('ResumeParsePage');
+  assert.match(html, /data-testid="resume-file"/);
+  assert.match(html, /accept="[^"]*\.pdf[^"]*\.docx[^"]*\.txt/);
+  assert.match(html, /最大 8MB/);
+  assert.match(html, /不保存到服务器/);
+});
+
 test('actual payload builders clear all evidence and reject unrelated state', async () => {
   const { emptyForm, jdPayload, matchPayload, resumePayload } = await server.ssrLoadModule('/src/formPayloads.ts');
   const sample = { education: '本科', experience: '2年', work_experience: 'Python', projects: 'Docker', skills_raw: 'FastAPI' };

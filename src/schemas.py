@@ -76,6 +76,19 @@ class ResumeParseResult(StableModel):
     need_human_review: bool = False
 
 
+class ResumeDocumentExtractResult(StableModel):
+    file_name: str
+    file_type: Literal["pdf", "docx", "txt"]
+    raw_text: str
+    character_count: int = Field(ge=0)
+    education: str = ""
+    experience: str = ""
+    work_experience: str = ""
+    projects: str = ""
+    skills_raw: str = ""
+    warnings: list[str] = Field(default_factory=list)
+
+
 class MatchRequest(StableModel):
     resume: ResumeParseRequest
     job_title: str

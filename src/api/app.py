@@ -4,11 +4,12 @@ import sqlite3
 from contextlib import asynccontextmanager
 from pathlib import Path
 
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, File, HTTPException, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse, JSONResponse
 
-from ..schemas import JDParseRequest, JDParseResult, MatchRequest, MatchResult, ResumeParseRequest, ResumeParseResult
+from ..schemas import JDParseRequest, JDParseResult, MatchRequest, MatchResult, ResumeDocumentExtractResult, ResumeParseRequest, ResumeParseResult
+from ..core.resume_document import MAX_FILE_BYTES, ResumeDocumentError, extract_resume_document
 from .service import get_services
 from .integration_service import get_system_data
 from .closure import router as closure_router, get_closure
@@ -87,6 +88,17 @@ def parse_jd(request: JDParseRequest) -> JDParseResult:
 @app.post("/api/resume/parse", response_model=ResumeParseResult)
 def parse_resume(request: ResumeParseRequest) -> ResumeParseResult:
     return get_services().resume_parser.parse(request)
+
+
+@app.post("/api/resume/extract", response_model=ResumeDocumentExtractResult)
+async def extract_resume(file: UploadFile = File(...)) -> ResumeDocumentExtractResult:
+    try:
+        data = await file.read(MAX_FILE_BYTES + 1)
+        return extract_resume_document(file.filename or "resume", data)
+    except ResumeDocumentError as exc:
+        raise HTTPException(status_code=422, detail=str(exc)) from exc
+    finally:
+        await file.close()
 
 
 @app.post("/api/match", response_model=MatchResult)

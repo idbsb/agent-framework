@@ -121,6 +121,7 @@ agent_framework/
 
 - `POST /api/jd/parse`
 - `POST /api/resume/parse`
+- `POST /api/resume/extract`（PDF、DOCX、TXT，最大 8MB，仅内存解析）
 - `POST /api/match`
 - `GET /api/jobs`
 - `GET /api/skills`
@@ -151,4 +152,4 @@ P1 的线上生产闭环仍需负责人部署验收；本地测试通过不等�
 
 ## 免费公开部署（不使用 Vercel）
 
-比赛展示可使用 Render 免费静态前端 + 免费 API。该模式支持公开查询、解析、匹配和展示，但关闭无法持久化的在线 SQLite 写入。部署方法和限制见 [Render 免费部署说明](docs/render_free_deployment.md)。
+比赛展示使用一个 Render 免费 Web Service 同时提供前端和 API。该模式支持公开查询、文件简历解析、匹配和展示，但关闭无法持久化的在线 SQLite 写入。部署方法和限制见 [Render 免费部署说明](docs/render_free_deployment.md)。

@@ -48,6 +48,22 @@ export async function postJson<T>(endpoint: string, payload: unknown): Promise<T
   }
 }
 
+export async function postFile<T>(endpoint: string, file: File): Promise<T> {
+  try {
+    const body = new FormData();
+    body.append("file", file, file.name);
+    const response = await fetch(apiUrl(endpoint), { method: "POST", body });
+    if (!response.ok) {
+      const value = await response.json().catch(() => null) as { detail?: unknown } | null;
+      throw responseError(response.status, value?.detail);
+    }
+    return await response.json() as T;
+  } catch (error) {
+    if (error instanceof TypeError) throw new ApiUnavailableError("后端服务不可用，请稍后重试。");
+    throw error;
+  }
+}
+
 export async function postThenGet<Written, Authoritative>(
   endpoint: string,
   payload: unknown,
