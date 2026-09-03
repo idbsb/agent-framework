@@ -15,7 +15,13 @@ def _text(value: object) -> str:
     return str(value or "").strip()
 
 
+def _has_content(value: object) -> bool:
+    return _text(value).casefold() not in MISSING_VALUES
+
+
 def _snippets(value: object) -> list[str]:
+    if not _has_content(value):
+        return []
     parts = re.split(r"[\r\n]+|(?<=[。！？；;])", _text(value))
     cleaned = []
     for part in parts:
@@ -108,6 +114,8 @@ class JobProfileBuilder:
         education, education_jd_count = self._summarize_values(rows, "education")
         experience, experience_jd_count = self._summarize_values(rows, "experience", "original_experience")
         responsibilities = self._ranked_snippets(rows, ("responsibilities",), limit=10)
+        required_raw = self._ranked_snippets(rows, ("required_skills_raw",), limit=8)
+        bonus_raw = self._ranked_snippets(rows, ("bonus_skills_raw",), limit=8)
         projects = self._ranked_snippets(
             rows,
             ("required_skills_raw", "bonus_skills_raw", "responsibilities"),
@@ -128,11 +136,11 @@ class JobProfileBuilder:
                 for row in rows
             ),
             "core_responsibilities": "；".join(responsibilities) if responsibilities else UNKNOWN,
-            "responsibilities_jd_count": sum(bool(_text(row.get("responsibilities"))) for row in rows),
-            "required_skills_text": "；".join(required) if required else UNKNOWN,
-            "required_skills_jd_count": sum(bool(_text(row.get("required_skills_raw"))) for row in rows),
-            "bonus_skills_text": "；".join(bonus) if bonus else UNKNOWN,
-            "bonus_skills_jd_count": sum(bool(_text(row.get("bonus_skills_raw"))) for row in rows),
+            "responsibilities_jd_count": sum(_has_content(row.get("responsibilities")) for row in rows),
+            "required_skills_text": "；".join(required or required_raw) if required or required_raw else UNKNOWN,
+            "required_skills_jd_count": sum(_has_content(row.get("required_skills_raw")) for row in rows),
+            "bonus_skills_text": "；".join(bonus or bonus_raw) if bonus or bonus_raw else UNKNOWN,
+            "bonus_skills_jd_count": sum(_has_content(row.get("bonus_skills_raw")) for row in rows),
             "skill_frequencies": frequencies,
             "small_sample": total < 3,
             "sample_notice": "小样本提示：当前岗位招聘样本较少，技能频率仅供观察。" if total < 3 else "",

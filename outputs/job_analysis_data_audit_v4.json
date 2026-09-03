@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-09-03T23:41:34+08:00",
+  "generated_at": "2026-09-03T23:55:39+08:00",
   "data_version": "1.0+supplemental_jd_v3",
   "protection_label": "PROTECTED_NEW_DATA",
   "pre_fix_runtime": {
@@ -14,14 +14,14 @@
     "supplemental_records_preserved": 49,
     "supplemental_records_counted": 46,
     "emerging_candidate_count": 32,
-    "jobs_with_any_explicit_unknown": 124,
+    "jobs_with_any_explicit_unknown": 56,
     "unknown_by_field": {
       "education": 23,
       "experience": 18,
       "project_experience": 14,
       "core_responsibilities": 0,
-      "required_skills_text": 18,
-      "bonus_skills_text": 108
+      "required_skills_text": 0,
+      "bonus_skills_text": 20
     },
     "small_sample_job_count": 127,
     "single_jd_job_count": 108,
