@@ -4,11 +4,12 @@
   "metrics": {
     "jd_count": 191,
     "standard_job_count": 117,
-    "standard_skill_count": 82,
+    "standard_skill_count": 84,
+    "frozen_standard_skill_count": 82,
     "graph_node_count": 490,
     "graph_edge_count": 2012,
     "resume_count": 27,
-    "evidence_covered_jd_count": 168
+    "evidence_covered_jd_count": 169
   },
   "top_jobs": [
     {
@@ -3523,30 +3524,33 @@
     }
   },
   "emerging_summary": {
-    "candidate_count": 11,
-    "high_confidence": 0,
-    "medium_confidence": 1,
-    "weak_candidate": 10
+    "candidate_count": 32,
+    "high_confidence": 3,
+    "medium_confidence": 10,
+    "weak_candidate": 19
   },
   "emerging_candidates": [
     {
       "candidate_id": "EMERGING-001",
       "candidate_name": "安全专家（AI方向）",
-      "emerging_score": 63.53,
-      "confidence_level": "中置信候选",
+      "emerging_score": 92.32,
+      "confidence_level": "高置信候选",
       "representative_titles": [
+        "AI 安全技术专家 / 大模型安全工程师",
+        "AI大模型安全专家",
         "AI安全专家",
+        "大模型安全工程师",
         "安全专家（AI方向）"
       ],
       "core_skills": [
-        "RAG",
-        "Java",
-        "Go",
-        "TensorFlow",
-        "向量数据库",
-        "PyTorch",
         "Python",
-        "LangChain"
+        "Java",
+        "RAG",
+        "Go",
+        "大语言模型（LLM）",
+        "LangChain",
+        "PyTorch",
+        "TensorFlow"
       ],
       "distinguishing_skills": [
         "RAG",
@@ -3554,11 +3558,14 @@
         "Go",
         "向量数据库"
       ],
-      "jd_count": 2,
-      "evidence_count": 2,
+      "jd_count": 5,
+      "evidence_count": 5,
       "evidence_jd_ids": [
         "JD-184",
-        "JD-185"
+        "JD-185",
+        "SUP-JD-003",
+        "SUP-JD-004",
+        "SUP-JD-013"
       ],
       "representative_evidence": [
         {
@@ -3566,14 +3573,24 @@
           "title": "安全专家（AI方向）",
           "company": "鼎捷数智",
           "source": "猎聘招聘官网",
-          "evidence": "1.教育背景与经验：统招本科及以上学历，计算机、人工智能、网络安全、密码学等相关专业；拥有5年以上信息安全从业经验，其中至少3年专注于大模型/生成式AI的安全治理、攻防研究或架构设计工作。有大型互联网、金融科技或头部AI企业相关经验者优先。\n2.深厚的技术功底：精通AI全生命周期安全风险（包括但不限于模型投毒、成员推理、后门攻击、提示词注入等）及其最新的攻防技术。熟悉主流AI框架（PyTorch, TensorFlow, Transformers, vLLM等）及LangChain、LlamaIndex等应用开发框架的底层原理与安全机制。\n3.工程化与编码能力：具备极强的代码能力，熟练掌握Python/Go/Java中至少一种编程语言。能够独立开发自动化安全测试脚本、防护中间件，或有实际的大规模数据清洗、模型微调（Fine-tuning）、向量数据库构建等工程经验。\n4.合规与标准视野：深入理解国内外AI安全法律法规（如中国《个人信息保护法》、欧盟《AI法案》、NIST AI RMF、ISO 42001等），具备企业级AI安全合规体系搭建或算法备案的实际操盘经验。\n5.软性素质：具备出色的跨部门沟通协调能力、项目管理能力及文档撰写能力。能够在复杂的业务场景中精准识别风险，并以建设性的方式推动算法与产品团队完成整改，具备高度的责任心与风险敏感度。"
+          "evidence": "1.教育背景与经验：统招本科及以上学历，计算机、人工智能、网络安全、密码学等相关专业；拥有5年以上信息安全从业经验，其中至少3年专注于大模型/生成式AI的安全治理、攻防研究或架构设计工作。有大型互联网、金融科技或头部AI企业相关经验者优先。\n2.深厚的技术功底：精通AI全生命周期安全风险（包括但不限于模型投毒、成员推理、后门攻击、提示词注入等）及其最新的攻防技术。熟悉主流AI框架（PyTorch, TensorFlow, Transformers, vLLM等）及LangChain、LlamaIndex等应用开发框架的底层原理与安全机制。\n3.工程化与编码能力：具备极强的代码能力，熟练掌握Python/Go/Java中至少一种编程语言。能够独立开发自动化安全测试脚本、防护中间件，或有实际的大规模数据清洗、模型微调（Fine-tuning）、向量数据库构建等工程经验。\n4.合规与标准视野：深入理解国内外AI安全法律法规（如中国《个人信息保护法》、欧盟《AI法案》、NIST AI RMF、ISO 42001等），具备企业级AI安全合规体系搭建或算法备案的实际操盘经验。\n5.软性素质：具备出色的跨部门沟通协调能力、项目管理能力及文档撰写能力。能够在复杂的业务场景中精准识别风险，并以建设性的方式推动算法与产品团队完成整改，具备高度的责任心与风险敏感度。",
+          "mapping_type": "legacy_evidence"
         },
         {
           "jd_id": "JD-185",
           "title": "AI安全专家",
           "company": "深圳联友科技有限公司",
           "source": "猎聘招聘官网",
-          "evidence": "1、本科及以上学历，计算机科学、网络安全、人工智能、数学等相关专业；\n2、5年以上信息安全、网络安全相关工作经验，2年以上AI安全专项工作经验，具备AI安全体系搭建、方案规划、安全管控实战经历。\n3、熟悉主流AI框架、大模型应用原理，精通AI对抗攻击、模型安全、隐私安全计算等核心技术，熟练使用各类AI安全工具与防护组件。\n4、具备极强的体系化搭建能力，有从0到1搭建企业AI安全体系、输出AI安全标准与技术规范的实战经验，可独立输出全套AI安全解决方案。\n5、熟悉AI数据安全、模型安全、应用安全全场景风险及防护方案，具备AI安全产品设计、安全策略落地、项目统筹推动能力。\n6、了解国内外AI安全合规政策、行业标准及伦理要求，具备AI合规审查、安全审计、应急处置实战能力。\n7、具备良好的技术研判、问题攻坚与跨部门推进能力，能够统筹AI安全项目落地、迭代优化，持续提升企业AI安全防护能力。"
+          "evidence": "1、本科及以上学历，计算机科学、网络安全、人工智能、数学等相关专业；\n2、5年以上信息安全、网络安全相关工作经验，2年以上AI安全专项工作经验，具备AI安全体系搭建、方案规划、安全管控实战经历。\n3、熟悉主流AI框架、大模型应用原理，精通AI对抗攻击、模型安全、隐私安全计算等核心技术，熟练使用各类AI安全工具与防护组件。\n4、具备极强的体系化搭建能力，有从0到1搭建企业AI安全体系、输出AI安全标准与技术规范的实战经验，可独立输出全套AI安全解决方案。\n5、熟悉AI数据安全、模型安全、应用安全全场景风险及防护方案，具备AI安全产品设计、安全策略落地、项目统筹推动能力。\n6、了解国内外AI安全合规政策、行业标准及伦理要求，具备AI合规审查、安全审计、应急处置实战能力。\n7、具备良好的技术研判、问题攻坚与跨部门推进能力，能够统筹AI安全项目落地、迭代优化，持续提升企业AI安全防护能力。",
+          "mapping_type": "legacy_evidence"
+        },
+        {
+          "jd_id": "SUP-JD-003",
+          "title": "AI 安全技术专家 / 大模型安全工程师",
+          "company": "京东",
+          "source": "用户补充JD TXT",
+          "evidence": "1.全日制统招硕士及以上学历，数学、计算机科学、人工智能、自然语言处理、数据科学、统计学、信息安全、软件工程等相关专业优先； 2.具备技术研发、算法工程、数据科学、模型评测、安全风控、内容安全或大模型应用相关工作经验；有互联网产品、AI 产品、内容安全、风控系统、推荐/搜索、AIGC 或大模型相关项目经验者优先； 3.技术基础：具备扎实的编程能力，熟悉 Python，能够独立完成数据处理、模型评测、实验分析和工具开发；熟悉常见机器学习 / 深度学习基础概念，如分类、召回、排序、评估指标、样本构造、特征工程、模型训练与验证；熟悉 SQL、数据分析、日志分析、实验评估等基础能力；能够基于真实业务数据进行问题定位、指标分析和效果验证； 4.大模型理解：理解大模型基本概念，包括 prompt、上下文窗口、RAG、SFT、RLHF/RM、模型幻觉、多轮对话、多模态、Agent、tool use 等；能够使用并评估主流大模型产品和 API；理解大模型应用中的典型安全风险，如 jailbreak、prompt injection、诱导生成、越权指令、幻觉误导、过度拒答、多轮风险升级等； 5.安全与业务理解：对 AI 内容安全、平台治理、业务风控或模型安全有兴趣和实践基础；能够理解安全底线、用户体验和业务增长之间的平衡；能将抽象风险转化为可执行的技术方案、评测指标和数据闭环；具备良好的问题拆解、结构化表达和跨团队协作能力；",
+          "mapping_type": "exact_evidence"
         }
       ],
       "evidence_records": [
@@ -3662,6 +3679,22 @@
               "source_field": "responsibilities",
               "accepted": true
             }
+          ],
+          "mapping_type": "legacy_evidence",
+          "mapping_reason": "V1原始Evidence",
+          "count_in_statistics": true,
+          "duplicate_status": "unique",
+          "evidence_confidence": 0.9,
+          "source_verification_status": "已验证",
+          "skills": [
+            "Go",
+            "Java",
+            "LangChain",
+            "PyTorch",
+            "Python",
+            "TensorFlow",
+            "向量数据库",
+            "RAG"
           ]
         },
         {
@@ -3686,15 +3719,135 @@
               "source_field": "bonus_skills_raw",
               "accepted": true
             }
+          ],
+          "mapping_type": "legacy_evidence",
+          "mapping_reason": "V1原始Evidence",
+          "count_in_statistics": true,
+          "duplicate_status": "unique",
+          "evidence_confidence": 0.9,
+          "source_verification_status": "已验证",
+          "skills": [
+            "RAG"
           ]
+        },
+        {
+          "jd_id": "SUP-JD-003",
+          "evidence_id": "SUP-JD-003",
+          "original_job_title": "AI 安全技术专家 / 大模型安全工程师",
+          "standard_job_title": "AI 安全技术专家 / 大模型安全工程师",
+          "standardization_status": "补充Evidence映射",
+          "company": "京东",
+          "source": "用户补充JD TXT",
+          "source_url": "",
+          "published_date": "",
+          "responsibilities": "部门介绍 我们是京东科技，作为京东集团旗下专注于以技术为产业服务的业务子集团，秉承“以科技引领产业数智化升级，推动世界更加高效和美好”的使命，为企业和金融机构等客户提供全链条的技术产品与服务。\n1. 建设大模型安全识别与防护能力：面向用户输入、模型输出、多轮对话、AIGC 生成内容、多模态内容等场景，参与建设输入安全、输出安全、上下文安全、情感陪伴安全、未成年人保护、数字人安全等能力模块；结合规则、分类模型、LLM-as-Judge、RAG、Agent、向量检索等技术，探索可落地的大模型安全防护方案； 2. 参与安全评测与 benchmark：体系建设参与构建安全 benchmark、人工金集、边界样本库、badcase 库和回归测试集。针对业务场景，设计风险评测维度和自动化评测流程；对模型误判、漏判、过度拒答、幻觉、越狱、提示词注入、多轮风险升级等问题进行分析和归因；建设模型评测指标体系，包括召回率、准确率、误伤率、漏放率、一致率、过度拒答率等； 3. 推动线上安全能力落地：参与设计自建 guardrail 的线上旁路 / shadow 双跑方案。支持安全策略灰度、效果监控、样本回流和模型迭代闭环；与产品、策略、算法、工程、审核标注团队协作，将安全能力接入真实业务流程。基于线上 case 和人审反馈，持续优化安全模型、规则策略和干预机制； 4. 负责安全数据与模型迭代闭环：基于业务风险 case，设计数据标注规范、风险标签体系和样本回收机制。将人审 badcase、模型误判样本、边界样本转化为可用于评测、训练和策略优化的数据资产参与安全分类器、模型裁判、风险识别模型、prompt 评测工具等能力建设。支持数据清洗、样本构造、自动化打标、标注一致性校验和质量分析； 5. 跟踪大模型安全技术发展：跟踪 AI safety、LLM guardrails、red teaming、prompt injection、jailbreak、多模态安全、Agent 安全等方向进展；调研业内安全方案、开源工具、评测框架和竞品策略。将前沿技术转化为团队可落地的工程方案和业务能力；",
+          "required_skills_raw": "1.全日制统招硕士及以上学历，数学、计算机科学、人工智能、自然语言处理、数据科学、统计学、信息安全、软件工程等相关专业优先； 2.具备技术研发、算法工程、数据科学、模型评测、安全风控、内容安全或大模型应用相关工作经验；有互联网产品、AI 产品、内容安全、风控系统、推荐/搜索、AIGC 或大模型相关项目经验者优先； 3.技术基础：具备扎实的编程能力，熟悉 Python，能够独立完成数据处理、模型评测、实验分析和工具开发；熟悉常见机器学习 / 深度学习基础概念，如分类、召回、排序、评估指标、样本构造、特征工程、模型训练与验证；熟悉 SQL、数据分析、日志分析、实验评估等基础能力；能够基于真实业务数据进行问题定位、指标分析和效果验证； 4.大模型理解：理解大模型基本概念，包括 prompt、上下文窗口、RAG、SFT、RLHF/RM、模型幻觉、多轮对话、多模态、Agent、tool use 等；能够使用并评估主流大模型产品和 API；理解大模型应用中的典型安全风险，如 jailbreak、prompt injection、诱导生成、越权指令、幻觉误导、过度拒答、多轮风险升级等； 5.安全与业务理解：对 AI 内容安全、平台治理、业务风控或模型安全有兴趣和实践基础；能够理解安全底线、用户体验和业务增长之间的平衡；能将抽象风险转化为可执行的技术方案、评测指标和数据闭环；具备良好的问题拆解、结构化表达和跨团队协作能力；",
+          "bonus_skills_raw": "1.有大模型安全、AIGC 内容安全、AI red teaming、guardrail、模型评测、LLM-as-Judge、自动化评测相关经验； 2.有内容审核、内容安全策略、未成年人保护、情感陪伴安全、数字人安全、多模态安全经验； 3.有线上风控系统、实时策略系统、模型服务、灰度实验、AB 实验、shadow 双跑经验； 4.有安全分类器、文本分类、多模态分类、风险识别模型、审核辅助模型建设经验； 5.熟悉 prompt engineering、RAG、Agent workflow、向量检索、自动化标注、数据飞轮等技术； 6.熟悉 Python、SQL、Pandas、PyTorch、Transformers、LangChain / LlamaIndex 或类似工具； 7.有论文、专利、开源项目、技术博客或 benchmark 构建经验； 符合京东价值观：客户为先、创新、拼搏、担当、感恩、诚信。",
+          "skills": [
+            "Python",
+            "RAG",
+            "SQL",
+            "大语言模型（LLM）",
+            "自然语言处理（NLP）"
+          ],
+          "tools_and_frameworks": [
+            "Python",
+            "PyTorch",
+            "LangChain",
+            "LlamaIndex",
+            "SQL",
+            "Pandas"
+          ],
+          "mapping_type": "exact_evidence",
+          "mapping_reason": "岗位名称、AI安全职责和模型安全技能与原候选高度一致。",
+          "mapping_confidence": 0.96,
+          "duplicate_status": "unique",
+          "duplicate_of": "",
+          "count_in_statistics": true,
+          "source_verification_status": "待补来源",
+          "evidence_confidence": 0.62,
+          "raw_text": "③AI 安全技术专家 / 大模型安全工程师——京东\n岗位描述\n部门介绍 我们是京东科技，作为京东集团旗下专注于以技术为产业服务的业务子集团，秉承“以科技引领产业数智化升级，推动世界更加高效和美好”的使命，为企业和金融机构等客户提供全链条的技术产品与服务。 岗位职责 1. 建设大模型安全识别与防护能力：面向用户输入、模型输出、多轮对话、AIGC 生成内容、多模态内容等场景，参与建设输入安全、输出安全、上下文安全、情感陪伴安全、未成年人保护、数字人安全等能力模块；结合规则、分类模型、LLM-as-Judge、RAG、Agent、向量检索等技术，探索可落地的大模型安全防护方案； 2. 参与安全评测与 benchmark：体系建设参与构建安全 benchmark、人工金集、边界样本库、badcase 库和回归测试集。针对业务场景，设计风险评测维度和自动化评测流程；对模型误判、漏判、过度拒答、幻觉、越狱、提示词注入、多轮风险升级等问题进行分析和归因；建设模型评测指标体系，包括召回率、准确率、误伤率、漏放率、一致率、过度拒答率等； 3. 推动线上安全能力落地：参与设计自建 guardrail 的线上旁路 / shadow 双跑方案。支持安全策略灰度、效果监控、样本回流和模型迭代闭环；与产品、策略、算法、工程、审核标注团队协作，将安全能力接入真实业务流程。基于线上 case 和人审反馈，持续优化安全模型、规则策略和干预机制； 4. 负责安全数据与模型迭代闭环：基于业务风险 case，设计数据标注规范、风险标签体系和样本回收机制。将人审 badcase、模型误判样本、边界样本转化为可用于评测、训练和策略优化的数据资产参与安全分类器、模型裁判、风险识别模型、prompt 评测工具等能力建设。支持数据清洗、样本构造、自动化打标、标注一致性校验和质量分析； 5. 跟踪大模型安全技术发展：跟踪 AI safety、LLM guardrails、red teaming、prompt injection、jailbreak、多模态安全、Agent 安全等方向进展；调研业内安全方案、开源工具、评测框架和竞品策略。将前沿技术转化为团队可落地的工程方案和业务能力；\n\n任职要求\n任职要求 1.全日制统招硕士及以上学历，数学、计算机科学、人工智能、自然语言处理、数据科学、统计学、信息安全、软件工程等相关专业优先； 2.具备技术研发、算法工程、数据科学、模型评测、安全风控、内容安全或大模型应用相关工作经验；有互联网产品、AI 产品、内容安全、风控系统、推荐/搜索、AIGC 或大模型相关项目经验者优先； 3.技术基础：具备扎实的编程能力，熟悉 Python，能够独立完成数据处理、模型评测、实验分析和工具开发；熟悉常见机器学习 / 深度学习基础概念，如分类、召回、排序、评估指标、样本构造、特征工程、模型训练与验证；熟悉 SQL、数据分析、日志分析、实验评估等基础能力；能够基于真实业务数据进行问题定位、指标分析和效果验证； 4.大模型理解：理解大模型基本概念，包括 prompt、上下文窗口、RAG、SFT、RLHF/RM、模型幻觉、多轮对话、多模态、Agent、tool use 等；能够使用并评估主流大模型产品和 API；理解大模型应用中的典型安全风险，如 jailbreak、prompt injection、诱导生成、越权指令、幻觉误导、过度拒答、多轮风险升级等； 5.安全与业务理解：对 AI 内容安全、平台治理、业务风控或模型安全有兴趣和实践基础；能够理解安全底线、用户体验和业务增长之间的平衡；能将抽象风险转化为可执行的技术方案、评测指标和数据闭环；具备良好的问题拆解、结构化表达和跨团队协作能力； 加分项 1.有大模型安全、AIGC 内容安全、AI red teaming、guardrail、模型评测、LLM-as-Judge、自动化评测相关经验； 2.有内容审核、内容安全策略、未成年人保护、情感陪伴安全、数字人安全、多模态安全经验； 3.有线上风控系统、实时策略系统、模型服务、灰度实验、AB 实验、shadow 双跑经验； 4.有安全分类器、文本分类、多模态分类、风险识别模型、审核辅助模型建设经验； 5.熟悉 prompt engineering、RAG、Agent workflow、向量检索、自动化标注、数据飞轮等技术； 6.熟悉 Python、SQL、Pandas、PyTorch、Transformers、LangChain / LlamaIndex 或类似工具； 7.有论文、专利、开源项目、技术博客或 benchmark 构建经验； 符合京东价值观：客户为先、创新、拼搏、担当、感恩、诚信。"
+        },
+        {
+          "jd_id": "SUP-JD-004",
+          "evidence_id": "SUP-JD-004",
+          "original_job_title": "AI大模型安全专家",
+          "standard_job_title": "AI大模型安全专家",
+          "standardization_status": "补充Evidence映射",
+          "company": "公安部第一研究所",
+          "source": "用户补充JD TXT",
+          "source_url": "",
+          "published_date": "",
+          "responsibilities": "1、\n（1）负责开展人工智能大模型安全方法研究，包括但不限于隐私保护技术、模型安全保护技术、合规性等。（2）跟踪国内外大模型安全测评方法和测试数据集，制定本领域大模型的安全测评技术方案，分析模型面临的各种安全威胁并制定相应的应对策略。（3）负责构建文本、语音、视觉、多模态大模型算法安全测评所需的测试数据集。（4）负责开发大模型安全的相关检测工具及模型安全防护工具。\n2、",
+          "required_skills_raw": "（1）3年以上大厂人工智能安全相关工作经验。（2）精通测试数据构建方法，具有较强的数据分析能力。（3）具有较强的编码能力，精通Python/Java等至少一门语言。（4）有较强团队组织能力和协作精神，工作责任心强，能够承受压力。（5）具有大模型安全算法研究或攻防实战经验。\n3、\n计算机、数学、统计学相关专业优先。",
+          "bonus_skills_raw": "",
+          "skills": [
+            "Java",
+            "Python"
+          ],
+          "tools_and_frameworks": [
+            "Python",
+            "Java"
+          ],
+          "mapping_type": "exact_evidence",
+          "mapping_reason": "岗位名称及大模型安全测评、防护职责与原候选高度一致。",
+          "mapping_confidence": 0.96,
+          "duplicate_status": "unique",
+          "duplicate_of": "",
+          "count_in_statistics": true,
+          "source_verification_status": "待补来源",
+          "evidence_confidence": 0.62,
+          "raw_text": "④AI大模型安全专家——公安部第一研究所\n1、岗位职责：（1）负责开展人工智能大模型安全方法研究，包括但不限于隐私保护技术、模型安全保护技术、合规性等。（2）跟踪国内外大模型安全测评方法和测试数据集，制定本领域大模型的安全测评技术方案，分析模型面临的各种安全威胁并制定相应的应对策略。（3）负责构建文本、语音、视觉、多模态大模型算法安全测评所需的测试数据集。（4）负责开发大模型安全的相关检测工具及模型安全防护工具。\n2、经验能力：（1）3年以上大厂人工智能安全相关工作经验。（2）精通测试数据构建方法，具有较强的数据分析能力。（3）具有较强的编码能力，精通Python/Java等至少一门语言。（4）有较强团队组织能力和协作精神，工作责任心强，能够承受压力。（5）具有大模型安全算法研究或攻防实战经验。\n3、专业要求：计算机、数学、统计学相关专业优先。"
+        },
+        {
+          "jd_id": "SUP-JD-013",
+          "evidence_id": "SUP-JD-013",
+          "original_job_title": "大模型安全工程师",
+          "standard_job_title": "大模型安全工程师",
+          "standardization_status": "补充Evidence映射",
+          "company": "抖音研发",
+          "source": "用户补充JD TXT",
+          "source_url": "",
+          "published_date": "",
+          "responsibilities": "1、负责对抖音等产品客户端方向的安全攻防需求，保障业务需求落地；\n2、探索大语言模型在抖音安全蓝军落地场景，构建LLM for Security架构和解决方案，如安全评测、应用分析、漏洞发现等；\n3、跟踪大模型在安全领域的前沿技术、研究成果及行业动态，推动前沿技术的引进、落地与实践优化；\n4、负责大模型安全产品的研发落地，提升产品性能、稳定性与可扩展性，保障技术方案的可行性与落地效果。",
+          "required_skills_raw": "1、熟悉至少一门编程语言，包括但不仅限于：Go、Python、Java、C++等；\n2、熟悉Android、iOS、鸿蒙等操作系统原理，熟悉APP逆向分析、漏洞挖掘等安全技术；\n3、了解大模型方向的研究和应用，具备Agent框架、LangGraph或相关大模型编排工具的开发经验；\n4、对大模型、安全攻防技术有浓厚的兴趣，良好的逻辑思维、团队协作能力；\n5、具备良好的产品与工程化思维，注重代码质量与系统性能，具备良好的沟通协调能力，能快速推进业务落地。",
+          "bonus_skills_raw": "",
+          "skills": [
+            "C++",
+            "Go",
+            "Java",
+            "LangGraph",
+            "Python",
+            "大语言模型（LLM）"
+          ],
+          "tools_and_frameworks": [
+            "Python",
+            "Java",
+            "C++",
+            "Go",
+            "LangGraph"
+          ],
+          "mapping_type": "job_family_support",
+          "mapping_reason": "岗位属于大模型安全工程，但客户端攻防与安全产品职责更宽，作为岗位族支撑。",
+          "mapping_confidence": 0.82,
+          "duplicate_status": "unique",
+          "duplicate_of": "",
+          "count_in_statistics": true,
+          "source_verification_status": "待补来源",
+          "evidence_confidence": 0.62,
+          "raw_text": "⑩③大模型安全工程师——抖音研发\n岗位描述\n1、负责对抖音等产品客户端方向的安全攻防需求，保障业务需求落地；\n2、探索大语言模型在抖音安全蓝军落地场景，构建LLM for Security架构和解决方案，如安全评测、应用分析、漏洞发现等；\n3、跟踪大模型在安全领域的前沿技术、研究成果及行业动态，推动前沿技术的引进、落地与实践优化；\n4、负责大模型安全产品的研发落地，提升产品性能、稳定性与可扩展性，保障技术方案的可行性与落地效果。\n职位要求\n1、熟悉至少一门编程语言，包括但不仅限于：Go、Python、Java、C++等；\n2、熟悉Android、iOS、鸿蒙等操作系统原理，熟悉APP逆向分析、漏洞挖掘等安全技术；\n3、了解大模型方向的研究和应用，具备Agent框架、LangGraph或相关大模型编排工具的开发经验；\n4、对大模型、安全攻防技术有浓厚的兴趣，良好的逻辑思维、团队协作能力；\n5、具备良好的产品与工程化思维，注重代码质量与系统性能，具备良好的沟通协调能力，能快速推进业务落地。"
         }
       ],
-      "source_count": 1,
+      "source_count": 2,
       "sources": [
-        "猎聘招聘官网"
+        "猎聘招聘官网",
+        "用户补充JD TXT"
       ],
-      "company_count": 2,
+      "company_count": 5,
       "companies": [
+        "京东",
+        "公安部第一研究所",
+        "抖音研发",
         "深圳联友科技有限公司",
         "鼎捷数智"
       ],
@@ -3709,21 +3862,30 @@
         "source_diversity": 0.3333,
         "company_diversity": 0.6667,
         "recent_signal": 1.0
-      }
+      },
+      "emerging_score_v1": 63.53,
+      "confidence_v1": "中置信候选",
+      "evidence_strength_v2": 4.4,
+      "emerging_score_v2": 92.32,
+      "confidence_v2": "高置信候选",
+      "score_version": "v2.0",
+      "counted_evidence_count": 5,
+      "exact_evidence_count": 4,
+      "supporting_evidence_count": 1
     },
     {
       "candidate_id": "EMERGING-002",
       "candidate_name": "AI与云安全工程师",
-      "emerging_score": 49.0,
+      "emerging_score": 46.08,
       "confidence_level": "弱候选/待观察",
       "representative_titles": [
         "AI与云安全工程师"
       ],
       "core_skills": [
+        "RAG",
         "向量数据库",
         "Kubernetes",
-        "大语言模型（LLM）",
-        "RAG"
+        "大语言模型（LLM）"
       ],
       "distinguishing_skills": [
         "向量数据库",
@@ -3740,7 +3902,8 @@
           "title": "AI与云安全工程师",
           "company": "康龙化成（北京）新药技术股份有限公司",
           "source": "猎聘招聘官网",
-          "evidence": "1. 本科及以上学历，计算机、信息安全、人工智能、等相关专业；\n2. 3-5年及以上人工智能安全、云安全、网络安全等相关工作经验；\n3. 精通主流公有云（阿里云/华为云/AWS/Azure）核心组件原理与安全配置，深刻理解云责任共担模型，熟练掌握云上网络、权限、存储、数据库的加固方案；\n4. 熟练掌握K8s容器生态及云原生安全技术，能够独立完成集群安全加固、镜像风控、运行时防护等全流程工作；\n5. 熟悉《网络安全法》、《数据安全法》、《AI Act》、GDPR、HIPAA、FDA、ISO 27001/27701、等保相关要求"
+          "evidence": "1. 本科及以上学历，计算机、信息安全、人工智能、等相关专业；\n2. 3-5年及以上人工智能安全、云安全、网络安全等相关工作经验；\n3. 精通主流公有云（阿里云/华为云/AWS/Azure）核心组件原理与安全配置，深刻理解云责任共担模型，熟练掌握云上网络、权限、存储、数据库的加固方案；\n4. 熟练掌握K8s容器生态及云原生安全技术，能够独立完成集群安全加固、镜像风控、运行时防护等全流程工作；\n5. 熟悉《网络安全法》、《数据安全法》、《AI Act》、GDPR、HIPAA、FDA、ISO 27001/27701、等保相关要求",
+          "mapping_type": "legacy_evidence"
         }
       ],
       "evidence_records": [
@@ -3793,6 +3956,18 @@
               "source_field": "responsibilities",
               "accepted": true
             }
+          ],
+          "mapping_type": "legacy_evidence",
+          "mapping_reason": "V1原始Evidence",
+          "count_in_statistics": true,
+          "duplicate_status": "unique",
+          "evidence_confidence": 0.9,
+          "source_verification_status": "已验证",
+          "skills": [
+            "RAG",
+            "向量数据库",
+            "Kubernetes",
+            "大语言模型（LLM）"
           ]
         }
       ],
@@ -3815,12 +3990,21 @@
         "source_diversity": 0.3333,
         "company_diversity": 0.3333,
         "recent_signal": 1.0
-      }
+      },
+      "emerging_score_v1": 49.0,
+      "confidence_v1": "弱候选/待观察",
+      "evidence_strength_v2": 1.0,
+      "emerging_score_v2": 46.08,
+      "confidence_v2": "弱候选/待观察",
+      "score_version": "v2.0",
+      "counted_evidence_count": 1,
+      "exact_evidence_count": 1,
+      "supporting_evidence_count": 0
     },
     {
       "candidate_id": "EMERGING-003",
       "candidate_name": "AI模型评估",
-      "emerging_score": 49.0,
+      "emerging_score": 39.42,
       "confidence_level": "弱候选/待观察",
       "representative_titles": [
         "AI模型评估"
@@ -3838,7 +4022,8 @@
           "title": "AI模型评估",
           "company": "小红书",
           "source": "BOSS直聘",
-          "evidence": "1、专业要求：汉语言文学、历史类优先，政治类/数分类/心理学/物理/计算机类专业其次\n2、具有3年以上互联网项目管理经验或2年及以上评测经验，若具备搜索 or seo经验优先\n3、熟练使用个SQL、Excel等数据分析工具，具备数据获取、分类和分析能力\n4、CET-6优秀or 雅思6分及以上\n5、积极主动，对AI富有激情，具备较强的团队协作能力、组织协调能力、复杂问题解决能力"
+          "evidence": "1、专业要求：汉语言文学、历史类优先，政治类/数分类/心理学/物理/计算机类专业其次\n2、具有3年以上互联网项目管理经验或2年及以上评测经验，若具备搜索 or seo经验优先\n3、熟练使用个SQL、Excel等数据分析工具，具备数据获取、分类和分析能力\n4、CET-6优秀or 雅思6分及以上\n5、积极主动，对AI富有激情，具备较强的团队协作能力、组织协调能力、复杂问题解决能力",
+          "mapping_type": "legacy_evidence"
         }
       ],
       "evidence_records": [
@@ -3854,7 +4039,14 @@
           "responsibilities": "1、观测行业发展动态，协助技术进行调研/分析/产出最终数据结论及文字报告；结合用户、产品调性有针对性研究方向，持续补充业务盲点\n2、善用评测手段及客观数据对产品内外问题进行拆解/分析，定位到根源，对特殊vip case进行归纳补充，协同技术、产品推动评估标准建设\n3、能够承接技术/产品侧业务需求，统筹整个项目执行/验收/交付/反馈流程，保障业务数据核心目标达成\n4、对标注团队进行标准迭代，分析问题提供解决思路，协同技术、产品调整标注方向",
           "required_skills_raw": "1、专业要求：汉语言文学、历史类优先，政治类/数分类/心理学/物理/计算机类专业其次\n2、具有3年以上互联网项目管理经验或2年及以上评测经验，若具备搜索 or seo经验优先\n3、熟练使用个SQL、Excel等数据分析工具，具备数据获取、分类和分析能力\n4、CET-6优秀or 雅思6分及以上\n5、积极主动，对AI富有激情，具备较强的团队协作能力、组织协调能力、复杂问题解决能力",
           "bonus_skills_raw": "无",
-          "skill_evidence": []
+          "skill_evidence": [],
+          "mapping_type": "legacy_evidence",
+          "mapping_reason": "V1原始Evidence",
+          "count_in_statistics": true,
+          "duplicate_status": "unique",
+          "evidence_confidence": 0.9,
+          "source_verification_status": "已验证",
+          "skills": []
         }
       ],
       "source_count": 1,
@@ -3876,7 +4068,16 @@
         "source_diversity": 0.3333,
         "company_diversity": 0.3333,
         "recent_signal": 0.0
-      }
+      },
+      "emerging_score_v1": 49.0,
+      "confidence_v1": "弱候选/待观察",
+      "evidence_strength_v2": 1.0,
+      "emerging_score_v2": 39.42,
+      "confidence_v2": "弱候选/待观察",
+      "score_version": "v2.0",
+      "counted_evidence_count": 1,
+      "exact_evidence_count": 1,
+      "supporting_evidence_count": 0
     }
   ]
 }

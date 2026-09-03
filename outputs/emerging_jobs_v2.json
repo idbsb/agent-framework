@@ -4934,8 +4934,5 @@
         }
       ]
     }
-  ],
-  "available": true,
-  "status": "generated_v2",
-  "loaded_from": "emerging_jobs_v2.json"
+  ]
 }

@@ -114,14 +114,14 @@ export default function ClosurePanel({ jobTitle }: { jobTitle?: string }) {
   },[jobTitle]);
   async function run(){setBusy(true);setError("");try{const refreshed=await postThenGet<ClosureVersion|ClosureVersion[],ClosureVersion|ClosureVersion[]>(jobTitle?'/api/closure/profiles/run':'/api/closure/discovery/run',jobTitle?{job_title:jobTitle}:{},()=>jobTitle?`/api/closure/profile/${encodeURIComponent(jobTitle)}`:'/api/closure/candidates');const list=Array.isArray(refreshed)?refreshed:[refreshed];setItems(list);setSelected(list.some(i=>i.id===selected)?selected:list[0]?.id||"");}catch(e){setError(e instanceof Error?e.message:String(e));}finally{setBusy(false);}}
   const item=items.find(i=>i.id===selected);
-  return <section className="panel closure-panel"><h2>{jobTitle?'岗位画像更新闭环':'新岗位定义与发布闭环'}</h2>
-    <p>独立审核记录；待审内容不覆盖正式发布画像。生产写操作需要管理员授权。</p>
+  return <details className="panel closure-panel"><summary>数据质量与审核记录</summary><div className="closure-panel-body"><h2>{jobTitle?'岗位画像更新审核':'新岗位定义与发布审核'}</h2>
+    <p>以下为数据维护功能，普通求职分析无需操作。待审内容不会覆盖已经发布的岗位画像。</p>
     <ClosureAccess/>
     <EvidenceImport jobTitle={jobTitle} saved={()=>setError('新证据已追加；正式版本未改变，请重新计算。')}/>
     <button disabled={busy} onClick={run}>{busy?'计算中…':jobTitle?'重新计算能力更新':'运行新岗位发现'}</button><p role="status">{error}</p>
     {!jobTitle?<div className="closure-candidate-list">{items.map(i=><button key={i.id} aria-pressed={selected===i.id} onClick={()=>setSelected(i.id)}>{(i.manual_definition||i.auto_definition).job_name} · {statusLabel[i.status]} · V{i.version}<small>发现规则得分 {i.discovery_score}（非真实性概率） · JD {i.source_job_count} · 企业 {i.company_count} · 来源 {i.source_count}</small></button>)}</div>:null}
     {item?<ReviewDetail key={item.id} item={item} replace={updated=>setItems(items.map(i=>i.id===updated.id?updated:i))}/>:<p>尚无候选 / 更新审核单。</p>}
-  </section>;
+  </div></details>;
 }
 
 export function PublishedProfile({ profile }: { profile?: ClosureVersion | null }) {

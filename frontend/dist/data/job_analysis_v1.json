@@ -409,7 +409,11 @@
         }
       ],
       "graph_source_label": "组员A正式知识图谱",
-      "message": ""
+      "message": "",
+      "profile_source": "static_baseline",
+      "profile_version": null,
+      "profile_id": null,
+      "profile_fingerprint": null
     },
     {
       "available": true,
@@ -636,7 +640,11 @@
         }
       ],
       "graph_source_label": "组员A正式知识图谱",
-      "message": ""
+      "message": "",
+      "profile_source": "static_baseline",
+      "profile_version": null,
+      "profile_id": null,
+      "profile_fingerprint": null
     },
     {
       "available": true,
@@ -844,7 +852,11 @@
         }
       ],
       "graph_source_label": "组员A正式知识图谱",
-      "message": ""
+      "message": "",
+      "profile_source": "static_baseline",
+      "profile_version": null,
+      "profile_id": null,
+      "profile_fingerprint": null
     }
   ]
 }

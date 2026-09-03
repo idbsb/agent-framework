@@ -11,14 +11,13 @@ export default function DashboardPage() {
   const [data, setData] = useState<Overview | null>(null); const [error, setError] = useState(""); const [fallback, setFallback] = useState(false);
   useEffect(() => { getJson<Overview>("/api/system/overview", "/data/system_overview.json").then((result) => { setData(result.data); setFallback(result.fallback); }).catch((reason: Error) => setError(reason.message)); }, []);
   return <>
-    {error ? <StatusBanner tone="error">{error}</StatusBanner> : null}{fallback ? <StatusBanner tone="warning">后端暂不可用，当前展示程序生成的真实静态结果。</StatusBanner> : null}
-    <section className="hero-panel"><div><p className="kicker">真实数据 · 标准体系 · Evidence可追溯</p><h2>{data?.truth_statement || "正在读取真实招聘数据…"}</h2><p>从招聘JD到岗位能力图谱，再到简历解析、人岗匹配与新岗位候选发现。</p></div><div className="hero-index">01<span>/ 08</span></div></section>
+    {error ? <StatusBanner tone="error">数据加载失败：{error}</StatusBanner> : null}{fallback ? <StatusBanner tone="warning">暂时无法连接实时服务，当前展示最近可用数据。</StatusBanner> : null}
+    <section className="hero-panel"><div><p className="kicker">真实招聘数据 · 岗位能力洞察</p><h2>{data?.truth_statement || "正在读取岗位与技能数据…"}</h2><p>从岗位要求、能力趋势到简历分析和人岗匹配，帮助你更清楚地规划求职方向。</p></div></section>
     <section className="metric-grid">{metrics.map(([key, label, Icon]) => <article className="metric-card" key={key}><div className="metric-icon"><Icon size={19} /></div><div className="metric-value">{data?.metrics[key] ?? "—"}</div><div className="metric-label">{label}</div></article>)}</section>
     <section className="dashboard-grid">
-      <article className="panel"><div className="panel-title"><span>重点岗位</span><small>按真实JD数量</small></div><div className="rank-list">{data?.top_jobs.slice(0, 6).map((item, index) => <div className="rank-row" key={item.job_title}><b>0{index + 1}</b><span>{item.job_title}</span><em>{item.jd_count} JD</em></div>)}</div></article>
-      <article className="panel"><div className="panel-title"><span>热门技能</span><small>Evidence覆盖</small></div><div className="skill-cloud">{data?.top_skills.slice(0, 10).map((item) => <span key={item.skill_name}>{item.skill_name}<b>{item.evidence_jd_count}</b></span>)}</div></article>
-      <article className="panel emerging-panel"><div className="panel-title"><span>新岗位候选</span><small>审慎发现</small></div><div className="emerging-number">{data?.emerging_summary.candidate_count ?? "—"}<span>个观察候选</span></div><p>高置信 {data?.emerging_summary.high_confidence ?? "—"} · 中置信 {data?.emerging_summary.medium_confidence ?? "—"} · 弱候选 {data?.emerging_summary.weak_candidate ?? "—"}</p><Link className="text-link" to="/emerging">查看候选 Evidence →</Link></article>
+      <article className="panel"><div className="panel-title"><span>热门岗位</span><small>按招聘信息数量</small></div><div className="rank-list">{data?.top_jobs.slice(0, 6).map((item, index) => <div className="rank-row" key={item.job_title}><b>{String(index + 1).padStart(2, "0")}</b><span>{item.job_title}</span><em>{item.jd_count} 条职位</em></div>)}</div></article>
+      <article className="panel"><div className="panel-title"><span>高频技能</span><small>招聘信息覆盖量</small></div><div className="skill-cloud">{data?.top_skills.slice(0, 10).map((item) => <span key={item.skill_name}>{item.skill_name}<b>{item.evidence_jd_count}</b></span>)}</div></article>
+      <article className="panel emerging-panel"><div className="panel-title"><span>新岗位机会</span><small>基于多源信息发现</small></div><div className="emerging-number">{data?.emerging_summary.candidate_count ?? "—"}<span>个观察方向</span></div><p>高置信 {data?.emerging_summary.high_confidence ?? "—"} · 中置信 {data?.emerging_summary.medium_confidence ?? "—"} · 持续观察 {data?.emerging_summary.weak_candidate ?? "—"}</p><Link className="text-link" to="/emerging">查看岗位机会与依据 →</Link></article>
     </section>
   </>;
 }
-
