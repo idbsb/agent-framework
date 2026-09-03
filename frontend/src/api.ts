@@ -2,6 +2,13 @@ import { closureHeaders } from "./closureAccess";
 
 export class ApiUnavailableError extends Error {}
 
+const retryableAnalysisEndpoints = new Set(["/api/jd/parse", "/api/resume/parse", "/api/match"]);
+const retryDelayMs = 500;
+
+function wait(ms: number): Promise<void> {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
+
 const apiBaseUrl = (import.meta.env.VITE_API_BASE_URL || "").replace(/\/$/, "");
 
 export function apiUrl(endpoint: string, baseUrl = apiBaseUrl): string {
@@ -34,18 +41,25 @@ export async function getJson<T>(endpoint: string, fallback?: string): Promise<{
 }
 
 export async function postJson<T>(endpoint: string, payload: unknown): Promise<T> {
-  try {
-    const response = await fetch(apiUrl(endpoint), { method: "POST", headers: { "Content-Type": "application/json", ...closureHeaders(endpoint) }, body: JSON.stringify(payload) });
-    if (!response.ok) {
-      const value = await response.json().catch(() => null) as { detail?: unknown } | null;
-      if (response.status >= 500 && !value?.detail) throw new ApiUnavailableError("后端服务不可用，请稍后重试。");
-      throw responseError(response.status, value?.detail);
+  const attempts = retryableAnalysisEndpoints.has(endpoint) ? 2 : 1;
+  for (let attempt = 0; attempt < attempts; attempt += 1) {
+    try {
+      const response = await fetch(apiUrl(endpoint), { method: "POST", headers: { "Content-Type": "application/json", ...closureHeaders(endpoint) }, body: JSON.stringify(payload) });
+      if (!response.ok) {
+        const value = await response.json().catch(() => null) as { detail?: unknown } | null;
+        const transient = [502, 503, 504].includes(response.status) && !value?.detail;
+        if (transient && attempt + 1 < attempts) { await wait(retryDelayMs); continue; }
+        if (response.status >= 500 && !value?.detail) throw new ApiUnavailableError("服务正在唤醒，请点击重试。");
+        throw responseError(response.status, value?.detail);
+      }
+      return await response.json() as T;
+    } catch (error) {
+      if (error instanceof TypeError && attempt + 1 < attempts) { await wait(retryDelayMs); continue; }
+      if (error instanceof TypeError) throw new ApiUnavailableError("网络连接中断，请检查网络后重试。");
+      throw error;
     }
-    return await response.json() as T;
-  } catch (error) {
-    if (error instanceof TypeError) throw new ApiUnavailableError("后端服务不可用，请稍后重试。");
-    throw error;
   }
+  throw new ApiUnavailableError("网络连接中断，请检查网络后重试。");
 }
 
 export async function postFile<T>(endpoint: string, file: File): Promise<T> {

@@ -59,6 +59,21 @@ test('resume upload uses multipart form data without forcing a content-type head
   } finally {globalThis.fetch=previous;}
 });
 
+test('resume analysis retries one transient network disconnect before reporting failure', async () => {
+  const api=await server.ssrLoadModule('/src/api.ts');
+  const previous=globalThis.fetch; let calls=0;
+  globalThis.fetch=async () => {
+    calls+=1;
+    if(calls===1) throw new TypeError('network connection closed during service wake-up');
+    return {ok:true,json:async()=>({resume_id:'RESUME-INPUT',skills:[]})};
+  };
+  try {
+    const result=await api.postJson('/api/resume/parse',{});
+    assert.equal(calls,2);
+    assert.equal(result.resume_id,'RESUME-INPUT');
+  } finally {globalThis.fetch=previous;}
+});
+
 test('Render build rejects absent, insecure and non-root API URLs', async () => {
   const {spawnSync}=await import('node:child_process');
   for(const value of ['', 'http://api.example.test', 'https://api.example.test/api', 'https://localhost']) {
