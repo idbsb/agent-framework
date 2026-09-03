@@ -192,7 +192,8 @@ def serve_frontend(frontend_path: str):
         raise HTTPException(status_code=404, detail="API endpoint not found")
     candidate = (_frontend_dist / frontend_path).resolve()
     if frontend_path and _frontend_dist.resolve() in candidate.parents and candidate.is_file():
-        return FileResponse(candidate)
+        headers = {"Cache-Control": "no-cache"} if frontend_path.startswith("data/") else None
+        return FileResponse(candidate, headers=headers)
     index = _frontend_dist / "index.html"
     if not index.is_file():
         raise HTTPException(status_code=503, detail="Frontend build is unavailable")

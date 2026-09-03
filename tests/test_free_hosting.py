@@ -29,9 +29,11 @@ class FreeHostingTest(unittest.TestCase):
         nested = serve_frontend("match")
         asset = next((Path(__file__).parents[1] / "frontend/dist/assets").glob("*.js"))
         static = serve_frontend(f"assets/{asset.name}")
+        data = serve_frontend("data/job_analysis_v1.json")
         self.assertIsInstance(root, FileResponse)
         self.assertEqual(root.path, nested.path)
         self.assertEqual(Path(static.path), asset)
+        self.assertEqual(data.headers["cache-control"], "no-cache")
 
     def test_unknown_api_is_not_rewritten_to_html(self):
         with self.assertRaises(HTTPException) as raised:
