@@ -13,6 +13,7 @@ dist/
 __pycache__/
 *.py[cod]
 .pytest_cache/
+.coverage
 .codex_artifacts/
 .venv/
 venv/
@@ -32,6 +33,9 @@ frontend/vite.config.d.ts
 agent_framework/
 组员图谱动态/
 reports/qa_screenshots/
+reports/coverage/backend-html/
+reports/coverage/frontend-html/
+tmp/
 
 # Editors and operating systems
 .idea/

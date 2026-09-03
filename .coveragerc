@@ -1,0 +1,21 @@
+[run]
+branch = True
+source =
+    src
+    external_modules/graph_dynamic/src
+
+[report]
+fail_under = 60
+show_missing = True
+skip_covered = False
+precision = 2
+
+[html]
+directory = reports/coverage/backend-html
+
+[xml]
+output = reports/coverage/backend-coverage.xml
+
+[json]
+output = reports/coverage/backend-coverage.json
+pretty_print = True
