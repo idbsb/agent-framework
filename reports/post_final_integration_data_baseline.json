@@ -1,0 +1,86 @@
+{
+  "generated_at": "2026-09-03T21:31:48+08:00",
+  "project_root": "C:\\Users\\87294\\Documents\\挑战杯\\agent_framework",
+  "counts": {
+    "jd_count": 191,
+    "standard_job_count": 117,
+    "standard_skill_count": 84,
+    "frozen_standard_skill_count": 82,
+    "graph_node_count": 490,
+    "graph_edge_count": 2012,
+    "emerging_candidate_count": 32,
+    "test_resume_count": 27,
+    "multi_source_evidence_count": 17,
+    "supplemental_jd_count": 49
+  },
+  "core_data_files": {
+    "outputs/standardized_jd_dataset_v1.xlsx": {
+      "sha256": "B00A0220FD4B974D8B00BB57D6F0AF3BB40F1D92CC7DDD59FCB0DDDA9FC90EDE",
+      "bytes": 179341
+    },
+    "outputs/standard_job_title_mapping_v1.xlsx": {
+      "sha256": "293B34DBB8E4E6F5689CF58387A38601F30FEB759B46E7F34931BC1F6FF859B1",
+      "bytes": 20617
+    },
+    "outputs/standard_skill_dictionary_v1.xlsx": {
+      "sha256": "178C64E654D3534878489E88AAFC5A17B98FE361CB38DB370F9036D01E5C1055",
+      "bytes": 19794
+    },
+    "outputs/standardized_resume_testset_v1.xlsx": {
+      "sha256": "3B78EDFFD349055342818FFF6B803B92D5BD1C1BD1DE140E3764EF82C3CCD952",
+      "bytes": 17346
+    },
+    "outputs/emerging_jobs_v1.json": {
+      "sha256": "473DB51392B84AE5E603B2A3E1D26EC700D87590C8A72749267425CE46F6E4D0",
+      "bytes": 79996
+    },
+    "outputs/emerging_jobs_v2.json": {
+      "sha256": "BA641CAB13DBF44A55693E02BA28416485922CA4A1BD3D99EDC23559FDD1BCC2",
+      "bytes": 443212
+    },
+    "data/external/supplemental_jd_v3.json": {
+      "sha256": "62E3009117F7AF0E83972992858E875FE5A44F4CF6CBC7397872C81EBF4606A6",
+      "bytes": 328429
+    },
+    "data/external/supplemental_jd_v3.xlsx": {
+      "sha256": "C50E0C59AB7D05C06C8D0AD8C4B1418F9B2B5296D7060B2D7F95A20B9A662B0D",
+      "bytes": 69839
+    },
+    "data/external/supplemental_jd_v3_source.txt": {
+      "sha256": "CA39AC9B96BD39E07064FBD2BA173D2162AC6A47873F989B57B100B240098D70",
+      "bytes": 101895
+    },
+    "multi_source_evidence_v1.json": {
+      "sha256": "5BDAD762E20C243228B0B9FB5060A1B7DD7EFCD400C3667B386FB3A72F1A054E",
+      "bytes": 12733
+    },
+    "multi_source_evidence_v1 (1).xlsx": {
+      "sha256": "D10A690E95090AE8FB098C52E513832DDB8CA1FF81038B2DCD6EED4CAB9E5603",
+      "bytes": 10831
+    },
+    "config/skill_dictionary_extensions.json": {
+      "sha256": "084571DFE7072DBD8753D86D13A812568F9B55F9FA3D72D902AD15B23293F5AA",
+      "bytes": 818
+    },
+    "external_modules/graph_dynamic/outputs/knowledge_graph_v1.json": {
+      "sha256": "42EF1ADB573ED7082EEC020CEA43642190E1386DD3AB45B37356AAA5663AFA42",
+      "bytes": 843112
+    },
+    "external_modules/graph_dynamic/outputs/key_job_evolution_v1.json": {
+      "sha256": "63C3C2F79849E0605AD8CA45700E09F06B927228624054EA5C8E08AACFC7B4A0",
+      "bytes": 219316
+    },
+    "external_modules/graph_dynamic/outputs/graph_nodes_v1.xlsx": {
+      "sha256": "145A556D62DFBD4C3D496B6A5DB7523AEE3ABD757C62EB4F939F8EB6C3C3B7A1",
+      "bytes": 38812
+    },
+    "external_modules/graph_dynamic/outputs/graph_edges_v1.xlsx": {
+      "sha256": "643591028BAC3643B264467171B5C78CF732D4BACD42E56BC3B0B1E7547040F6",
+      "bytes": 72818
+    },
+    "external_modules/graph_dynamic/outputs/job_skill_evolution_v1.xlsx": {
+      "sha256": "D46B7A8E72554F1707266C6ED00AA4FE371A423D042F5D56149A5A0CB23284E8",
+      "bytes": 65583
+    }
+  }
+}

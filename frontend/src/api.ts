@@ -4,6 +4,7 @@ export class ApiUnavailableError extends Error {}
 
 const retryableAnalysisEndpoints = new Set(["/api/jd/parse", "/api/resume/parse", "/api/match"]);
 const retryDelayMs = 500;
+const liveGetAttempts = 4;
 
 function wait(ms: number): Promise<void> {
   return new Promise(resolve => setTimeout(resolve, ms));
@@ -28,16 +29,20 @@ function responseError(status: number, detail?: unknown): Error {
 }
 
 export async function getJson<T>(endpoint: string, fallback?: string): Promise<{ data: T; fallback: boolean }> {
-  try {
-    const response = await fetch(apiUrl(endpoint), { cache: "no-store" });
-    if (!response.ok) throw new Error(`HTTP ${response.status}`);
-    return { data: await response.json() as T, fallback: false };
-  } catch (error) {
-    if (!fallback) throw new ApiUnavailableError("暂时无法连接数据服务，请稍后重试。");
-    const response = await fetch(fallback);
-    if (!response.ok) throw new ApiUnavailableError("当前模块数据尚未生成。");
-    return { data: await response.json() as T, fallback: true };
+  for (let attempt = 0; attempt < liveGetAttempts; attempt += 1) {
+    try {
+      const response = await fetch(apiUrl(endpoint), { cache: "no-store" });
+      if (response.ok) return { data: await response.json() as T, fallback: false };
+      if (![502, 503, 504].includes(response.status) || attempt + 1 >= liveGetAttempts) break;
+    } catch (error) {
+      if (!(error instanceof TypeError) || attempt + 1 >= liveGetAttempts) break;
+    }
+    await wait(retryDelayMs * (attempt + 1));
   }
+  if (!fallback) throw new ApiUnavailableError("暂时无法连接数据服务，请稍后重试。");
+  const response = await fetch(fallback, { cache: "no-store" });
+  if (!response.ok) throw new ApiUnavailableError("当前模块数据尚未生成。");
+  return { data: await response.json() as T, fallback: true };
 }
 
 export async function postJson<T>(endpoint: string, payload: unknown): Promise<T> {

@@ -74,6 +74,38 @@ test('resume analysis retries one transient network disconnect before reporting 
   } finally {globalThis.fetch=previous;}
 });
 
+test('live GET retries a transient Render wake-up failure before using fallback', async () => {
+  const api=await server.ssrLoadModule('/src/api.ts');
+  const previous=globalThis.fetch; let calls=0;
+  globalThis.fetch=async (url) => {
+    calls+=1;
+    if(calls===1) return {ok:false,status:503,json:async()=>({})};
+    return {ok:true,status:200,json:async()=>({available:true,source:url})};
+  };
+  try {
+    const result=await api.getJson('/api/evolution/job/test','/data/evolution_status.json');
+    assert.equal(calls,2);
+    assert.equal(result.fallback,false);
+    assert.equal(result.data.available,true);
+  } finally {globalThis.fetch=previous;}
+});
+
+test('live GET uses static data only after all retry attempts fail', async () => {
+  const api=await server.ssrLoadModule('/src/api.ts');
+  const previous=globalThis.fetch; const calls=[];
+  globalThis.fetch=async (url) => {
+    calls.push(url);
+    if(url==='/data/evolution_status.json') return {ok:true,status:200,json:async()=>({static:true})};
+    return {ok:false,status:503,json:async()=>({})};
+  };
+  try {
+    const result=await api.getJson('/api/evolution/job/test','/data/evolution_status.json');
+    assert.equal(calls.at(-1),'/data/evolution_status.json');
+    assert.ok(calls.length>=3);
+    assert.equal(result.fallback,true);
+  } finally {globalThis.fetch=previous;}
+});
+
 test('Render build rejects absent, insecure and non-root API URLs', async () => {
   const {spawnSync}=await import('node:child_process');
   for(const value of ['', 'http://api.example.test', 'https://api.example.test/api', 'https://localhost']) {

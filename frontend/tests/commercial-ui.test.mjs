@@ -25,3 +25,13 @@ test("all eight pages exclude numbered hero labels and internal demo copy", asyn
   const content = (await Promise.all(pages.map((name) => source(`pages/${name}.tsx`)))).join("\n");
   assert.doesNotMatch(content, /index="0[1-8]"|ADAPTER READY|Evolution Adapter|真实API|现场演示|Matching Engine recommendations|直接调用Matching Engine|组员A/);
 });
+
+test("resume capability view shows evidence strength instead of mastery-like percentages", async () => {
+  const evidence = await source("components/SkillEvidenceView.tsx");
+  const page = await source("pages/ResumeParsePage.tsx");
+  assert.match(evidence, /Evidence强度|证据强度/);
+  assert.doesNotMatch(evidence, /Math\.round\(item\.confidence \* 100\)|抽取置信度.*%/);
+  assert.match(page, /工作经历/);
+  assert.match(page, /能力覆盖率/);
+  assert.match(page, /缺失技能/);
+});

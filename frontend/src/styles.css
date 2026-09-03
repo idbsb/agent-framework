@@ -183,10 +183,22 @@ textarea { resize: vertical; line-height: 1.6; }
 .evidence-line b { color: var(--brand-dark); }
 .evidence-line span { color: #4b5563; overflow-wrap: anywhere; }
 .evidence-line em { color: var(--muted); font-style: normal; }
+.evidence-strength { width: fit-content; padding: 4px 7px; border-radius: 999px; font-weight: 700; }
+.evidence-strong { background: #dcfce7; color: #047857 !important; }
+.evidence-medium { background: #dbeafe; color: #1d4ed8 !important; }
+.evidence-weak { background: #fef3c7; color: #b45309 !important; }
 .profile-header { display: flex; gap: 13px; align-items: center; padding: 18px; border-radius: 10px; background: var(--brand-soft); }
 .avatar-block { display: grid; place-items: center; width: 48px; height: 48px; border-radius: 12px; color: #fff; background: var(--brand); }
 .profile-header h2 { margin: 0; color: var(--text); font-size: 17px; }
 .profile-header p { margin: 4px 0 0; color: var(--muted); font-size: 10px; }
+.resume-summary { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 14px 0; }
+.resume-summary p { margin: 0; padding: 11px; border: 1px solid var(--border); border-radius: 9px; color: #4b5563; font-size: 11px; }
+.coverage-score { display: flex; align-items: center; gap: 12px; margin: 12px 0; padding: 14px; border-radius: 10px; background: var(--brand-soft); }
+.coverage-score b { color: var(--brand-dark); font-size: 25px; }
+.coverage-score span { color: var(--muted); font-size: 11px; }
+.capability-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 18px; }
+.capability-grid > div { padding: 12px; border: 1px solid var(--border); border-radius: 10px; }
+.capability-grid h4 { margin: 0 0 9px; color: var(--text); font-size: 11px; }
 .resume-upload { position: relative; display: grid; justify-items: center; gap: 7px; padding: 24px; border: 1.5px dashed #6ee7b7; border-radius: 10px; background: #f8fffc; color: var(--brand-dark); text-align: center; cursor: pointer; }
 .resume-upload:hover { border-color: var(--brand); background: var(--brand-soft); }
 .resume-upload b { font-size: 12px; }
@@ -230,6 +242,7 @@ textarea { resize: vertical; line-height: 1.6; }
   .sidebar-backdrop { position: fixed; z-index: 25; inset: 0; display: block; padding: 0; border: 0; border-radius: 0; background: rgba(17,24,39,.4); }
   .topbar { padding-left: 76px; }
   .workbench-grid, .match-layout { grid-template-columns: 1fr; }
+  .resume-summary, .capability-grid { grid-template-columns: 1fr; }
   .match-form { position: static; }
 }
 @media (max-width: 680px) {

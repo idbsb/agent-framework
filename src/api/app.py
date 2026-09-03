@@ -87,7 +87,10 @@ def parse_jd(request: JDParseRequest) -> JDParseResult:
 
 @app.post("/api/resume/parse", response_model=ResumeParseResult)
 def parse_resume(request: ResumeParseRequest) -> ResumeParseResult:
-    return get_services().resume_parser.parse(request)
+    services = get_services()
+    effective = services.matching_engine.effective_profiles.get_effective_job_profile(request.target_job)
+    requirements = effective.get("matching_profile") or {}
+    return services.resume_parser.parse(request, job_requirements=requirements)
 
 
 @app.post("/api/resume/extract", response_model=ResumeDocumentExtractResult)

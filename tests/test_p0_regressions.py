@@ -158,9 +158,62 @@ class P0RegressionTest(unittest.TestCase):
         text = "  不会 Python、Docker 和 RAG  "
         items = self.services.skill_index.extract_fields([("skills_raw", text)])
         for item in items:
-            self.assertEqual(item.evidence, text)
             self.assertEqual(text[item.start:item.end], item.matched_text)
             self.assertEqual(item.confidence_semantics, "rule_match_strength_not_mastery_probability")
+            self.assertIn(item.matched_text, item.evidence)
+
+    def test_evidence_is_the_smallest_supporting_original_fragment(self):
+        text = "基于 LangGraph 设计 Agent 工作流。通过 Function Calling 调用搜索工具。了解 MCP。"
+        parsed = self.parse(projects=text)
+        evidence = {item.standard_skill_name: item.evidence for item in parsed.skills}
+        self.assertEqual(evidence["LangGraph"], "基于 LangGraph 设计 Agent 工作流")
+        self.assertEqual(evidence["Function Calling"], "通过 Function Calling 调用搜索工具")
+        self.assertEqual(evidence["MCP"], "了解 MCP")
+        self.assertNotEqual(evidence["LangGraph"], evidence["MCP"])
+
+    def test_evidence_strength_distinguishes_practice_from_mention(self):
+        parsed = self.parse("Python、FastAPI", projects="基于 LangGraph 设计 Agent 工作流。了解 MCP。")
+        strengths = {item.standard_skill_name: item.evidence_strength for item in parsed.skills}
+        self.assertEqual(strengths["LangGraph"], "strong")
+        self.assertEqual(strengths["MCP"], "weak")
+        self.assertEqual(strengths["Python"], "medium")
+
+    def test_agent_resume_skills_keep_their_own_supporting_sentences(self):
+        text = (
+            "使用 Python/FastAPI 完成后端接口与数据处理模块。"
+            "基于 LangGraph 设计 Agent 工作流。"
+            "通过 Function Calling 调用搜索、计算和数据查询工具。"
+            "开发基于 RAG 与 LangChain 的知识库问答系统。"
+            "了解 MCP（Model Context Protocol）。"
+        )
+        parsed = self.parse(projects=text)
+        strongest = {}
+        rank = {"weak": 0, "medium": 1, "strong": 2}
+        for item in parsed.skills:
+            if item.standard_skill_name not in strongest or rank[item.evidence_strength] > rank[strongest[item.standard_skill_name].evidence_strength]:
+                strongest[item.standard_skill_name] = item
+        for name in ("Python", "FastAPI", "RAG", "LangChain", "LangGraph", "Function Calling", "MCP"):
+            self.assertIn(name, strongest)
+            self.assertIn(name, strongest[name].evidence)
+        self.assertEqual(strongest["MCP"].evidence_strength, "weak")
+        self.assertEqual(strongest["LangGraph"].evidence_strength, "strong")
+        self.assertNotEqual(strongest["RAG"].evidence, strongest["LangGraph"].evidence)
+        self.assertNotEqual(strongest["Function Calling"].evidence, strongest["MCP"].evidence)
+
+    def test_resume_api_returns_evidence_based_job_coverage(self):
+        result = parse_resume(ResumeParseRequest(
+            target_job=JOB, education="硕士", experience="1年",
+            projects="基于LangGraph开发Agent工作流。了解MCP。", skills_raw="Python",
+        ))
+        self.assertIn("Python", result.core_skills_covered)
+        self.assertIn("LangGraph", result.core_skills_covered)
+        self.assertIn("MCP", result.weak_evidence_skills)
+        self.assertNotIn("MCP", result.core_skills_covered)
+        self.assertGreater(result.coverage_denominator, 0)
+        self.assertAlmostEqual(
+            result.coverage_rate,
+            result.coverage_numerator / result.coverage_denominator,
+        )
 
     def test_empty_requirements_do_not_grant_free_credit(self):
         self.assertIsNone(self.services.matching_engine._ratio(0, 0))

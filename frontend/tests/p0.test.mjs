@@ -56,18 +56,19 @@ test('actual payload builders clear all evidence and reject unrelated state', as
   assert.ok(!JSON.stringify(jd).includes('FastAPI'));
 });
 
-test('skill evidence escapes HTML, excludes non-affirmed tags and explains confidence', async () => {
+test('skill evidence escapes HTML, excludes non-affirmed tags and explains evidence strength', async () => {
   const { default: View } = await server.ssrLoadModule('/src/components/SkillEvidenceView.tsx');
   const skills = ['negated', 'planned', 'other_person', 'uncertain'].map((polarity, start) => ({
     skill_id: String(start), standard_skill_name: 'Python', polarity, accepted: false,
     confidence: 0.98, evidence: '<script>alert("synthetic")</script>', source_field: 'skills_raw', start,
-    need_human_review: polarity === 'uncertain',
+    evidence_strength: 'weak', need_human_review: polarity === 'uncertain',
   }));
   const html = renderToStaticMarkup(React.createElement(View, { skills }));
   assert.ok(!html.includes('<script>'));
   assert.match(html, /&lt;script&gt;/);
   assert.match(html, /暂无可接受的正向技能证据/);
-  assert.match(html, /不代表候选人真实掌握该技能的概率/);
-  assert.match(html, /抽取置信度/);
+  assert.match(html, /不代表技能熟练度、岗位胜任概率或录用概率/);
+  assert.match(html, /弱 Evidence/);
+  assert.doesNotMatch(html, /98%|抽取置信度/);
   assert.match(html, /需人工复核/);
 });

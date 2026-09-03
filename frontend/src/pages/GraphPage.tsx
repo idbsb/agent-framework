@@ -21,7 +21,17 @@ export default function GraphPage() {
   const [fallback, setFallback] = useState(false);
   const [selected, setSelected] = useState<{ kind: "node" | "edge"; id: string } | null>(null);
   useEffect(() => { getJson<{ jobs: JobOption[] }>("/api/jobs").then(r => setJobs(r.data.jobs)).catch(() => setJobs([])); }, []);
-  useEffect(() => { getJson<GraphPayload>(`/api/graph/job/${encodeURIComponent(title)}`, "/data/graph_compat_v1.json").then((result) => { setData(filterGraph(result.data, title)); setFallback(result.fallback); setSelected(null); }); }, [title]);
+  useEffect(() => {
+    let cancelled = false;
+    let recoveryTimer: ReturnType<typeof setTimeout> | undefined;
+    const load = () => getJson<GraphPayload>(`/api/graph/job/${encodeURIComponent(title)}`, "/data/graph_compat_v1.json").then((result) => {
+      if (cancelled) return;
+      setData(filterGraph(result.data, title)); setFallback(result.fallback); setSelected(null);
+      if (result.fallback) recoveryTimer = setTimeout(load, 15_000);
+    });
+    void load();
+    return () => { cancelled = true; if (recoveryTimer) clearTimeout(recoveryTimer); };
+  }, [title]);
 
   const option = useMemo(() => ({
     backgroundColor: "transparent",

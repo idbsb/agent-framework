@@ -9,6 +9,13 @@ from ..schemas import SkillEvidence
 from .skill_context import classify
 
 
+EVIDENCE_BOUNDARY = re.compile(r"[。！？!?；;\n]")
+PRACTICE_CUES = re.compile(
+    r"使用|开发|实现|搭建|设计|部署|负责|构建|完成|集成|调用|优化|维护|基于|应用|参与"
+)
+WEAK_CUES = re.compile(r"了解(?:过)?|学习过|接触过|简单提及|初步了解|略懂|听说过")
+
+
 def normalize(text: object) -> str:
     value = str(text or "").strip().casefold()
     value = value.replace("（", "(").replace("）", ")").replace("／", "/")
@@ -21,6 +28,23 @@ def _pattern(phrase: str) -> re.Pattern[str]:
     if re.fullmatch(r"[A-Za-z0-9_+#. /-]+", phrase):
         return re.compile(rf"(?<![A-Za-z0-9_]){escaped}(?![A-Za-z0-9_])", re.IGNORECASE)
     return re.compile(escaped, re.IGNORECASE)
+
+
+def _minimal_evidence(text: str, start: int, end: int) -> str:
+    left = 0
+    for boundary in EVIDENCE_BOUNDARY.finditer(text, 0, start):
+        left = boundary.end()
+    next_boundary = EVIDENCE_BOUNDARY.search(text, end)
+    right = next_boundary.start() if next_boundary else len(text)
+    return text[left:right].strip(" \t\r\n，,。；;！？!?")
+
+
+def _evidence_strength(source_field: str, evidence: str, polarity: str) -> str:
+    if polarity != "affirmed" or WEAK_CUES.search(evidence):
+        return "weak"
+    if source_field in {"projects", "work_experience"} and PRACTICE_CUES.search(evidence):
+        return "strong"
+    return "medium"
 
 
 @dataclass(frozen=True)
@@ -93,18 +117,20 @@ class SkillIndex:
                         exact = normalize(match.group(0)) == normalize(record.name)
                         confidence = 0.98 if exact else (0.90 if multi else 0.93)
                         polarity = classify(text, span[0], span[1], source_field)
+                        evidence_text = _minimal_evidence(text, span[0], span[1])
                         item = SkillEvidence(
                             skill_id=skill_id,
                             standard_skill_name=record.name,
                             skill_type=record.category,
                             confidence=confidence,
-                            evidence=text,
+                            evidence=evidence_text,
                             source_field=source_field,
                             matched_text=match.group(0),
                             start=span[0], end=span[1],
                             polarity=polarity,
                             accepted=polarity == "affirmed",
                             need_human_review=polarity == "uncertain",
+                            evidence_strength=_evidence_strength(source_field, evidence_text, polarity),
                         )
                         key = (skill_id, source_field, text, span)
                         prior = evidence.get(key)

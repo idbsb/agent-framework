@@ -27,6 +27,7 @@ class SkillEvidence(StableModel):
     end: int | None = None
     need_human_review: bool = False
     confidence_semantics: str = "rule_match_strength_not_mastery_probability"
+    evidence_strength: Literal["strong", "medium", "weak"] = "medium"
 
 
 class JDParseRequest(StableModel):
@@ -57,9 +58,16 @@ class JDParseResult(StableModel):
 class ResumeParseRequest(StableModel):
     model_config = ConfigDict(extra="forbid", str_strip_whitespace=False)
     resume_id: str = "RESUME-INPUT"
+    name: str = ""
+    phone: str = ""
+    email: str = ""
     target_job: str = ""
+    target_job_source: Literal["explicit", "content_inferred", "filename_inferred", "user_input", "unknown"] = "unknown"
     education: str = ""
+    degree: str = ""
+    major: str = ""
     experience: str = ""
+    experience_source: Literal["explicit", "date_range_inferred", "user_input", "unknown"] = "unknown"
     work_experience: str = ""
     projects: str = ""
     skills_raw: str = ""
@@ -67,12 +75,26 @@ class ResumeParseRequest(StableModel):
 
 class ResumeParseResult(StableModel):
     resume_id: str
+    name: str = ""
+    phone: str = ""
+    email: str = ""
     target_job: str = ""
+    target_job_source: Literal["explicit", "content_inferred", "filename_inferred", "user_input", "unknown"] = "unknown"
     education: str = ""
+    degree: str = ""
+    major: str = ""
     experience: str = ""
+    experience_source: Literal["explicit", "date_range_inferred", "user_input", "unknown"] = "unknown"
     work_experience: str = ""
     projects: list[str] = Field(default_factory=list)
     skills: list[SkillEvidence] = Field(default_factory=list)
+    core_skills_covered: list[str] = Field(default_factory=list)
+    bonus_skills_covered: list[str] = Field(default_factory=list)
+    weak_evidence_skills: list[str] = Field(default_factory=list)
+    missing_skills: list[str] = Field(default_factory=list)
+    coverage_numerator: int = Field(default=0, ge=0)
+    coverage_denominator: int = Field(default=0, ge=0)
+    coverage_rate: float | None = Field(default=None, ge=0, le=1)
     need_human_review: bool = False
 
 
@@ -81,8 +103,16 @@ class ResumeDocumentExtractResult(StableModel):
     file_type: Literal["pdf", "docx", "txt"]
     raw_text: str
     character_count: int = Field(ge=0)
+    name: str = ""
+    phone: str = ""
+    email: str = ""
+    target_job: str = ""
+    target_job_source: Literal["explicit", "content_inferred", "filename_inferred", "unknown"] = "unknown"
     education: str = ""
+    degree: str = ""
+    major: str = ""
     experience: str = ""
+    experience_source: Literal["explicit", "date_range_inferred", "unknown"] = "unknown"
     work_experience: str = ""
     projects: str = ""
     skills_raw: str = ""
