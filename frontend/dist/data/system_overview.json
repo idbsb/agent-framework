@@ -79,11 +79,11 @@
       "evidence_jd_count": 33
     },
     {
-      "skill_name": "计算机视觉（CV）",
+      "skill_name": "TensorFlow",
       "evidence_jd_count": 33
     },
     {
-      "skill_name": "TensorFlow",
+      "skill_name": "计算机视觉（CV）",
       "evidence_jd_count": 33
     }
   ],
