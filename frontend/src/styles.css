@@ -262,3 +262,4 @@ textarea { resize: vertical; line-height: 1.6; }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { scroll-behavior: auto !important; transition-duration: .01ms !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; }
 }
+.frequency-ledger{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px 18px;margin-top:4px}.frequency-ledger div{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:8px 10px;border-radius:8px;background:#f8fafc;color:#475569;font-size:13px}.frequency-ledger strong{white-space:nowrap;color:#047857;font-variant-numeric:tabular-nums}@media(max-width:760px){.frequency-ledger{grid-template-columns:1fr}}

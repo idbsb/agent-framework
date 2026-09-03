@@ -16,3 +16,8 @@ test('no publication label reports static baseline with no fabricated version',a
   const html=renderToStaticMarkup(React.createElement(Badge,{info:{profile_source:'static_baseline',profile_version:null}}));
   assert.match(html,/静态基线/);assert.ok(!html.includes('V1'));
 });
+test('job analysis labels current JD aggregate without implying a manual publication',async()=>{
+  const {default:Badge}=await server.ssrLoadModule('/src/components/ProfileSourceBadge.tsx');
+  const html=renderToStaticMarkup(React.createElement(Badge,{info:{profile_source:'jd_aggregate',profile_version:null}}));
+  assert.match(html,/当前最新JD自动聚合/);assert.ok(!html.includes('已审核'));
+});

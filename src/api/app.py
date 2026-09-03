@@ -114,7 +114,7 @@ def match_resume(request: MatchRequest) -> MatchResult:
 @app.get("/api/jobs")
 def list_jobs() -> dict:
     services = get_services()
-    rows = services.loader.load_jds()
+    rows = services.loader.load_job_analysis_jds()
     counts = {}
     for row in rows:
         title = str(row.get("standard_job_title", "")).strip()
@@ -125,7 +125,7 @@ def list_jobs() -> dict:
     for title, published in publications.items():
         counts[title] = published["source_job_count"]
     return {
-        "data_version": services.loader.version.get("data_version"),
+        "data_version": services.loader.job_analysis_data_version(),
         "jobs": [{"standard_job_title": title, "jd_count": counts[title],
                   **effective.metadata(effective.get_effective_job_profile(title, publications))} for title in sorted(counts)],
     }

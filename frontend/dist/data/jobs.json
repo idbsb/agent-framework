@@ -1,5 +1,5 @@
 {
-  "data_version": "1.0",
+  "data_version": "1.0+supplemental_jd_v3",
   "jobs": [
     {
       "standard_job_title": "3D数字人算法工程师",
@@ -98,6 +98,10 @@
       "jd_count": 1
     },
     {
+      "standard_job_title": "AI数据工程师",
+      "jd_count": 1
+    },
+    {
       "standard_job_title": "AI数据治理工程师",
       "jd_count": 1
     },
@@ -115,6 +119,10 @@
     },
     {
       "standard_job_title": "AI模型部署与性能优化工程师",
+      "jd_count": 1
+    },
+    {
+      "standard_job_title": "AI模型部署与运维工程师",
       "jd_count": 1
     },
     {
@@ -142,12 +150,20 @@
       "jd_count": 5
     },
     {
+      "standard_job_title": "AI编译器工程师",
+      "jd_count": 1
+    },
+    {
       "standard_job_title": "AI视频评测工程师",
       "jd_count": 2
     },
     {
       "standard_job_title": "AI训练师",
       "jd_count": 1
+    },
+    {
+      "standard_job_title": "AI评测",
+      "jd_count": 2
     },
     {
       "standard_job_title": "AI评测工程师",
@@ -164,6 +180,10 @@
     {
       "standard_job_title": "Agent评测产品经理",
       "jd_count": 1
+    },
+    {
+      "standard_job_title": "Agent评测工程师",
+      "jd_count": 3
     },
     {
       "standard_job_title": "LLM模型算法研究员",
@@ -191,6 +211,18 @@
     },
     {
       "standard_job_title": "UI/UX设计师",
+      "jd_count": 1
+    },
+    {
+      "standard_job_title": "VLA/VTLA灵巧操作算法工程师",
+      "jd_count": 1
+    },
+    {
+      "standard_job_title": "VLA算法工程师",
+      "jd_count": 3
+    },
+    {
+      "standard_job_title": "世界模型训练与真机部署工程师",
       "jd_count": 1
     },
     {
@@ -226,8 +258,36 @@
       "jd_count": 6
     },
     {
+      "standard_job_title": "具身智能技术产品经理",
+      "jd_count": 1
+    },
+    {
+      "standard_job_title": "具身智能数据Infra负责人",
+      "jd_count": 1
+    },
+    {
+      "standard_job_title": "具身智能数据工程师",
+      "jd_count": 2
+    },
+    {
+      "standard_job_title": "具身智能数据服务PDSA（J99380）",
+      "jd_count": 1
+    },
+    {
+      "standard_job_title": "具身智能数据服务解决方案与项目经理（J102453）",
+      "jd_count": 1
+    },
+    {
+      "standard_job_title": "具身智能数据闭环技术项目经理",
+      "jd_count": 1
+    },
+    {
+      "standard_job_title": "具身智能数采测试工程师",
+      "jd_count": 1
+    },
+    {
       "standard_job_title": "具身智能算法工程师",
-      "jd_count": 5
+      "jd_count": 6
     },
     {
       "standard_job_title": "具身智能算法研究员",
@@ -243,6 +303,10 @@
     },
     {
       "standard_job_title": "具身智能软件工程师",
+      "jd_count": 1
+    },
+    {
+      "standard_job_title": "办公Agent算法工程师",
       "jd_count": 1
     },
     {
@@ -290,8 +354,28 @@
       "jd_count": 1
     },
     {
+      "standard_job_title": "大模型与智能体算法工程师",
+      "jd_count": 1
+    },
+    {
+      "standard_job_title": "大模型内生安全研究员",
+      "jd_count": 1
+    },
+    {
+      "standard_job_title": "大模型安全与对齐算法工程师",
+      "jd_count": 3
+    },
+    {
       "standard_job_title": "大模型安全攻防工程师",
       "jd_count": 3
+    },
+    {
+      "standard_job_title": "大模型平台策略推理优化工程师",
+      "jd_count": 1
+    },
+    {
+      "standard_job_title": "大模型平台运维工程师",
+      "jd_count": 1
     },
     {
       "standard_job_title": "大模型幻觉测评专员",
@@ -306,8 +390,16 @@
       "jd_count": 2
     },
     {
+      "standard_job_title": "大模型应用研发工程师",
+      "jd_count": 1
+    },
+    {
       "standard_job_title": "大模型微调工程师",
       "jd_count": 1
+    },
+    {
+      "standard_job_title": "大模型推理优化工程师",
+      "jd_count": 2
     },
     {
       "standard_job_title": "大模型推理研发工程师",
@@ -346,6 +438,10 @@
       "jd_count": 1
     },
     {
+      "standard_job_title": "大模型评估产品经理",
+      "jd_count": 3
+    },
+    {
       "standard_job_title": "大模型评测工程师",
       "jd_count": 2
     },
@@ -360,6 +456,10 @@
     {
       "standard_job_title": "大语言模型后训练算法工程师",
       "jd_count": 1
+    },
+    {
+      "standard_job_title": "安全专家（AI方向）",
+      "jd_count": 3
     },
     {
       "standard_job_title": "工业AI工程师",
@@ -388,6 +488,10 @@
     {
       "standard_job_title": "无人机集群调度平台工程师",
       "jd_count": 1
+    },
+    {
+      "standard_job_title": "智能体攻防算法工程师",
+      "jd_count": 3
     },
     {
       "standard_job_title": "智能体研发工程师",
@@ -440,6 +544,10 @@
     {
       "standard_job_title": "网页预训练数据研究工程师",
       "jd_count": 1
+    },
+    {
+      "standard_job_title": "自动驾驶感知测试开发工程师",
+      "jd_count": 4
     },
     {
       "standard_job_title": "自动驾驶数据闭环工程师",

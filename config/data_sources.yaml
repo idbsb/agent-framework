@@ -1,6 +1,11 @@
 standardized_jd_dataset:
   path: outputs/standardized_jd_dataset_v1.xlsx
   sheet: 标准化JD
+supplemental_job_analysis:
+  path: data/external/supplemental_jd_v3.json
+  candidate_mapping_path: outputs/emerging_jobs_v2.json
+  include_flag: count_in_statistics
+  protection_label: PROTECTED_NEW_DATA
 standard_job_title_mapping:
   path: outputs/standard_job_title_mapping_v1.xlsx
   sheet: 岗位名称映射
@@ -16,4 +21,3 @@ job_skill_gold:
   sheet: 技能明细
 outputs_dir: outputs
 reports_dir: reports
-

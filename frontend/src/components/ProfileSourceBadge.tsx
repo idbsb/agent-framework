@@ -2,5 +2,10 @@ export type ProfileSourceInfo = { profile_source?: string; profile_version?: num
 
 export default function ProfileSourceBadge({ info }: { info?: ProfileSourceInfo | null }) {
   if (!info) return null;
-  return <p className="data-chip" data-testid="profile-source">岗位画像来源：{info.profile_source === "published_dynamic" ? `已发布画像 V${info.profile_version}（已审核）` : "静态基线（当前可用的岗位基准数据）"}</p>;
+  const label = info.profile_source === "published_dynamic"
+    ? `已发布画像 V${info.profile_version}（已审核）`
+    : info.profile_source === "jd_aggregate"
+      ? "当前最新JD自动聚合"
+      : "静态基线（当前可用的岗位基准数据）";
+  return <p className="data-chip" data-testid="profile-source">岗位画像来源：{label}</p>;
 }

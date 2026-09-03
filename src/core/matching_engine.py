@@ -46,7 +46,7 @@ class MatchingEngine:
 
     def _build_profiles(self) -> dict[str, dict]:
         grouped: dict[str, list[dict]] = defaultdict(list)
-        for row in self.loader.load_jds():
+        for row in self.loader.load_job_analysis_jds():
             title = str(row.get("standard_job_title", ""))
             if title:
                 grouped[title].append(row)

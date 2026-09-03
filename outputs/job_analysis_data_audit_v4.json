@@ -1,0 +1,289 @@
+{
+  "generated_at": "2026-09-03T23:41:34+08:00",
+  "data_version": "1.0+supplemental_jd_v3",
+  "protection_label": "PROTECTED_NEW_DATA",
+  "pre_fix_runtime": {
+    "configured_formal_jd_count": 191,
+    "configured_formal_job_count": 117,
+    "legacy_profile_job_count": 3
+  },
+  "post_fix_runtime": {
+    "analysis_jd_count": 237,
+    "standard_job_count": 144,
+    "complete_profile_count": 144,
+    "supplemental_records_preserved": 49,
+    "supplemental_records_counted": 46,
+    "emerging_candidate_count": 32,
+    "jobs_with_any_explicit_unknown": 124,
+    "unknown_by_field": {
+      "education": 23,
+      "experience": 18,
+      "project_experience": 14,
+      "core_responsibilities": 0,
+      "required_skills_text": 18,
+      "bonus_skills_text": 108
+    },
+    "small_sample_job_count": 127,
+    "single_jd_job_count": 108,
+    "hundred_percent_skill_entries_in_small_samples": 461,
+    "hundred_percent_skill_entries_in_samples_of_at_least_three": 12,
+    "jd_count_by_job": {
+      "3D数字人算法工程师": 1,
+      "AI Agent优化工程师": 1,
+      "AI Agent开发工程师": 12,
+      "AI For Science算法专家": 1,
+      "AIGC多模态内容生成算法研究员": 1,
+      "AIGC视频生成算法工程师": 1,
+      "AIoT测试工程师": 1,
+      "AI产品经理": 2,
+      "AI全栈工程师": 1,
+      "AI前沿材料专家": 1,
+      "AI基础设施工程师": 1,
+      "AI安全与隐私工程师": 1,
+      "AI安全合规工程师": 1,
+      "AI安全工程师": 2,
+      "AI安全技术工程师": 9,
+      "AI安全攻防工程师": 4,
+      "AI安全验证工程师": 1,
+      "AI工作流搭建师": 1,
+      "AI应用工程师": 1,
+      "AI应用开发工程师": 2,
+      "AI应用研发工程师": 1,
+      "AI应用研究员": 1,
+      "AI攻防技术专家": 2,
+      "AI数字人开发工程师": 1,
+      "AI数据工程师": 1,
+      "AI数据治理工程师": 1,
+      "AI智能体应用开发工程师": 4,
+      "AI模型工程师": 1,
+      "AI模型研究员": 1,
+      "AI模型部署与性能优化工程师": 1,
+      "AI模型部署与运维工程师": 1,
+      "AI测试开发工程师": 2,
+      "AI渲染研究员": 1,
+      "AI研发工程师": 1,
+      "AI端侧大模型开发工程师": 1,
+      "AI算法工程师": 1,
+      "AI算法测试开发工程师": 5,
+      "AI编译器工程师": 1,
+      "AI视频评测工程师": 2,
+      "AI训练师": 1,
+      "AI评测": 2,
+      "AI评测工程师": 5,
+      "Agent基础设施工程师": 1,
+      "Agent研发工程师": 1,
+      "Agent评测产品经理": 1,
+      "Agent评测工程师": 3,
+      "LLM模型算法研究员": 1,
+      "RAG引擎研发工程师": 2,
+      "RAG技术负责人": 1,
+      "RAG知识库开发工程师": 2,
+      "RAG知识库落地工程师": 1,
+      "RPA智能体开发工程师": 1,
+      "UI/UX设计师": 1,
+      "VLA/VTLA灵巧操作算法工程师": 1,
+      "VLA算法工程师": 3,
+      "世界模型训练与真机部署工程师": 1,
+      "云端Agent技术专家": 1,
+      "仿真与数据合成工程师": 1,
+      "具身多模态交互算法工程师": 1,
+      "具身数据评估工程师": 1,
+      "具身智能仿真与数据工程师": 1,
+      "具身智能仿真数据采集工程师": 1,
+      "具身智能仿真算法实习生": 1,
+      "具身智能工程师": 6,
+      "具身智能技术产品经理": 1,
+      "具身智能数据Infra负责人": 1,
+      "具身智能数据工程师": 2,
+      "具身智能数据服务PDSA（J99380）": 1,
+      "具身智能数据服务解决方案与项目经理（J102453）": 1,
+      "具身智能数据闭环技术项目经理": 1,
+      "具身智能数采测试工程师": 1,
+      "具身智能算法工程师": 6,
+      "具身智能算法研究员": 3,
+      "具身智能系统工程师": 2,
+      "具身智能规划控制工程师": 1,
+      "具身智能软件工程师": 1,
+      "办公Agent算法工程师": 1,
+      "医疗大模型医学专家": 1,
+      "原生多模态算法研究员": 1,
+      "后端工程师": 1,
+      "图像算法工程师": 1,
+      "多模态大模型后训练算法工程师": 1,
+      "多模态大模型算法研究员": 1,
+      "多模态大模型评估师": 2,
+      "多模态数据算法工程师": 1,
+      "多模态智能体算法工程师": 1,
+      "多模态深度鉴伪算法研究员": 1,
+      "多模态算法研究员": 1,
+      "大模型与智能体算法工程师": 1,
+      "大模型内生安全研究员": 1,
+      "大模型安全与对齐算法工程师": 3,
+      "大模型安全攻防工程师": 3,
+      "大模型平台策略推理优化工程师": 1,
+      "大模型平台运维工程师": 1,
+      "大模型幻觉测评专员": 1,
+      "大模型应用工程师": 1,
+      "大模型应用开发工程师": 2,
+      "大模型应用研发工程师": 1,
+      "大模型微调工程师": 1,
+      "大模型推理优化工程师": 2,
+      "大模型推理研发工程师": 1,
+      "大模型推理算法工程师": 1,
+      "大模型推理系统工程师": 1,
+      "大模型数据科学家": 1,
+      "大模型智能体安全研究员": 2,
+      "大模型智能体架构师": 1,
+      "大模型算法工程师": 1,
+      "大模型行业研究员": 1,
+      "大模型训练研发工程师": 1,
+      "大模型评估产品经理": 3,
+      "大模型评测工程师": 2,
+      "大模型评测算法工程师": 2,
+      "大模型部署工程师": 1,
+      "大语言模型后训练算法工程师": 1,
+      "安全专家（AI方向）": 3,
+      "工业AI工程师": 1,
+      "工业解决方案工程师": 1,
+      "建模工程师": 1,
+      "提示词工程师": 1,
+      "数字人研发工程师": 1,
+      "数字孪生开发工程师": 1,
+      "无人机集群调度平台工程师": 1,
+      "智能体攻防算法工程师": 3,
+      "智能体研发工程师": 1,
+      "智能体策略研发工程师": 1,
+      "智能座舱大模型算法工程师": 1,
+      "机器人VLA算法工程师": 1,
+      "机器人学习算法工程师": 1,
+      "机器人感知算法工程师": 2,
+      "机器人数据工程师": 2,
+      "机器人数据运营工程师": 1,
+      "机器人物理角色动画算法工程师": 1,
+      "模型加速与部署工程师": 1,
+      "模型训练优化工程师": 1,
+      "网络安全大模型算法工程师": 1,
+      "网页预训练数据研究工程师": 1,
+      "自动驾驶感知测试开发工程师": 4,
+      "自动驾驶数据闭环工程师": 1,
+      "自动驾驶算法优化工程师": 1,
+      "行业大模型微调工程师": 1,
+      "语言大模型研究员": 1,
+      "软件缺陷检测研究工程师": 1,
+      "边缘AI芯片算法部署工程师": 1,
+      "金融科技多模态大模型算法工程师": 1
+    }
+  },
+  "protected_new_data_before": [
+    {
+      "path": "data/external/supplemental_jd_v3_source.txt",
+      "size_bytes": 101895,
+      "sha256": "CA39AC9B96BD39E07064FBD2BA173D2162AC6A47873F989B57B100B240098D70"
+    },
+    {
+      "path": "data/external/supplemental_jd_v3.json",
+      "size_bytes": 328429,
+      "sha256": "62E3009117F7AF0E83972992858E875FE5A44F4CF6CBC7397872C81EBF4606A6"
+    },
+    {
+      "path": "data/external/supplemental_jd_v3.xlsx",
+      "size_bytes": 69839,
+      "sha256": "C50E0C59AB7D05C06C8D0AD8C4B1418F9B2B5296D7060B2D7F95A20B9A662B0D"
+    },
+    {
+      "path": "outputs/emerging_jobs_v2.json",
+      "size_bytes": 443212,
+      "sha256": "BA641CAB13DBF44A55693E02BA28416485922CA4A1BD3D99EDC23559FDD1BCC2"
+    },
+    {
+      "path": "outputs/emerging_jobs_v2.xlsx",
+      "size_bytes": 66592,
+      "sha256": "59BAD3C6AB06EEA7D0458D6983DF1E104297922386070728CFEECB02ACAC501A"
+    },
+    {
+      "path": "outputs/supplemental_jd_mapping_report_v3.xlsx",
+      "size_bytes": 86744,
+      "sha256": "E0438CECCD87AD2908CDFDE2E7F6A2DD0B9A65110933FF0E80EF14FB241DE9B9"
+    },
+    {
+      "path": "config/skill_dictionary_extensions.json",
+      "size_bytes": 818,
+      "sha256": "084571DFE7072DBD8753D86D13A812568F9B55F9FA3D72D902AD15B23293F5AA"
+    }
+  ],
+  "protected_new_data_after": [
+    {
+      "path": "data/external/supplemental_jd_v3_source.txt",
+      "size_bytes": 101895,
+      "sha256": "CA39AC9B96BD39E07064FBD2BA173D2162AC6A47873F989B57B100B240098D70"
+    },
+    {
+      "path": "data/external/supplemental_jd_v3.json",
+      "size_bytes": 328429,
+      "sha256": "62E3009117F7AF0E83972992858E875FE5A44F4CF6CBC7397872C81EBF4606A6"
+    },
+    {
+      "path": "data/external/supplemental_jd_v3.xlsx",
+      "size_bytes": 69839,
+      "sha256": "C50E0C59AB7D05C06C8D0AD8C4B1418F9B2B5296D7060B2D7F95A20B9A662B0D"
+    },
+    {
+      "path": "outputs/emerging_jobs_v2.json",
+      "size_bytes": 443212,
+      "sha256": "BA641CAB13DBF44A55693E02BA28416485922CA4A1BD3D99EDC23559FDD1BCC2"
+    },
+    {
+      "path": "outputs/emerging_jobs_v2.xlsx",
+      "size_bytes": 66592,
+      "sha256": "59BAD3C6AB06EEA7D0458D6983DF1E104297922386070728CFEECB02ACAC501A"
+    },
+    {
+      "path": "outputs/supplemental_jd_mapping_report_v3.xlsx",
+      "size_bytes": 86744,
+      "sha256": "E0438CECCD87AD2908CDFDE2E7F6A2DD0B9A65110933FF0E80EF14FB241DE9B9"
+    },
+    {
+      "path": "config/skill_dictionary_extensions.json",
+      "size_bytes": 818,
+      "sha256": "084571DFE7072DBD8753D86D13A812568F9B55F9FA3D72D902AD15B23293F5AA"
+    }
+  ],
+  "protected_new_data_git_diff_clean": true,
+  "protected_new_data_unchanged": true,
+  "frozen_sources_before": [
+    {
+      "path": "outputs/standardized_jd_dataset_v1.xlsx",
+      "size_bytes": 179341,
+      "sha256": "B00A0220FD4B974D8B00BB57D6F0AF3BB40F1D92CC7DDD59FCB0DDDA9FC90EDE"
+    },
+    {
+      "path": "outputs/standard_job_title_mapping_v1.xlsx",
+      "size_bytes": 20617,
+      "sha256": "293B34DBB8E4E6F5689CF58387A38601F30FEB759B46E7F34931BC1F6FF859B1"
+    },
+    {
+      "path": "outputs/standard_skill_dictionary_v1.xlsx",
+      "size_bytes": 19794,
+      "sha256": "178C64E654D3534878489E88AAFC5A17B98FE361CB38DB370F9036D01E5C1055"
+    }
+  ],
+  "frozen_sources_after": [
+    {
+      "path": "outputs/standardized_jd_dataset_v1.xlsx",
+      "size_bytes": 179341,
+      "sha256": "B00A0220FD4B974D8B00BB57D6F0AF3BB40F1D92CC7DDD59FCB0DDDA9FC90EDE"
+    },
+    {
+      "path": "outputs/standard_job_title_mapping_v1.xlsx",
+      "size_bytes": 20617,
+      "sha256": "293B34DBB8E4E6F5689CF58387A38601F30FEB759B46E7F34931BC1F6FF859B1"
+    },
+    {
+      "path": "outputs/standard_skill_dictionary_v1.xlsx",
+      "size_bytes": 19794,
+      "sha256": "178C64E654D3534878489E88AAFC5A17B98FE361CB38DB370F9036D01E5C1055"
+    }
+  ],
+  "frozen_sources_git_diff_clean": true,
+  "frozen_sources_unchanged": true
+}

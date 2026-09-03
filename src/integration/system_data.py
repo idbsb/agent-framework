@@ -6,6 +6,7 @@ from pathlib import Path
 from typing import Any
 
 from ..api.service import CoreServices
+from ..core.job_profile_builder import JobProfileBuilder
 from .evolution_adapter import EvolutionAdapter
 from .graph_adapter import GraphAdapter
 
@@ -21,6 +22,11 @@ class SystemDataService:
         self.project_root = self.loader.project_root
         self.graph = GraphAdapter(self.loader, services.skill_index, effective_profiles=services.matching_engine.effective_profiles)
         self.evolution = EvolutionAdapter(self.project_root)
+        self.profile_builder = JobProfileBuilder(
+            self.loader.load_job_analysis_jds(),
+            services.skill_index,
+            services.matching_engine.profile_config,
+        )
 
     def _emerging(self) -> dict[str, Any]:
         errors: list[str] = []
@@ -51,7 +57,7 @@ class SystemDataService:
         return next((item for item in self._emerging().get("candidates", []) if item.get("candidate_id") == candidate_id), None)
 
     def overview(self) -> dict[str, Any]:
-        rows = self.loader.load_jds()
+        rows = self.loader.load_job_analysis_jds()
         resumes = self.loader.load_resumes()
         skills, _ = self.loader.load_skill_dictionary()
         graph = self.graph.load()
@@ -71,7 +77,7 @@ class SystemDataService:
             # A JD contributes at most once per skill, even with many evidence spans.
             skill_counts.update({item.standard_skill_name for item in extracted if item.accepted})
         return {
-            "data_version": self.loader.version.get("data_version"),
+            "data_version": self.loader.job_analysis_data_version(),
             "truth_statement": f"当前系统基于{len(rows)}条真实招聘JD构建。",
             "metrics": {
                 "jd_count": len(rows),
@@ -95,45 +101,40 @@ class SystemDataService:
     def job_analysis(self, job_title: str) -> dict[str, Any]:
         reader = self.services.matching_engine.effective_profiles
         effective = reader.get_effective_job_profile(job_title)
-        profile_path = self.project_root / "outputs" / "job_profiles_cleaned.xlsx"
-        profile = None
-        if profile_path.exists():
-            rows = self.loader.read_sheet(profile_path, "岗位能力画像")
-            profile = next((row for row in rows if _text(row.get("岗位名称")) == job_title), None)
         matching_profile = effective["matching_profile"] or {}
-        graph = self.graph.for_job(job_title, limit=30, effective_profile=effective)
-        skills_by_id = {node.get("id"): node.get("name") for node in graph.get("nodes", []) if node.get("type") == "skill"}
-        frequencies = [
-            {
-                "skill_id": edge.get("target"),
-                "skill_name": skills_by_id.get(edge.get("target"), str(edge.get("target", ""))),
-                "frequency": edge.get("frequency", 0),
-                "importance": edge.get("importance", ""),
-                "skill_level": edge.get("skill_level", ""),
-                "evidence_jd_ids": edge.get("evidence_jd_ids", []),
-            }
-            for edge in graph.get("edges", [])
-        ]
-        result = {
-            "available": bool(profile or matching_profile),
-            "job_title": job_title,
-            "jd_count": int((profile or {}).get("JD数量") or matching_profile.get("jd_count") or 0),
-            "core_responsibilities": _text((profile or {}).get("核心职责")),
-            "required_skills_text": _text((profile or {}).get("必备技能")),
-            "bonus_skills_text": _text((profile or {}).get("加分技能")),
-            "project_experience": _text((profile or {}).get("项目经历")),
-            "education": _text((profile or {}).get("学历要求")),
-            "experience": _text((profile or {}).get("经验要求")),
-            "skill_frequencies": frequencies,
-            "graph_source_label": graph.get("source_label", ""),
-            "message": "" if profile or matching_profile else "当前岗位尚无正式能力画像。",
-        }
+        result = self.profile_builder.build(job_title, matching_profile)
+        result["graph_source_label"] = "当前最新JD自动聚合"
         result.update(reader.metadata(effective))
+        if effective["profile_source"] == "static_baseline" and result.get("available"):
+            result["profile_source"] = "jd_aggregate"
         if effective["profile_source"] == "published_dynamic":
             d = effective["definition"]
-            result.update(available=True, jd_count=matching_profile["jd_count"],
-                          core_responsibilities="；".join(r["text"] for r in d["core_responsibilities"]),
-                          required_skills_text="；".join(s["skill_name"] for s in d["required_skills"]),
-                          bonus_skills_text="；".join(s["skill_name"] for s in d["preferred_skills"]),
-                          published_profile=effective["publication"])
+            result.update(
+                available=True,
+                core_responsibilities="；".join(r["text"] for r in d["core_responsibilities"]),
+                required_skills_text="；".join(s["skill_name"] for s in d["required_skills"]),
+                bonus_skills_text="；".join(s["skill_name"] for s in d["preferred_skills"]) or "招聘信息未明确",
+                published_profile=effective["publication"],
+            )
+            if not result.get("jd_count"):
+                graph = self.graph.for_job(job_title, limit=30, effective_profile=effective)
+                skills_by_id = {node.get("id"): node.get("name") for node in graph.get("nodes", []) if node.get("type") == "skill"}
+                result.update(
+                    jd_count=matching_profile["jd_count"],
+                    core_responsibilities="；".join(r["text"] for r in d["core_responsibilities"]),
+                    project_experience="招聘信息未明确",
+                    education="招聘信息未明确",
+                    experience="招聘信息未明确",
+                    skill_frequencies=[{
+                        "skill_id": edge.get("target"),
+                        "skill_name": skills_by_id.get(edge.get("target"), str(edge.get("target", ""))),
+                        "frequency": edge.get("frequency", 0),
+                        "evidence_jd_count": len(edge.get("evidence_jd_ids", [])),
+                        "sample_size": matching_profile["jd_count"],
+                        "evidence_jd_ids": edge.get("evidence_jd_ids", []),
+                    } for edge in graph.get("edges", [])],
+                    small_sample=matching_profile["jd_count"] < 3,
+                    sample_notice="小样本提示：当前岗位招聘样本较少，技能频率仅供观察。" if matching_profile["jd_count"] < 3 else "",
+                    message="",
+                )
         return result

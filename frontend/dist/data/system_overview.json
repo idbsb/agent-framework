@@ -1,15 +1,15 @@
 {
-  "data_version": "1.0",
-  "truth_statement": "当前系统基于191条真实招聘JD构建。",
+  "data_version": "1.0+supplemental_jd_v3",
+  "truth_statement": "当前系统基于237条真实招聘JD构建。",
   "metrics": {
-    "jd_count": 191,
-    "standard_job_count": 117,
+    "jd_count": 237,
+    "standard_job_count": 144,
     "standard_skill_count": 84,
     "frozen_standard_skill_count": 82,
     "graph_node_count": 490,
     "graph_edge_count": 2012,
     "resume_count": 27,
-    "evidence_covered_jd_count": 169
+    "evidence_covered_jd_count": 211
   },
   "top_jobs": [
     {
@@ -21,15 +21,15 @@
       "jd_count": 9
     },
     {
+      "job_title": "具身智能算法工程师",
+      "jd_count": 6
+    },
+    {
       "job_title": "具身智能工程师",
       "jd_count": 6
     },
     {
       "job_title": "AI算法测试开发工程师",
-      "jd_count": 5
-    },
-    {
-      "job_title": "具身智能算法工程师",
       "jd_count": 5
     },
     {
@@ -48,46 +48,50 @@
   "top_skills": [
     {
       "skill_name": "Python",
-      "evidence_jd_count": 117
+      "evidence_jd_count": 151
     },
     {
       "skill_name": "大语言模型（LLM）",
-      "evidence_jd_count": 70
+      "evidence_jd_count": 92
     },
     {
       "skill_name": "C++",
-      "evidence_jd_count": 57
-    },
-    {
-      "skill_name": "RAG",
-      "evidence_jd_count": 48
+      "evidence_jd_count": 73
     },
     {
       "skill_name": "PyTorch",
-      "evidence_jd_count": 45
+      "evidence_jd_count": 61
+    },
+    {
+      "skill_name": "RAG",
+      "evidence_jd_count": 54
     },
     {
       "skill_name": "Java",
-      "evidence_jd_count": 39
-    },
-    {
-      "skill_name": "LangChain",
-      "evidence_jd_count": 30
-    },
-    {
-      "skill_name": "TensorFlow",
-      "evidence_jd_count": 29
+      "evidence_jd_count": 43
     },
     {
       "skill_name": "Linux",
-      "evidence_jd_count": 27
+      "evidence_jd_count": 33
+    },
+    {
+      "skill_name": "LangChain",
+      "evidence_jd_count": 33
     },
     {
       "skill_name": "计算机视觉（CV）",
-      "evidence_jd_count": 26
+      "evidence_jd_count": 33
+    },
+    {
+      "skill_name": "TensorFlow",
+      "evidence_jd_count": 33
     }
   ],
   "sources": [
+    {
+      "source": "用户补充JD TXT",
+      "jd_count": 46
+    },
     {
       "source": "智联招聘官网招聘",
       "jd_count": 28

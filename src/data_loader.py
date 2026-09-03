@@ -105,6 +105,80 @@ class DataLoader:
     def load_jds(self) -> list[dict[str, Any]]:
         return self._load_mapped("standardized_jd_dataset")
 
+    def load_job_analysis_jds(self) -> list[dict[str, Any]]:
+        """Return the immutable formal corpus plus approved supplemental statistics rows.
+
+        The supplemental source and its existing candidate mapping remain untouched. Confirmed
+        duplicates stay in the protected source for auditability but are not counted twice.
+        """
+        rows = self.load_jds()
+        source = self.sources.get("supplemental_job_analysis")
+        if not isinstance(source, dict):
+            return rows
+        source_path = Path(str(source.get("path", "")))
+        mapping_path = Path(str(source.get("candidate_mapping_path", "")))
+        source_path = source_path if source_path.is_absolute() else self.project_root / source_path
+        mapping_path = mapping_path if mapping_path.is_absolute() else self.project_root / mapping_path
+        if not source_path.exists() or not mapping_path.exists():
+            raise DataConfigurationError("岗位分析补充JD或其既有候选映射不存在")
+        payload = json.loads(source_path.read_text(encoding="utf-8"))
+        mapping = json.loads(mapping_path.read_text(encoding="utf-8"))
+        records = payload.get("records")
+        candidates = mapping.get("candidates")
+        if not isinstance(records, list) or not isinstance(candidates, list):
+            raise DataConfigurationError("岗位分析补充JD或候选映射结构无效")
+        candidate_names = {
+            str(item.get("candidate_id", "")).strip(): str(item.get("candidate_name", "")).strip()
+            for item in candidates if isinstance(item, dict)
+        }
+        include_flag = str(source.get("include_flag") or "count_in_statistics")
+        protection_label = str(source.get("protection_label") or "PROTECTED_NEW_DATA")
+        supplemental = []
+        for record in records:
+            if not isinstance(record, dict) or not record.get(include_flag):
+                continue
+            candidate_id = str(record.get("primary_emerging_job_id", "")).strip()
+            title = candidate_names.get(candidate_id, "")
+            if not title:
+                raise DataConfigurationError(f"补充JD缺少既有岗位候选映射：{record.get('evidence_id', '')}")
+            supplemental.append({
+                "jd_id": str(record.get("evidence_id", "")).strip(),
+                "original_job_title": str(record.get("raw_job_title", "")).strip(),
+                "standard_job_title": title,
+                "job_family": str(record.get("job_family", "")).strip(),
+                "technical_domain": str(record.get("technical_domain", "")).strip(),
+                "company": str(record.get("company_normalized", "")).strip(),
+                "city": str(record.get("location", "")).strip(),
+                "responsibilities": str(record.get("responsibilities_raw", "")).strip(),
+                "required_skills_raw": str(record.get("requirements_raw", "")).strip(),
+                "bonus_skills_raw": str(record.get("bonus_requirements_raw", "")).strip(),
+                "education": str(record.get("education_requirement", "")).strip(),
+                "experience": str(record.get("experience_requirement", "")).strip(),
+                "original_experience": str(record.get("experience_requirement", "")).strip(),
+                "source": str(record.get("source_name", "")).strip(),
+                "source_url": str(record.get("source_url", "")).strip(),
+                "standardization_status": str(record.get("mapping_type", "")).strip(),
+                "original_row_number": record.get("source_start_line", ""),
+                "raw_text": str(record.get("raw_text", "")).strip(),
+                "candidate_id": candidate_id,
+                "data_protection": protection_label,
+            })
+        ids = [row.get("jd_id") for row in rows + supplemental]
+        if len(ids) != len(set(ids)):
+            raise DataConfigurationError("岗位分析组合输入存在重复JD编号")
+        return rows + supplemental
+
+    def job_analysis_data_version(self) -> str:
+        base = str(self.version.get("data_version") or "unknown")
+        source = self.sources.get("supplemental_job_analysis")
+        if not isinstance(source, dict):
+            return base
+        path = Path(str(source.get("path", "")))
+        path = path if path.is_absolute() else self.project_root / path
+        payload = json.loads(path.read_text(encoding="utf-8"))
+        supplemental = str(payload.get("data_version") or "supplemental")
+        return f"{base}+{supplemental}"
+
     def load_job_title_mapping(self) -> list[dict[str, Any]]:
         return self._load_mapped("standard_job_title_mapping")
 
