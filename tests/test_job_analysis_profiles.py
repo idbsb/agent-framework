@@ -47,6 +47,10 @@ class JobAnalysisProfileRegressionTest(unittest.TestCase):
                     "bonus_skills_text",
                 ):
                     self.assertTrue(result[field], field)
+                if result["required_skills_jd_count"]:
+                    self.assertNotEqual(result["required_skills_text"], UNKNOWN)
+                if result["bonus_skills_jd_count"]:
+                    self.assertNotEqual(result["bonus_skills_text"], UNKNOWN)
                 for skill in result["skill_frequencies"]:
                     self.assertEqual(skill["sample_size"], count)
                     self.assertEqual(skill["frequency"], skill["evidence_jd_count"] / count)
