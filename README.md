@@ -153,3 +153,11 @@ P1 的线上生产闭环仍需负责人部署验收；本地测试通过不等�
 ## 免费公开部署（不使用 Vercel）
 
 比赛展示使用一个 Render 免费 Web Service 同时提供前端和 API。该模式支持公开查询、文件简历解析、匹配和展示，但关闭无法持久化的在线 SQLite 写入。部署方法和限制见 [Render 免费部署说明](docs/render_free_deployment.md)。
+
+## 参赛软件材料
+
+- [源代码及版本说明](docs/source_code_and_version.md)
+- [部署说明](docs/deployment_guide.md)
+- [单元测试与覆盖率说明](docs/testing_and_coverage.md)
+
+完整覆盖率可执行 `powershell -NoProfile -ExecutionPolicy Bypass -File scripts/run_coverage.ps1`；Python 与前端均设置 60% 自动失败门槛。
