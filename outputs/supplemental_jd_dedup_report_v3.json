@@ -1,0 +1,646 @@
+{
+  "data_version": "supplemental_jd_v3",
+  "generated_at": "2026-09-03T11:35:59+08:00",
+  "original_jd_count": 191,
+  "supplemental_jd_count": 49,
+  "duplicate_count": 3,
+  "possible_duplicate_count": 1,
+  "counted_supplemental_count": 46,
+  "methods": [
+    "规范化JD全文SHA-256",
+    "企业名称规范化",
+    "岗位名称规范化",
+    "企业+岗位名+URL组合键",
+    "JD正文相似度",
+    "技能集合相似度"
+  ],
+  "records": [
+    {
+      "evidence_id": "SUP-JD-001",
+      "duplicate_status": "unique",
+      "duplicate_of": "",
+      "duplicate_reason": "未发现重复。",
+      "count_in_statistics": true,
+      "needs_manual_review": false
+    },
+    {
+      "evidence_id": "SUP-JD-002",
+      "duplicate_status": "unique",
+      "duplicate_of": "",
+      "duplicate_reason": "未发现重复。",
+      "count_in_statistics": true,
+      "needs_manual_review": false
+    },
+    {
+      "evidence_id": "SUP-JD-003",
+      "duplicate_status": "unique",
+      "duplicate_of": "",
+      "duplicate_reason": "未发现重复。",
+      "count_in_statistics": true,
+      "needs_manual_review": false
+    },
+    {
+      "evidence_id": "SUP-JD-004",
+      "duplicate_status": "unique",
+      "duplicate_of": "",
+      "duplicate_reason": "未发现重复。",
+      "count_in_statistics": true,
+      "needs_manual_review": false
+    },
+    {
+      "evidence_id": "SUP-JD-005",
+      "duplicate_status": "unique",
+      "duplicate_of": "",
+      "duplicate_reason": "未发现重复。",
+      "count_in_statistics": true,
+      "needs_manual_review": false
+    },
+    {
+      "evidence_id": "SUP-JD-006",
+      "duplicate_status": "unique",
+      "duplicate_of": "",
+      "duplicate_reason": "未发现重复。",
+      "count_in_statistics": true,
+      "needs_manual_review": false
+    },
+    {
+      "evidence_id": "SUP-JD-007",
+      "duplicate_status": "unique",
+      "duplicate_of": "",
+      "duplicate_reason": "未发现重复。",
+      "count_in_statistics": true,
+      "needs_manual_review": false
+    },
+    {
+      "evidence_id": "SUP-JD-008",
+      "duplicate_status": "unique",
+      "duplicate_of": "",
+      "duplicate_reason": "未发现重复。",
+      "count_in_statistics": true,
+      "needs_manual_review": false
+    },
+    {
+      "evidence_id": "SUP-JD-009",
+      "duplicate_status": "unique",
+      "duplicate_of": "",
+      "duplicate_reason": "未发现重复。",
+      "count_in_statistics": true,
+      "needs_manual_review": false
+    },
+    {
+      "evidence_id": "SUP-JD-010",
+      "duplicate_status": "unique",
+      "duplicate_of": "",
+      "duplicate_reason": "未发现重复。",
+      "count_in_statistics": true,
+      "needs_manual_review": false
+    },
+    {
+      "evidence_id": "SUP-JD-011",
+      "duplicate_status": "unique",
+      "duplicate_of": "",
+      "duplicate_reason": "未发现重复。",
+      "count_in_statistics": true,
+      "needs_manual_review": false
+    },
+    {
+      "evidence_id": "SUP-JD-012",
+      "duplicate_status": "unique",
+      "duplicate_of": "",
+      "duplicate_reason": "未发现重复。",
+      "count_in_statistics": true,
+      "needs_manual_review": false
+    },
+    {
+      "evidence_id": "SUP-JD-013",
+      "duplicate_status": "unique",
+      "duplicate_of": "",
+      "duplicate_reason": "未发现重复。",
+      "count_in_statistics": true,
+      "needs_manual_review": false
+    },
+    {
+      "evidence_id": "SUP-JD-014",
+      "duplicate_status": "unique",
+      "duplicate_of": "",
+      "duplicate_reason": "未发现重复。",
+      "count_in_statistics": true,
+      "needs_manual_review": false
+    },
+    {
+      "evidence_id": "SUP-JD-015",
+      "duplicate_status": "unique",
+      "duplicate_of": "",
+      "duplicate_reason": "未发现重复。",
+      "count_in_statistics": true,
+      "needs_manual_review": false
+    },
+    {
+      "evidence_id": "SUP-JD-016",
+      "duplicate_status": "unique",
+      "duplicate_of": "",
+      "duplicate_reason": "未发现重复。",
+      "count_in_statistics": true,
+      "needs_manual_review": false
+    },
+    {
+      "evidence_id": "SUP-JD-017",
+      "duplicate_status": "unique",
+      "duplicate_of": "",
+      "duplicate_reason": "未发现重复。",
+      "count_in_statistics": true,
+      "needs_manual_review": false
+    },
+    {
+      "evidence_id": "SUP-JD-018",
+      "duplicate_status": "unique",
+      "duplicate_of": "",
+      "duplicate_reason": "未发现重复。",
+      "count_in_statistics": true,
+      "needs_manual_review": false
+    },
+    {
+      "evidence_id": "SUP-JD-019",
+      "duplicate_status": "unique",
+      "duplicate_of": "",
+      "duplicate_reason": "未发现重复。",
+      "count_in_statistics": true,
+      "needs_manual_review": false
+    },
+    {
+      "evidence_id": "SUP-JD-020",
+      "duplicate_status": "unique",
+      "duplicate_of": "",
+      "duplicate_reason": "未发现重复。",
+      "count_in_statistics": true,
+      "needs_manual_review": false
+    },
+    {
+      "evidence_id": "SUP-JD-021",
+      "duplicate_status": "unique",
+      "duplicate_of": "",
+      "duplicate_reason": "未发现重复。",
+      "count_in_statistics": true,
+      "needs_manual_review": false
+    },
+    {
+      "evidence_id": "SUP-JD-022",
+      "duplicate_status": "duplicate",
+      "duplicate_of": "JD-085",
+      "duplicate_reason": "规范化正文哈希或企业+岗位+正文高度一致",
+      "count_in_statistics": false,
+      "needs_manual_review": false
+    },
+    {
+      "evidence_id": "SUP-JD-023",
+      "duplicate_status": "unique",
+      "duplicate_of": "",
+      "duplicate_reason": "未发现重复。",
+      "count_in_statistics": true,
+      "needs_manual_review": false
+    },
+    {
+      "evidence_id": "SUP-JD-024",
+      "duplicate_status": "unique",
+      "duplicate_of": "",
+      "duplicate_reason": "未发现重复。",
+      "count_in_statistics": true,
+      "needs_manual_review": false
+    },
+    {
+      "evidence_id": "SUP-JD-025",
+      "duplicate_status": "unique",
+      "duplicate_of": "",
+      "duplicate_reason": "未发现重复。",
+      "count_in_statistics": true,
+      "needs_manual_review": false
+    },
+    {
+      "evidence_id": "SUP-JD-026",
+      "duplicate_status": "possible_duplicate",
+      "duplicate_of": "JD-081",
+      "duplicate_reason": "企业、岗位、正文或技能集合高度相似，需人工复核（正文相似度0.86，技能Jaccard 1.00）",
+      "count_in_statistics": true,
+      "needs_manual_review": true
+    },
+    {
+      "evidence_id": "SUP-JD-027",
+      "duplicate_status": "unique",
+      "duplicate_of": "",
+      "duplicate_reason": "未发现重复。",
+      "count_in_statistics": true,
+      "needs_manual_review": false
+    },
+    {
+      "evidence_id": "SUP-JD-028",
+      "duplicate_status": "unique",
+      "duplicate_of": "",
+      "duplicate_reason": "未发现重复。",
+      "count_in_statistics": true,
+      "needs_manual_review": false
+    },
+    {
+      "evidence_id": "SUP-JD-029",
+      "duplicate_status": "unique",
+      "duplicate_of": "",
+      "duplicate_reason": "未发现重复。",
+      "count_in_statistics": true,
+      "needs_manual_review": false
+    },
+    {
+      "evidence_id": "SUP-JD-030",
+      "duplicate_status": "unique",
+      "duplicate_of": "",
+      "duplicate_reason": "未发现重复。",
+      "count_in_statistics": true,
+      "needs_manual_review": false
+    },
+    {
+      "evidence_id": "SUP-JD-031",
+      "duplicate_status": "unique",
+      "duplicate_of": "",
+      "duplicate_reason": "未发现重复。",
+      "count_in_statistics": true,
+      "needs_manual_review": false
+    },
+    {
+      "evidence_id": "SUP-JD-032",
+      "duplicate_status": "unique",
+      "duplicate_of": "",
+      "duplicate_reason": "未发现重复。",
+      "count_in_statistics": true,
+      "needs_manual_review": false
+    },
+    {
+      "evidence_id": "SUP-JD-033",
+      "duplicate_status": "unique",
+      "duplicate_of": "",
+      "duplicate_reason": "未发现重复。",
+      "count_in_statistics": true,
+      "needs_manual_review": false
+    },
+    {
+      "evidence_id": "SUP-JD-034",
+      "duplicate_status": "unique",
+      "duplicate_of": "",
+      "duplicate_reason": "未发现重复。",
+      "count_in_statistics": true,
+      "needs_manual_review": false
+    },
+    {
+      "evidence_id": "SUP-JD-035",
+      "duplicate_status": "unique",
+      "duplicate_of": "",
+      "duplicate_reason": "未发现重复。",
+      "count_in_statistics": true,
+      "needs_manual_review": false
+    },
+    {
+      "evidence_id": "SUP-JD-036",
+      "duplicate_status": "unique",
+      "duplicate_of": "",
+      "duplicate_reason": "未发现重复。",
+      "count_in_statistics": true,
+      "needs_manual_review": false
+    },
+    {
+      "evidence_id": "SUP-JD-037",
+      "duplicate_status": "unique",
+      "duplicate_of": "",
+      "duplicate_reason": "未发现重复。",
+      "count_in_statistics": true,
+      "needs_manual_review": false
+    },
+    {
+      "evidence_id": "SUP-JD-038",
+      "duplicate_status": "unique",
+      "duplicate_of": "",
+      "duplicate_reason": "未发现重复。",
+      "count_in_statistics": true,
+      "needs_manual_review": false
+    },
+    {
+      "evidence_id": "SUP-JD-039",
+      "duplicate_status": "unique",
+      "duplicate_of": "",
+      "duplicate_reason": "未发现重复。",
+      "count_in_statistics": true,
+      "needs_manual_review": false
+    },
+    {
+      "evidence_id": "SUP-JD-040",
+      "duplicate_status": "unique",
+      "duplicate_of": "",
+      "duplicate_reason": "未发现重复。",
+      "count_in_statistics": true,
+      "needs_manual_review": false
+    },
+    {
+      "evidence_id": "SUP-JD-041",
+      "duplicate_status": "duplicate",
+      "duplicate_of": "SUP-JD-021",
+      "duplicate_reason": "规范化正文哈希或企业+岗位+正文高度一致",
+      "count_in_statistics": false,
+      "needs_manual_review": false
+    },
+    {
+      "evidence_id": "SUP-JD-042",
+      "duplicate_status": "unique",
+      "duplicate_of": "",
+      "duplicate_reason": "未发现重复。",
+      "count_in_statistics": true,
+      "needs_manual_review": false
+    },
+    {
+      "evidence_id": "SUP-JD-043",
+      "duplicate_status": "unique",
+      "duplicate_of": "",
+      "duplicate_reason": "未发现重复。",
+      "count_in_statistics": true,
+      "needs_manual_review": false
+    },
+    {
+      "evidence_id": "SUP-JD-044",
+      "duplicate_status": "unique",
+      "duplicate_of": "",
+      "duplicate_reason": "未发现重复。",
+      "count_in_statistics": true,
+      "needs_manual_review": false
+    },
+    {
+      "evidence_id": "SUP-JD-045",
+      "duplicate_status": "unique",
+      "duplicate_of": "",
+      "duplicate_reason": "未发现重复。",
+      "count_in_statistics": true,
+      "needs_manual_review": false
+    },
+    {
+      "evidence_id": "SUP-JD-046",
+      "duplicate_status": "unique",
+      "duplicate_of": "",
+      "duplicate_reason": "未发现重复。",
+      "count_in_statistics": true,
+      "needs_manual_review": false
+    },
+    {
+      "evidence_id": "SUP-JD-047",
+      "duplicate_status": "unique",
+      "duplicate_of": "",
+      "duplicate_reason": "未发现重复。",
+      "count_in_statistics": true,
+      "needs_manual_review": false
+    },
+    {
+      "evidence_id": "SUP-JD-048",
+      "duplicate_status": "duplicate",
+      "duplicate_of": "SUP-JD-012",
+      "duplicate_reason": "规范化正文哈希或企业+岗位+正文高度一致",
+      "count_in_statistics": false,
+      "needs_manual_review": false
+    },
+    {
+      "evidence_id": "SUP-JD-049",
+      "duplicate_status": "unique",
+      "duplicate_of": "",
+      "duplicate_reason": "未发现重复。",
+      "count_in_statistics": true,
+      "needs_manual_review": false
+    }
+  ],
+  "exceptions": [
+    {
+      "evidence_id": "SUP-JD-022",
+      "source_sequence": 22,
+      "source_number_raw": "②⑩②",
+      "source_start_line": 450,
+      "source_end_line": 466,
+      "raw_job_title": "大模型评估产品经理",
+      "cleaned_job_title": "大模型评估产品经理",
+      "normalized_job_title": "大模型评估产品经理",
+      "company_raw": "百度",
+      "company_normalized": "百度",
+      "raw_text": "②⑩②大模型评估产品经理——百度\n作职责：\n-负责大型语言模型（主要以问答、文创、信息处理等）的评估标准制定，形成具有公信力的行业标准\n-高质量评估，并对评估结果进行深入分析洞察，指导模型及系统策略优化\n-与产品经理、工程架构、算法研发深度配合，共同推动产品迭代\n-跟进市场动态，深入进行竞品分析、评估方案调研\n-设计评估工具、自动评估等相关辅助产品，持续提升产品评估效率\n职责要求：\n-有用户行为研究、商业分析等经验优先，有很好的文字品味，洞察能力强，并具有较强的规律总结能力\n-对大模型、深度学习、机器学习有较深的认知，对技术敏感\n-具有较强的结构化思维能力和良好的表达能力、协作意识、执行力\n-国内重点院校本科、研究生毕业，有大模型、对话机器人、NLP等相关方向实习经验、科研项目经历优先",
+      "responsibilities_raw": "作职责：\n-负责大型语言模型（主要以问答、文创、信息处理等）的评估标准制定，形成具有公信力的行业标准\n-高质量评估，并对评估结果进行深入分析洞察，指导模型及系统策略优化\n-与产品经理、工程架构、算法研发深度配合，共同推动产品迭代\n-跟进市场动态，深入进行竞品分析、评估方案调研\n-设计评估工具、自动评估等相关辅助产品，持续提升产品评估效率",
+      "requirements_raw": "-有用户行为研究、商业分析等经验优先，有很好的文字品味，洞察能力强，并具有较强的规律总结能力\n-对大模型、深度学习、机器学习有较深的认知，对技术敏感\n-具有较强的结构化思维能力和良好的表达能力、协作意识、执行力\n-国内重点院校本科、研究生毕业，有大模型、对话机器人、NLP等相关方向实习经验、科研项目经历优先",
+      "bonus_requirements_raw": "",
+      "responsibilities_summary": "作职责： -负责大型语言模型（主要以问答、文创、信息处理等）的评估标准制定，形成具有公信力的行业标准 -高质量评估，并对评估结果进行深入分析洞察，指导模型及系统策略优化 -与产品经理、工程架构、算法研发深度配合，共同推动产品迭代 -跟进市场动态，深入进行竞品分析、评估方案调研 -设计评估工具、自动评估等相关辅助产品，持续提升产品评估效率",
+      "required_skills": [
+        "自然语言处理（NLP）"
+      ],
+      "preferred_skills": [],
+      "tools_and_frameworks": [],
+      "job_family": "具身智能",
+      "job_function": "产品管理",
+      "technical_domain": "具身智能/VLA",
+      "education_requirement": "本科",
+      "experience_requirement": "",
+      "employment_type": "实习",
+      "location": "",
+      "source_name": "用户补充JD TXT",
+      "source_file": "补充JD(1).txt",
+      "source_url": "",
+      "publish_date": "",
+      "primary_emerging_job_id": "EMERGING-010",
+      "supporting_emerging_job_ids": [],
+      "mapping_type": "exact_evidence",
+      "mapping_confidence": 0.98,
+      "mapping_reason": "岗位名称直接对应原大模型评估产品经理候选。",
+      "duplicate_status": "duplicate",
+      "duplicate_of": "JD-085",
+      "duplicate_reason": "规范化正文哈希或企业+岗位+正文高度一致",
+      "count_in_statistics": false,
+      "source_verification_status": "待补来源",
+      "evidence_confidence": 0.62,
+      "needs_manual_review": false,
+      "parse_failed": false,
+      "data_version": "supplemental_jd_v3",
+      "ingested_at": "2026-09-03T11:35:59+08:00",
+      "normalized_text_sha256": "2DED3B6BF439B5514709A1AEB793157AEF75086E4F0F34BD29183E178E93D9AC"
+    },
+    {
+      "evidence_id": "SUP-JD-026",
+      "source_sequence": 26,
+      "source_number_raw": "②⑩⑥",
+      "source_start_line": 543,
+      "source_end_line": 561,
+      "raw_job_title": "自动驾驶感知测试开发工程师",
+      "cleaned_job_title": "自动驾驶感知测试开发工程师",
+      "normalized_job_title": "自动驾驶感知测试开发工程师",
+      "company_raw": "百度",
+      "company_normalized": "百度",
+      "raw_text": "②⑩⑥自动驾驶感知测试开发工程师——百度\n工作职责：\n-负责自动驾驶感知方向包括但不局限于障碍物感知算法、红绿灯感知算法等算法模块测试，对感知算法效果进行验证\n-根据项目特点，进行测试设计与执行，开发测试与评测工具\n-参与程序设计和问题跟踪工作，持续改善程序的设计缺陷\n-探索技术创新，解决大规模数据测试相关技术问题\n职责要求：\n-计算机、软件工程等相关专业硕士及以上学历，211或985院校优先\n-熟练使用python、C++等编程语言，有3年以上开发经验\n-熟悉AI测试、算法评测、仿真测试和数据建设经验优先\n-熟练使用linux系统\n-对测试有浓厚的兴趣和丰富的经验，有很强的分析能力和定位问题的能力，熟悉自动驾驶系统优先\n-良好的沟通与表达能力、思路清晰，较强的动手能力与逻辑分析能力",
+      "responsibilities_raw": "-负责自动驾驶感知方向包括但不局限于障碍物感知算法、红绿灯感知算法等算法模块测试，对感知算法效果进行验证\n-根据项目特点，进行测试设计与执行，开发测试与评测工具\n-参与程序设计和问题跟踪工作，持续改善程序的设计缺陷\n-探索技术创新，解决大规模数据测试相关技术问题",
+      "requirements_raw": "-计算机、软件工程等相关专业硕士及以上学历，211或985院校优先\n-熟练使用python、C++等编程语言，有3年以上开发经验\n-熟悉AI测试、算法评测、仿真测试和数据建设经验优先\n-熟练使用linux系统\n-对测试有浓厚的兴趣和丰富的经验，有很强的分析能力和定位问题的能力，熟悉自动驾驶系统优先\n-良好的沟通与表达能力、思路清晰，较强的动手能力与逻辑分析能力",
+      "bonus_requirements_raw": "",
+      "responsibilities_summary": "-负责自动驾驶感知方向包括但不局限于障碍物感知算法、红绿灯感知算法等算法模块测试，对感知算法效果进行验证 -根据项目特点，进行测试设计与执行，开发测试与评测工具 -参与程序设计和问题跟踪工作，持续改善程序的设计缺陷 -探索技术创新，解决大规模数据测试相关技术问题",
+      "required_skills": [
+        "C++",
+        "Linux",
+        "Python"
+      ],
+      "preferred_skills": [],
+      "tools_and_frameworks": [
+        "Python",
+        "C++",
+        "Linux"
+      ],
+      "job_family": "智能驾驶",
+      "job_function": "测试与验证",
+      "technical_domain": "自动驾驶",
+      "education_requirement": "硕士及以上学历",
+      "experience_requirement": "3年以上开发经验",
+      "employment_type": "",
+      "location": "",
+      "source_name": "用户补充JD TXT",
+      "source_file": "补充JD(1).txt",
+      "source_url": "",
+      "publish_date": "",
+      "primary_emerging_job_id": "EMERGING-011",
+      "supporting_emerging_job_ids": [],
+      "mapping_type": "exact_evidence",
+      "mapping_confidence": 0.99,
+      "mapping_reason": "岗位名称直接对应原自动驾驶感知测试开发候选。",
+      "duplicate_status": "possible_duplicate",
+      "duplicate_of": "JD-081",
+      "duplicate_reason": "企业、岗位、正文或技能集合高度相似，需人工复核（正文相似度0.86，技能Jaccard 1.00）",
+      "count_in_statistics": true,
+      "source_verification_status": "待补来源",
+      "evidence_confidence": 0.62,
+      "needs_manual_review": true,
+      "parse_failed": false,
+      "data_version": "supplemental_jd_v3",
+      "ingested_at": "2026-09-03T11:35:59+08:00",
+      "normalized_text_sha256": "D138DE446622E9C384AD7C2AB0870C25B746ECB5B33B5E219E3E8304D42013F5"
+    },
+    {
+      "evidence_id": "SUP-JD-041",
+      "source_sequence": 41,
+      "source_number_raw": "41.",
+      "source_start_line": 956,
+      "source_end_line": 980,
+      "raw_job_title": "大模型安全与对齐",
+      "cleaned_job_title": "大模型安全与对齐",
+      "normalized_job_title": "大模型安全与对齐",
+      "company_raw": "蚂蚁集团",
+      "company_normalized": "蚂蚁集团",
+      "raw_text": "41.大模型安全与对齐——蚂蚁集团\n岗位职责\n工作内容与目标\n\n面向大模型原生、及大模型原生应用等业务场景，基于大数据和大规模分布式计算环境，开展大模型建模、持续训练等，研发算法、算法工程化和在线系统落地，持续提升算法效果、系统性能和业务价值。研发大模型安全围栏算法方案研发，从离线验证走向生产应用，打通建模、训练、部署、监控与迭代优化全流程，负责大模型应用系统安全的算法能力建设和部署。 具体职责包括以下相关方向的一项或多项：\n\n提升LLM/VLLM在复杂业务场景的安全性与帮助性。设计并实现从预训练到后训练的全流程安全对齐框架，将安全约束深度融入训练目标与模型架构;\n构建可轻量级部署、有深度推理能力的大模型，有对有害内容、Agent安全、模型幻觉等安全威胁的内生防御能力，并平衡安全性、用户体验、及模型性能;\n构建持续学习的在线安全对齐机制，支持模型安全能力的自我进化与迭代，确保新型威胁下模型的自愈能力，确保输出的准确性、可靠性及符合伦理规范。\n04\n职位要求\n任职资格与能力要求\n\n具备扎实的机器学习与深度学习理论基础；在大模型安全对齐领域有深入研究，熟悉RLHF、SFT、可控生成等核心技术，具备相关算法研发经验；在Agent安全相关领域有深入研究；\n精通PyTorch/Megatron/VeRL等深度学习框架，有大模型训练或安全优化实战经验；精通计算机原理，大模型算法、大模型应用系统架构和相关优化经验；\n具备优秀的算法实现、系统优化、及工程落地能力；\n对AI安全技术发展趋势有深刻理解，在顶级会议发表过安全对齐、可解释AI、伦理机器学习等相关论文者优先。",
+      "responsibilities_raw": "工作内容与目标\n\n面向大模型原生、及大模型原生应用等业务场景，基于大数据和大规模分布式计算环境，开展大模型建模、持续训练等，研发算法、算法工程化和在线系统落地，持续提升算法效果、系统性能和业务价值。研发大模型安全围栏算法方案研发，从离线验证走向生产应用，打通建模、训练、部署、监控与迭代优化全流程，负责大模型应用系统安全的算法能力建设和部署。 具体职责包括以下相关方向的一项或多项：\n\n提升LLM/VLLM在复杂业务场景的安全性与帮助性。设计并实现从预训练到后训练的全流程安全对齐框架，将安全约束深度融入训练目标与模型架构;\n构建可轻量级部署、有深度推理能力的大模型，有对有害内容、Agent安全、模型幻觉等安全威胁的内生防御能力，并平衡安全性、用户体验、及模型性能;\n构建持续学习的在线安全对齐机制，支持模型安全能力的自我进化与迭代，确保新型威胁下模型的自愈能力，确保输出的准确性、可靠性及符合伦理规范。\n04",
+      "requirements_raw": "具备扎实的机器学习与深度学习理论基础；在大模型安全对齐领域有深入研究，熟悉RLHF、SFT、可控生成等核心技术，具备相关算法研发经验；在Agent安全相关领域有深入研究；\n精通PyTorch/Megatron/VeRL等深度学习框架，有大模型训练或安全优化实战经验；精通计算机原理，大模型算法、大模型应用系统架构和相关优化经验；\n具备优秀的算法实现、系统优化、及工程落地能力；\n对AI安全技术发展趋势有深刻理解，在顶级会议发表过安全对齐、可解释AI、伦理机器学习等相关论文者优先。",
+      "bonus_requirements_raw": "",
+      "responsibilities_summary": "工作内容与目标 面向大模型原生、及大模型原生应用等业务场景，基于大数据和大规模分布式计算环境，开展大模型建模、持续训练等，研发算法、算法工程化和在线系统落地，持续提升算法效果、系统性能和业务价值。研发大模型安全围栏算法方案研发，从离线验证走向生产应用，打通建模、训练、部署、监控与迭代优化全流程，负责大模型应用系统安全的算法能力建设和部署。 具体职责包括以下相关方向的一项或多项： 提升LLM/VLLM在复杂业务场景的安全性与帮助性。设计并…",
+      "required_skills": [
+        "PyTorch",
+        "大语言模型（LLM）"
+      ],
+      "preferred_skills": [],
+      "tools_and_frameworks": [
+        "PyTorch",
+        "vLLM",
+        "Megatron",
+        "verl"
+      ],
+      "job_family": "AI安全",
+      "job_function": "安全算法研发",
+      "technical_domain": "大模型与智能体安全",
+      "education_requirement": "",
+      "experience_requirement": "",
+      "employment_type": "",
+      "location": "",
+      "source_name": "用户补充JD TXT",
+      "source_file": "补充JD(1).txt",
+      "source_url": "",
+      "publish_date": "",
+      "primary_emerging_job_id": "EMERGING-021",
+      "supporting_emerging_job_ids": [
+        "EMERGING-001"
+      ],
+      "mapping_type": "new_candidate",
+      "mapping_confidence": 0.9,
+      "mapping_reason": "覆盖安全对齐训练、红队评测、Guard与RLHF/DPO，区别于通用安全工程。",
+      "duplicate_status": "duplicate",
+      "duplicate_of": "SUP-JD-021",
+      "duplicate_reason": "规范化正文哈希或企业+岗位+正文高度一致",
+      "count_in_statistics": false,
+      "source_verification_status": "待补来源",
+      "evidence_confidence": 0.62,
+      "needs_manual_review": false,
+      "parse_failed": false,
+      "data_version": "supplemental_jd_v3",
+      "ingested_at": "2026-09-03T11:35:59+08:00",
+      "normalized_text_sha256": "BED586A1A82288490ED5BB9359729CFA55FD0B0FDB691F97372E245E5C2DBD22"
+    },
+    {
+      "evidence_id": "SUP-JD-048",
+      "source_sequence": 48,
+      "source_number_raw": "48.",
+      "source_start_line": 1173,
+      "source_end_line": 1195,
+      "raw_job_title": "大模型平台运维",
+      "cleaned_job_title": "大模型平台运维",
+      "normalized_job_title": "大模型平台运维",
+      "company_raw": "浪潮集团",
+      "company_normalized": "浪潮集团",
+      "raw_text": "48.大模型平台运维——浪潮集团\n岗位职责:\n1.负责大模型和基础功能的日常运维工作，确保系统稳定运行\n2.监控模型性能，及时发现并解决潜在问题\n3.与团队合作，共同优化模型运行效率。\n4.和领导交办的其他运维任务\n任职要求:\n1、本科及以上，计算机、通信、电子相关专业毕业\n2、3年以上运维工作经验，至少1年智能体平台或AI基础设施相关运维经验\n3、深度使用过Dify、n8n、Coze、OpenClaw等至少两种工具或平台，理解其架构、部署方式和插件机制\n4、精通Python/Go/Typescript等语言，有API开发与工作流编排开发经验\n5、熟悉Kubernetes容器化技术、KVM虚拟化技术\n6、有较强的风险识别与故障恢复能力，熟悉监控（Prometheus、Grafana、Opentelemetry）、日志（ELK/Loki）、分布式追踪，设计并落地SLO/SLI/SLA体系\n加分项：\n1、熟悉开源智能体框架（LangChain、ADK、Agno、等）\n2、拥有OpenClaw深度使用或二次开发经验",
+      "responsibilities_raw": "1.负责大模型和基础功能的日常运维工作，确保系统稳定运行\n2.监控模型性能，及时发现并解决潜在问题\n3.与团队合作，共同优化模型运行效率。\n4.和领导交办的其他运维任务",
+      "requirements_raw": "1、本科及以上，计算机、通信、电子相关专业毕业\n2、3年以上运维工作经验，至少1年智能体平台或AI基础设施相关运维经验\n3、深度使用过Dify、n8n、Coze、OpenClaw等至少两种工具或平台，理解其架构、部署方式和插件机制\n4、精通Python/Go/Typescript等语言，有API开发与工作流编排开发经验\n5、熟悉Kubernetes容器化技术、KVM虚拟化技术\n6、有较强的风险识别与故障恢复能力，熟悉监控（Prometheus、Grafana、Opentelemetry）、日志（ELK/Loki）、分布式追踪，设计并落地SLO/SLI/SLA体系",
+      "bonus_requirements_raw": "1、熟悉开源智能体框架（LangChain、ADK、Agno、等）\n2、拥有OpenClaw深度使用或二次开发经验",
+      "responsibilities_summary": "1.负责大模型和基础功能的日常运维工作，确保系统稳定运行 2.监控模型性能，及时发现并解决潜在问题 3.与团队合作，共同优化模型运行效率。 4.和领导交办的其他运维任务",
+      "required_skills": [
+        "Dify",
+        "Go",
+        "Kubernetes",
+        "Python",
+        "TypeScript"
+      ],
+      "preferred_skills": [
+        "LangChain"
+      ],
+      "tools_and_frameworks": [
+        "Python",
+        "Go",
+        "TypeScript",
+        "Kubernetes",
+        "LangChain",
+        "Dify",
+        "n8n",
+        "Coze",
+        "OpenClaw",
+        "Prometheus",
+        "Grafana",
+        "OpenTelemetry",
+        "ELK",
+        "Loki"
+      ],
+      "job_family": "AI基础设施",
+      "job_function": "模型部署与运维",
+      "technical_domain": "大模型平台",
+      "education_requirement": "本科及以上",
+      "experience_requirement": "3年以上运维工作经验",
+      "employment_type": "",
+      "location": "",
+      "source_name": "用户补充JD TXT",
+      "source_file": "补充JD(1).txt",
+      "source_url": "",
+      "publish_date": "",
+      "primary_emerging_job_id": "EMERGING-017",
+      "supporting_emerging_job_ids": [
+        "EMERGING-007"
+      ],
+      "mapping_type": "new_candidate",
+      "mapping_confidence": 0.9,
+      "mapping_reason": "职责聚焦大模型/智能体平台运行、监控和SLO，不与安全运维合并。",
+      "duplicate_status": "duplicate",
+      "duplicate_of": "SUP-JD-012",
+      "duplicate_reason": "规范化正文哈希或企业+岗位+正文高度一致",
+      "count_in_statistics": false,
+      "source_verification_status": "待补来源",
+      "evidence_confidence": 0.62,
+      "needs_manual_review": false,
+      "parse_failed": false,
+      "data_version": "supplemental_jd_v3",
+      "ingested_at": "2026-09-03T11:35:59+08:00",
+      "normalized_text_sha256": "AD71B0F76716462C1AD3D42CAF2D36AD24D5B7A163ADEDD2353041DF91720483"
+    }
+  ]
+}

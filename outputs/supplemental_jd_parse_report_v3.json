@@ -1,0 +1,454 @@
+{
+  "data_version": "supplemental_jd_v3",
+  "generated_at": "2026-09-03T11:35:59+08:00",
+  "expected_count": 49,
+  "parsed_count": 49,
+  "failed_count": 0,
+  "conservation_passed": true,
+  "failures": [],
+  "evidence_ids_continuous": true,
+  "source_line_count": 1208,
+  "records": [
+    {
+      "evidence_id": "SUP-JD-001",
+      "source_sequence": 1,
+      "source_start_line": 3,
+      "source_end_line": 31,
+      "raw_job_title": "具身智能数据Infra负责人",
+      "company_raw": "北京贝塔无限智能科技有限公司",
+      "needs_manual_review": false
+    },
+    {
+      "evidence_id": "SUP-JD-002",
+      "source_sequence": 2,
+      "source_start_line": 32,
+      "source_end_line": 53,
+      "raw_job_title": "具身智能数采测试实习生",
+      "company_raw": "光轮智能（北京）科技股份有限公司",
+      "needs_manual_review": false
+    },
+    {
+      "evidence_id": "SUP-JD-003",
+      "source_sequence": 3,
+      "source_start_line": 54,
+      "source_end_line": 63,
+      "raw_job_title": "AI 安全技术专家 / 大模型安全工程师",
+      "company_raw": "京东",
+      "needs_manual_review": false
+    },
+    {
+      "evidence_id": "SUP-JD-004",
+      "source_sequence": 4,
+      "source_start_line": 64,
+      "source_end_line": 70,
+      "raw_job_title": "AI大模型安全专家",
+      "company_raw": "公安部第一研究所",
+      "needs_manual_review": false
+    },
+    {
+      "evidence_id": "SUP-JD-005",
+      "source_sequence": 5,
+      "source_start_line": 71,
+      "source_end_line": 93,
+      "raw_job_title": "具身智能数据服务PDSA",
+      "company_raw": "百度",
+      "needs_manual_review": false
+    },
+    {
+      "evidence_id": "SUP-JD-006",
+      "source_sequence": 6,
+      "source_start_line": 94,
+      "source_end_line": 134,
+      "raw_job_title": "具身智能数据工程师",
+      "company_raw": "上海禹桐科技有限公司",
+      "needs_manual_review": false
+    },
+    {
+      "evidence_id": "SUP-JD-007",
+      "source_sequence": 7,
+      "source_start_line": 135,
+      "source_end_line": 161,
+      "raw_job_title": "AI研究算法工程师-具身智能数据方向",
+      "company_raw": "科大讯飞",
+      "needs_manual_review": false
+    },
+    {
+      "evidence_id": "SUP-JD-008",
+      "source_sequence": 8,
+      "source_start_line": 162,
+      "source_end_line": 179,
+      "raw_job_title": "具身智能数据服务解决方案与项目经理",
+      "company_raw": "百度",
+      "needs_manual_review": false
+    },
+    {
+      "evidence_id": "SUP-JD-009",
+      "source_sequence": 9,
+      "source_start_line": 180,
+      "source_end_line": 208,
+      "raw_job_title": "蚂蚁集团-数据闭环技术项目经理-具身智能方向",
+      "company_raw": "蚂蚁集团",
+      "needs_manual_review": false
+    },
+    {
+      "evidence_id": "SUP-JD-010",
+      "source_sequence": 10,
+      "source_start_line": 209,
+      "source_end_line": 245,
+      "raw_job_title": "具身智能技术产品经理(校招)",
+      "company_raw": "光轮智能（北京）科技股份有限公司",
+      "needs_manual_review": false
+    },
+    {
+      "evidence_id": "SUP-JD-011",
+      "source_sequence": 11,
+      "source_start_line": 246,
+      "source_end_line": 258,
+      "raw_job_title": "大模型数据清洗",
+      "company_raw": "北京字跳网络技术有限公司",
+      "needs_manual_review": false
+    },
+    {
+      "evidence_id": "SUP-JD-012",
+      "source_sequence": 12,
+      "source_start_line": 259,
+      "source_end_line": 279,
+      "raw_job_title": "大模型平台运维",
+      "company_raw": "浪潮集团",
+      "needs_manual_review": false
+    },
+    {
+      "evidence_id": "SUP-JD-013",
+      "source_sequence": 13,
+      "source_start_line": 280,
+      "source_end_line": 296,
+      "raw_job_title": "大模型安全工程师",
+      "company_raw": "抖音研发",
+      "needs_manual_review": false
+    },
+    {
+      "evidence_id": "SUP-JD-014",
+      "source_sequence": 14,
+      "source_start_line": 297,
+      "source_end_line": 312,
+      "raw_job_title": "大模型内生安全青年科学家/研究员",
+      "company_raw": "上海人工智能实验室",
+      "needs_manual_review": false
+    },
+    {
+      "evidence_id": "SUP-JD-015",
+      "source_sequence": 15,
+      "source_start_line": 313,
+      "source_end_line": 330,
+      "raw_job_title": "智能体攻防算法工程师",
+      "company_raw": "上海人工智能实验室",
+      "needs_manual_review": false
+    },
+    {
+      "evidence_id": "SUP-JD-016",
+      "source_sequence": 16,
+      "source_start_line": 331,
+      "source_end_line": 350,
+      "raw_job_title": "安全算法工程师/青年研究员",
+      "company_raw": "上海人工智能实验室",
+      "needs_manual_review": false
+    },
+    {
+      "evidence_id": "SUP-JD-017",
+      "source_sequence": 17,
+      "source_start_line": 351,
+      "source_end_line": 367,
+      "raw_job_title": "前沿智能体攻防算法研究员",
+      "company_raw": "上海人工智能实验室",
+      "needs_manual_review": false
+    },
+    {
+      "evidence_id": "SUP-JD-018",
+      "source_sequence": 18,
+      "source_start_line": 368,
+      "source_end_line": 386,
+      "raw_job_title": "大模型评测工程师（番茄小说） - 抖音研发中台",
+      "company_raw": "字节跳动",
+      "needs_manual_review": false
+    },
+    {
+      "evidence_id": "SUP-JD-019",
+      "source_sequence": 19,
+      "source_start_line": 387,
+      "source_end_line": 406,
+      "raw_job_title": "微信读书/输入法/秒剪-大模型评测算法工程师-Agent方向",
+      "company_raw": "Tencent",
+      "needs_manual_review": false
+    },
+    {
+      "evidence_id": "SUP-JD-020",
+      "source_sequence": 20,
+      "source_start_line": 407,
+      "source_end_line": 427,
+      "raw_job_title": "【蚂蚁星】AI工程师-大模型评测（实习）",
+      "company_raw": "蚂蚁集团",
+      "needs_manual_review": false
+    },
+    {
+      "evidence_id": "SUP-JD-021",
+      "source_sequence": 21,
+      "source_start_line": 428,
+      "source_end_line": 449,
+      "raw_job_title": "大模型安全与对齐",
+      "company_raw": "蚂蚁集团",
+      "needs_manual_review": false
+    },
+    {
+      "evidence_id": "SUP-JD-022",
+      "source_sequence": 22,
+      "source_start_line": 450,
+      "source_end_line": 466,
+      "raw_job_title": "大模型评估产品经理",
+      "company_raw": "百度",
+      "needs_manual_review": false
+    },
+    {
+      "evidence_id": "SUP-JD-023",
+      "source_sequence": 23,
+      "source_start_line": 467,
+      "source_end_line": 489,
+      "raw_job_title": "LLM大模型评测产品经理-AI创新业务",
+      "company_raw": "字节跳动",
+      "needs_manual_review": false
+    },
+    {
+      "evidence_id": "SUP-JD-024",
+      "source_sequence": 24,
+      "source_start_line": 490,
+      "source_end_line": 518,
+      "raw_job_title": "大模型评测产品经理",
+      "company_raw": "北京三快在线科技有限公司",
+      "needs_manual_review": false
+    },
+    {
+      "evidence_id": "SUP-JD-025",
+      "source_sequence": 25,
+      "source_start_line": 519,
+      "source_end_line": 542,
+      "raw_job_title": "豆包AI大模型产品经理（评测方向）-火山方舟MaaS",
+      "company_raw": "字节跳动",
+      "needs_manual_review": false
+    },
+    {
+      "evidence_id": "SUP-JD-026",
+      "source_sequence": 26,
+      "source_start_line": 543,
+      "source_end_line": 561,
+      "raw_job_title": "自动驾驶感知测试开发工程师",
+      "company_raw": "百度",
+      "needs_manual_review": true
+    },
+    {
+      "evidence_id": "SUP-JD-027",
+      "source_sequence": 27,
+      "source_start_line": 562,
+      "source_end_line": 583,
+      "raw_job_title": "自动驾驶测试开发工程师（算法方向）",
+      "company_raw": "北京地平线机器人技术研发有限公司",
+      "needs_manual_review": false
+    },
+    {
+      "evidence_id": "SUP-JD-028",
+      "source_sequence": 28,
+      "source_start_line": 584,
+      "source_end_line": 651,
+      "raw_job_title": "SIL Validation Engineer(Perception)",
+      "company_raw": "caterpillar",
+      "needs_manual_review": false
+    },
+    {
+      "evidence_id": "SUP-JD-029",
+      "source_sequence": 29,
+      "source_start_line": 652,
+      "source_end_line": 669,
+      "raw_job_title": "自动驾驶车云功能测试开发工程师",
+      "company_raw": "百度",
+      "needs_manual_review": false
+    },
+    {
+      "evidence_id": "SUP-JD-030",
+      "source_sequence": 30,
+      "source_start_line": 670,
+      "source_end_line": 702,
+      "raw_job_title": "蚂蚁集团-Agent 评测工程师-AI创新产品",
+      "company_raw": "蚂蚁集团",
+      "needs_manual_review": false
+    },
+    {
+      "evidence_id": "SUP-JD-031",
+      "source_sequence": 31,
+      "source_start_line": 703,
+      "source_end_line": 729,
+      "raw_job_title": "社招AI智能体评测工程师",
+      "company_raw": "平安银行",
+      "needs_manual_review": false
+    },
+    {
+      "evidence_id": "SUP-JD-032",
+      "source_sequence": 32,
+      "source_start_line": 730,
+      "source_end_line": 772,
+      "raw_job_title": "大模型算法实习生-办公Agent方向",
+      "company_raw": "商汤科技",
+      "needs_manual_review": false
+    },
+    {
+      "evidence_id": "SUP-JD-033",
+      "source_sequence": 33,
+      "source_start_line": 773,
+      "source_end_line": 790,
+      "raw_job_title": "具身VLA算法工程师",
+      "company_raw": "海尔",
+      "needs_manual_review": false
+    },
+    {
+      "evidence_id": "SUP-JD-034",
+      "source_sequence": 34,
+      "source_start_line": 791,
+      "source_end_line": 818,
+      "raw_job_title": "VLA算法工程师/专家_XC",
+      "company_raw": "Bosch Automotive Products",
+      "needs_manual_review": false
+    },
+    {
+      "evidence_id": "SUP-JD-035",
+      "source_sequence": 35,
+      "source_start_line": 819,
+      "source_end_line": 839,
+      "raw_job_title": "【具身智能】VLA算法工程师",
+      "company_raw": "深圳库犸科技有限公司",
+      "needs_manual_review": false
+    },
+    {
+      "evidence_id": "SUP-JD-036",
+      "source_sequence": 36,
+      "source_start_line": 840,
+      "source_end_line": 875,
+      "raw_job_title": "具身智能算法工程师 （VLA/VTLA/灵巧操作方向）",
+      "company_raw": "千觉机器人科技(上海)有限公司",
+      "needs_manual_review": false
+    },
+    {
+      "evidence_id": "SUP-JD-037",
+      "source_sequence": 37,
+      "source_start_line": 876,
+      "source_end_line": 893,
+      "raw_job_title": "蚂蚁集团-大模型推理优化工程师-杭州",
+      "company_raw": "蚂蚁集团",
+      "needs_manual_review": false
+    },
+    {
+      "evidence_id": "SUP-JD-038",
+      "source_sequence": 38,
+      "source_start_line": 894,
+      "source_end_line": 911,
+      "raw_job_title": "大模型推理优化工程师-豆包手机助手",
+      "company_raw": "北京抖音信息服务有限公司",
+      "needs_manual_review": false
+    },
+    {
+      "evidence_id": "SUP-JD-039",
+      "source_sequence": 39,
+      "source_start_line": 912,
+      "source_end_line": 934,
+      "raw_job_title": "大模型平台策略推理优化工程师",
+      "company_raw": "百度",
+      "needs_manual_review": false
+    },
+    {
+      "evidence_id": "SUP-JD-040",
+      "source_sequence": 40,
+      "source_start_line": 935,
+      "source_end_line": 955,
+      "raw_job_title": "AI编译器工程师",
+      "company_raw": "复旦微电子集团",
+      "needs_manual_review": false
+    },
+    {
+      "evidence_id": "SUP-JD-041",
+      "source_sequence": 41,
+      "source_start_line": 956,
+      "source_end_line": 980,
+      "raw_job_title": "大模型安全与对齐",
+      "company_raw": "蚂蚁集团",
+      "needs_manual_review": false
+    },
+    {
+      "evidence_id": "SUP-JD-042",
+      "source_sequence": 42,
+      "source_start_line": 981,
+      "source_end_line": 995,
+      "raw_job_title": "ASP Intern LLM-大模型对齐算法工程师",
+      "company_raw": "深圳虾皮信息科技有限公司",
+      "needs_manual_review": false
+    },
+    {
+      "evidence_id": "SUP-JD-043",
+      "source_sequence": 43,
+      "source_start_line": 996,
+      "source_end_line": 1022,
+      "raw_job_title": "日常实习生-AI安全算法工程师-Qwen基础模型",
+      "company_raw": "阿里巴巴",
+      "needs_manual_review": false
+    },
+    {
+      "evidence_id": "SUP-JD-044",
+      "source_sequence": 44,
+      "source_start_line": 1023,
+      "source_end_line": 1049,
+      "raw_job_title": "世界模型训练与真机部署工程师/青年研究员",
+      "company_raw": "物理智能中心",
+      "needs_manual_review": false
+    },
+    {
+      "evidence_id": "SUP-JD-045",
+      "source_sequence": 45,
+      "source_start_line": 1050,
+      "source_end_line": 1072,
+      "raw_job_title": "北京-具身智能算法工程师",
+      "company_raw": "北京思灵机器人科技有限责任公司",
+      "needs_manual_review": false
+    },
+    {
+      "evidence_id": "SUP-JD-046",
+      "source_sequence": 46,
+      "source_start_line": 1073,
+      "source_end_line": 1125,
+      "raw_job_title": "大模型算法工程师",
+      "company_raw": "中国科学院西安光机所大数据与人工智能中心",
+      "needs_manual_review": false
+    },
+    {
+      "evidence_id": "SUP-JD-047",
+      "source_sequence": 47,
+      "source_start_line": 1126,
+      "source_end_line": 1172,
+      "raw_job_title": "AI模型部署与运维工程师",
+      "company_raw": "中国科学院西安光机所大数据与人工智能中心",
+      "needs_manual_review": false
+    },
+    {
+      "evidence_id": "SUP-JD-048",
+      "source_sequence": 48,
+      "source_start_line": 1173,
+      "source_end_line": 1195,
+      "raw_job_title": "大模型平台运维",
+      "company_raw": "浪潮集团",
+      "needs_manual_review": false
+    },
+    {
+      "evidence_id": "SUP-JD-049",
+      "source_sequence": 49,
+      "source_start_line": 1196,
+      "source_end_line": 1208,
+      "raw_job_title": "北京-大模型研发工程师",
+      "company_raw": "百度",
+      "needs_manual_review": false
+    }
+  ]
+}

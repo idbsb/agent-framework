@@ -1,0 +1,109 @@
+{
+  "generated_at": "2026-09-03T11:35:59+08:00",
+  "before": [
+    {
+      "path": "external_modules/graph_dynamic/standard_job_title_mapping_v1.xlsx",
+      "size_bytes": 20617,
+      "sha256": "293B34DBB8E4E6F5689CF58387A38601F30FEB759B46E7F34931BC1F6FF859B1"
+    },
+    {
+      "path": "external_modules/graph_dynamic/standard_skill_dictionary_v1.xlsx",
+      "size_bytes": 19794,
+      "sha256": "178C64E654D3534878489E88AAFC5A17B98FE361CB38DB370F9036D01E5C1055"
+    },
+    {
+      "path": "external_modules/graph_dynamic/standardized_jd_dataset_v1.xlsx",
+      "size_bytes": 179341,
+      "sha256": "B00A0220FD4B974D8B00BB57D6F0AF3BB40F1D92CC7DDD59FCB0DDDA9FC90EDE"
+    },
+    {
+      "path": "outputs/standard_job_title_mapping_v1.xlsx",
+      "size_bytes": 20617,
+      "sha256": "293B34DBB8E4E6F5689CF58387A38601F30FEB759B46E7F34931BC1F6FF859B1"
+    },
+    {
+      "path": "outputs/standard_skill_dictionary_v1.xlsx",
+      "size_bytes": 19794,
+      "sha256": "178C64E654D3534878489E88AAFC5A17B98FE361CB38DB370F9036D01E5C1055"
+    },
+    {
+      "path": "outputs/standardized_jd_dataset_v1.xlsx",
+      "size_bytes": 179341,
+      "sha256": "B00A0220FD4B974D8B00BB57D6F0AF3BB40F1D92CC7DDD59FCB0DDDA9FC90EDE"
+    },
+    {
+      "path": "outputs/standardized_resume_testset_v1.xlsx",
+      "size_bytes": 17346,
+      "sha256": "3B78EDFFD349055342818FFF6B803B92D5BD1C1BD1DE140E3764EF82C3CCD952"
+    },
+    {
+      "path": "组员图谱动态/standard_job_title_mapping_v1.xlsx",
+      "size_bytes": 20617,
+      "sha256": "293B34DBB8E4E6F5689CF58387A38601F30FEB759B46E7F34931BC1F6FF859B1"
+    },
+    {
+      "path": "组员图谱动态/standard_skill_dictionary_v1.xlsx",
+      "size_bytes": 19794,
+      "sha256": "178C64E654D3534878489E88AAFC5A17B98FE361CB38DB370F9036D01E5C1055"
+    },
+    {
+      "path": "组员图谱动态/standardized_jd_dataset_v1.xlsx",
+      "size_bytes": 179341,
+      "sha256": "B00A0220FD4B974D8B00BB57D6F0AF3BB40F1D92CC7DDD59FCB0DDDA9FC90EDE"
+    }
+  ],
+  "after": [
+    {
+      "path": "external_modules/graph_dynamic/standard_job_title_mapping_v1.xlsx",
+      "size_bytes": 20617,
+      "sha256": "293B34DBB8E4E6F5689CF58387A38601F30FEB759B46E7F34931BC1F6FF859B1"
+    },
+    {
+      "path": "external_modules/graph_dynamic/standard_skill_dictionary_v1.xlsx",
+      "size_bytes": 19794,
+      "sha256": "178C64E654D3534878489E88AAFC5A17B98FE361CB38DB370F9036D01E5C1055"
+    },
+    {
+      "path": "external_modules/graph_dynamic/standardized_jd_dataset_v1.xlsx",
+      "size_bytes": 179341,
+      "sha256": "B00A0220FD4B974D8B00BB57D6F0AF3BB40F1D92CC7DDD59FCB0DDDA9FC90EDE"
+    },
+    {
+      "path": "outputs/standard_job_title_mapping_v1.xlsx",
+      "size_bytes": 20617,
+      "sha256": "293B34DBB8E4E6F5689CF58387A38601F30FEB759B46E7F34931BC1F6FF859B1"
+    },
+    {
+      "path": "outputs/standard_skill_dictionary_v1.xlsx",
+      "size_bytes": 19794,
+      "sha256": "178C64E654D3534878489E88AAFC5A17B98FE361CB38DB370F9036D01E5C1055"
+    },
+    {
+      "path": "outputs/standardized_jd_dataset_v1.xlsx",
+      "size_bytes": 179341,
+      "sha256": "B00A0220FD4B974D8B00BB57D6F0AF3BB40F1D92CC7DDD59FCB0DDDA9FC90EDE"
+    },
+    {
+      "path": "outputs/standardized_resume_testset_v1.xlsx",
+      "size_bytes": 17346,
+      "sha256": "3B78EDFFD349055342818FFF6B803B92D5BD1C1BD1DE140E3764EF82C3CCD952"
+    },
+    {
+      "path": "组员图谱动态/standard_job_title_mapping_v1.xlsx",
+      "size_bytes": 20617,
+      "sha256": "293B34DBB8E4E6F5689CF58387A38601F30FEB759B46E7F34931BC1F6FF859B1"
+    },
+    {
+      "path": "组员图谱动态/standard_skill_dictionary_v1.xlsx",
+      "size_bytes": 19794,
+      "sha256": "178C64E654D3534878489E88AAFC5A17B98FE361CB38DB370F9036D01E5C1055"
+    },
+    {
+      "path": "组员图谱动态/standardized_jd_dataset_v1.xlsx",
+      "size_bytes": 179341,
+      "sha256": "B00A0220FD4B974D8B00BB57D6F0AF3BB40F1D92CC7DDD59FCB0DDDA9FC90EDE"
+    }
+  ],
+  "unchanged": true,
+  "file_count": 10
+}

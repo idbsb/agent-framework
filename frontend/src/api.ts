@@ -26,7 +26,7 @@ export async function getJson<T>(endpoint: string, fallback?: string): Promise<{
     if (!response.ok) throw new Error(`HTTP ${response.status}`);
     return { data: await response.json() as T, fallback: false };
   } catch (error) {
-    if (!fallback) throw new ApiUnavailableError("后端服务未启动，请启动FastAPI服务。");
+    if (!fallback) throw new ApiUnavailableError("暂时无法连接数据服务，请稍后重试。");
     const response = await fetch(fallback);
     if (!response.ok) throw new ApiUnavailableError("当前模块数据尚未生成。");
     return { data: await response.json() as T, fallback: true };

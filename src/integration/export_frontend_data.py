@@ -28,7 +28,10 @@ def main() -> int:
     write_json(target / "graph_compat_v1.json", system.graph.load())
     focus = ["AI Agent开发工程师", "RAG引擎研发工程师", "AI安全技术工程师"]
     write_json(target / "evolution_status.json", {"jobs": {title: system.evolution.for_job(title) for title in focus}})
-    write_json(target / "emerging_jobs_v1.json", system.emerging_list())
+    emerging = system.emerging_list()
+    write_json(target / "emerging_jobs_v2.json", emerging)
+    # Keep the V1 filename for already deployed bundles that still request it.
+    write_json(target / "emerging_jobs_v1.json", emerging)
     write_json(target / "job_analysis_v1.json", {"jobs": [system.job_analysis(title) for title in focus]})
     print(f"已生成前端真实数据降级文件：{target}")
     return 0

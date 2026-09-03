@@ -23,13 +23,26 @@ class SystemDataService:
         self.evolution = EvolutionAdapter(self.project_root)
 
     def _emerging(self) -> dict[str, Any]:
-        path = self.project_root / "outputs" / "emerging_jobs_v1.json"
-        if not path.exists():
-            return {"available": False, "status": "not_generated", "message": "当前模块数据尚未生成。", "summary": {}, "candidates": []}
-        value = json.loads(path.read_text(encoding="utf-8"))
-        value["available"] = True
-        value["status"] = "generated"
-        return value
+        errors: list[str] = []
+        for filename, status in (("emerging_jobs_v2.json", "generated_v2"), ("emerging_jobs_v1.json", "fallback_v1")):
+            path = self.project_root / "outputs" / filename
+            if not path.exists():
+                continue
+            try:
+                value = json.loads(path.read_text(encoding="utf-8"))
+                if not isinstance(value.get("candidates"), list) or not isinstance(value.get("summary"), dict):
+                    raise ValueError("候选或摘要结构无效")
+                if filename.endswith("v2.json") and not value.get("validation", {}).get("passed"):
+                    raise ValueError("V2数据校验未通过")
+                value["available"] = True
+                value["status"] = status
+                value["loaded_from"] = filename
+                if errors:
+                    value["fallback_reason"] = "；".join(errors)
+                return value
+            except (OSError, ValueError, TypeError, json.JSONDecodeError) as exc:
+                errors.append(f"{filename}: {exc}")
+        return {"available": False, "status": "not_generated", "message": "当前模块数据尚未生成。", "summary": {}, "candidates": [], "load_errors": errors}
 
     def emerging_list(self) -> dict[str, Any]:
         return self._emerging()
