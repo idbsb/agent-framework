@@ -143,6 +143,6 @@ class JobProfileBuilder:
             "bonus_skills_jd_count": sum(_has_content(row.get("bonus_skills_raw")) for row in rows),
             "skill_frequencies": frequencies,
             "small_sample": total < 3,
-            "sample_notice": "小样本提示：当前岗位招聘样本较少，技能频率仅供观察。" if total < 3 else "",
+            "sample_notice": "小样本提示：当前岗位招聘样本较少，暂不形成技能频率结论；以下仅展示JD提及证据。" if total < 3 else "",
             "message": "",
         }

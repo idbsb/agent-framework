@@ -162,7 +162,7 @@ class SystemDataService:
                         "evidence_jd_ids": edge.get("evidence_jd_ids", []),
                     } for edge in graph.get("edges", [])],
                     small_sample=matching_profile["jd_count"] < 3,
-                    sample_notice="小样本提示：当前岗位招聘样本较少，技能频率仅供观察。" if matching_profile["jd_count"] < 3 else "",
+                    sample_notice="小样本提示：当前岗位招聘样本较少，暂不形成技能频率结论；以下仅展示JD提及证据。" if matching_profile["jd_count"] < 3 else "",
                     message="",
                 )
         return result

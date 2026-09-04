@@ -1,8 +1,8 @@
 {
-  "generated_at": "2026-08-26T18:17:16+08:00",
+  "generated_at": "2026-09-05T04:16:58+08:00",
   "environment": {
     "os": "Windows-11-10.0.26200-SP0",
-    "python": "3.12.13",
+    "python": "3.12.14",
     "node": "v24.18.0"
   },
   "passed": true,
@@ -90,24 +90,25 @@
     }
   },
   "observations": {
-    "job_count": 117,
-    "skill_count": 82,
+    "job_count": 153,
+    "skill_count": 84,
     "overview_metrics": {
-      "jd_count": 191,
-      "standard_job_count": 117,
-      "standard_skill_count": 82,
-      "graph_node_count": 490,
-      "graph_edge_count": 2012,
+      "jd_count": 278,
+      "standard_job_count": 153,
+      "standard_skill_count": 84,
+      "frozen_standard_skill_count": 82,
+      "graph_node_count": 657,
+      "graph_edge_count": 2273,
       "resume_count": 27,
-      "evidence_covered_jd_count": 168
+      "evidence_covered_jd_count": 251
     },
     "focus_job_analysis_available": true,
     "graph_summary": {
-      "node_count": 490,
-      "edge_count": 2012,
-      "job_skill_edge_count": 633,
-      "job_count": 117,
-      "skill_count": 82
+      "node_count": 657,
+      "edge_count": 2273,
+      "job_skill_edge_count": 894,
+      "job_count": 126,
+      "skill_count": 240
     },
     "evolution_status": "connected",
     "evolution_samples": {
@@ -120,12 +121,12 @@
       "2026-08-15T00:00:00"
     ],
     "emerging_summary": {
-      "candidate_count": 11,
-      "high_confidence": 0,
-      "medium_confidence": 1,
-      "weak_candidate": 10
+      "candidate_count": 32,
+      "high_confidence": 3,
+      "medium_confidence": 10,
+      "weak_candidate": 19
     },
-    "live_match_score": 33.33
+    "live_match_score": 36.33
   },
   "missing_group_a_files": []
 }

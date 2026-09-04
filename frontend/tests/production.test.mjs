@@ -1,8 +1,9 @@
 import { before, after, test } from 'node:test';
 import assert from 'node:assert/strict';
 import { createServer } from 'vite';
-import { readdirSync, readFileSync } from 'node:fs';
+import { mkdtempSync, readdirSync, readFileSync, rmSync } from 'node:fs';
 import { join } from 'node:path';
+import { tmpdir } from 'node:os';
 let server;
 before(async () => {server = await createServer({server:{middlewareMode:true,hmr:false},appType:'custom',optimizeDeps:{noDiscovery:true,include:[]}});});
 after(async () => {await server?.close();});
@@ -106,28 +107,42 @@ test('live GET uses static data only after all retry attempts fail', async () =>
   } finally {globalThis.fetch=previous;}
 });
 
-test('Render build rejects absent, insecure and non-root API URLs', async () => {
+test('Render build rejects insecure and non-root external API URLs', async () => {
   const {spawnSync}=await import('node:child_process');
-  for(const value of ['', 'http://api.example.test', 'https://api.example.test/api', 'https://localhost']) {
-    const result=spawnSync(process.execPath,['node_modules/vite/bin/vite.js','build','--config','vite.config.ts'],{
-      encoding:'utf8',env:{...process.env,RENDER:'true',VERCEL:'',VITE_API_BASE_URL:value}
-    });
-    assert.notEqual(result.status,0,`unexpected success for ${value}`);
-    assert.match(result.stderr,/VITE_API_BASE_URL/);
+  for(const value of ['http://api.example.test', 'https://api.example.test/api', 'https://localhost']) {
+    const output=mkdtempSync(join(tmpdir(),'challenge-cup-invalid-build-'));
+    try {
+      const result=spawnSync(process.execPath,['node_modules/vite/bin/vite.js','build','--config','vite.config.ts','--outDir',output],{
+        encoding:'utf8',env:{...process.env,RENDER:'true',VERCEL:'',VITE_API_BASE_URL:value}
+      });
+      assert.notEqual(result.status,0,`unexpected success for ${value}`);
+      assert.match(result.stderr,/VITE_API_BASE_URL/);
+    } finally { rmSync(output,{recursive:true,force:true}); }
   }
 });
 
-test('valid production API base builds and backend-only admin token is absent from dist', async () => {
+test('Render same-origin production build stays isolated from committed dist and test hosts', async () => {
   const {spawnSync}=await import('node:child_process');
   const marker='TEST_ADMIN_TOKEN_MUST_NOT_ENTER_FRONTEND_BUNDLE';
-  const result=spawnSync(process.execPath,['node_modules/vite/bin/vite.js','build','--config','vite.config.ts'],{
-    cwd:join(process.cwd()),encoding:'utf8',env:{...process.env,RENDER:'true',VERCEL:'',
-      VITE_API_BASE_URL:'https://api.example.test',P1_ADMIN_TOKEN:marker}
-  });
-  assert.equal(result.status,0,result.stderr||result.stdout);
+  const output=mkdtempSync(join(tmpdir(),'challenge-cup-production-build-'));
+  try {
+    const result=spawnSync(process.execPath,['node_modules/vite/bin/vite.js','build','--config','vite.config.ts','--outDir',output],{
+      cwd:join(process.cwd()),encoding:'utf8',env:{...process.env,RENDER:'true',VERCEL:'',
+        VITE_API_BASE_URL:'',P1_ADMIN_TOKEN:marker}
+    });
+    assert.equal(result.status,0,result.stderr||result.stdout);
+    const files=[];
+    const visit=dir=>readdirSync(dir,{withFileTypes:true}).forEach(entry=>entry.isDirectory()?visit(join(dir,entry.name)):files.push(join(dir,entry.name)));
+    visit(output);
+    assert.ok(files.some(file=>file.endsWith('.js')));
+    assert.ok(files.every(file=>!readFileSync(file).includes(marker)));
+    assert.ok(files.every(file=>!readFileSync(file).includes('api.example.test')));
+  } finally { rmSync(output,{recursive:true,force:true}); }
+});
+
+test('committed production bundle contains no placeholder API origin', () => {
   const files=[];
   const visit=dir=>readdirSync(dir,{withFileTypes:true}).forEach(entry=>entry.isDirectory()?visit(join(dir,entry.name)):files.push(join(dir,entry.name)));
   visit(join(process.cwd(),'dist'));
-  assert.ok(files.some(file=>file.endsWith('.js')));
-  assert.ok(files.every(file=>!readFileSync(file).includes(marker)));
+  assert.ok(files.every(file=>!readFileSync(file).includes('api.example.test')));
 });

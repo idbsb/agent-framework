@@ -17,6 +17,7 @@ test("job seeker navigation excludes developer-facing product placeholders", asy
   const layout = await source("components/Layout.tsx");
   assert.match(layout, /求职数据概览/);
   assert.match(layout, /岗位能力与智能匹配平台/);
+  assert.match(layout, /职涌 · 求职决策智能体/);
   assert.doesNotMatch(layout, /TALENT GRAPH|Evidence-bound AI|MULTI-SOURCE TALENT INTELLIGENCE/);
 });
 
@@ -34,4 +35,20 @@ test("resume capability view shows evidence strength instead of mastery-like per
   assert.match(page, /工作经历/);
   assert.match(page, /能力覆盖率/);
   assert.match(page, /缺失技能/);
+});
+
+test("dashboard presents the complete competition workflow without an internal batch card", async () => {
+  const dashboard = await source("pages/DashboardPage.tsx");
+  assert.match(dashboard, /多源数据采集/);
+  assert.match(dashboard, /新岗位发现与定义/);
+  assert.match(dashboard, /既有岗位能力更新/);
+  assert.match(dashboard, /动态能力图谱/);
+  assert.match(dashboard, /精准匹配与差距分析/);
+  assert.doesNotMatch(dashboard, /最近一次图谱更新|新增JD|batch_update/);
+});
+
+test("multi-source and job-change pages describe market evidence instead of an import batch", async () => {
+  const content = `${await source("pages/MultiSourcePage.tsx")}\n${await source("pages/JobChangesPage.tsx")}`;
+  assert.doesNotMatch(content, /本批新增JD|本次数据更新|6份增量工作簿/);
+  assert.match(content, /当前观察样本|多源证据/);
 });

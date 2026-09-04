@@ -7,9 +7,15 @@ import { PublishedProfile } from "../components/ClosurePanel";
 import ProfileSourceBadge, { type ProfileSourceInfo } from "../components/ProfileSourceBadge";
 import type { ClosureVersion } from "../closure";
 
-type Analysis = ProfileSourceInfo & { published_profile?: ClosureVersion; available: boolean; job_title: string; jd_count: number; small_sample: boolean; sample_notice: string; core_responsibilities: string; required_skills_text: string; bonus_skills_text: string; project_experience: string; education: string; experience: string; skill_frequencies: Array<{ skill_name: string; frequency: number; evidence_jd_count: number; sample_size: number; evidence_jd_ids: string[] }>; graph_source_label: string; message: string };
+type SkillFrequency = { skill_name: string; frequency: number; evidence_jd_count: number; sample_size: number; evidence_jd_ids: string[] };
+type Analysis = ProfileSourceInfo & { published_profile?: ClosureVersion; available: boolean; job_title: string; jd_count: number; small_sample: boolean; sample_notice: string; core_responsibilities: string; required_skills_text: string; bonus_skills_text: string; project_experience: string; education: string; experience: string; skill_frequencies: SkillFrequency[]; graph_source_label: string; message: string };
 const focus = ["AI Agent开发工程师", "RAG引擎研发工程师", "AI安全技术工程师"];
 const split = (value: string) => value.split(/[；;\n]+/).map((item) => item.replace(/^\d+[.、]\s*/, "").trim()).filter(Boolean).slice(0, 16);
+
+export function formatSkillFrequency(item: Pick<SkillFrequency, "frequency" | "evidence_jd_count" | "sample_size">, smallSample: boolean): string {
+  if (smallSample) return `${item.evidence_jd_count}条JD提及`;
+  return `${item.evidence_jd_count}/${item.sample_size} · ${Math.round(item.frequency * 100)}%`;
+}
 
 export default function JobAnalysisPage() {
   const [jobs, setJobs] = useState<JobOption[]>([]); const [title, setTitle] = useState(focus[0]); const [data, setData] = useState<Analysis | null>(null); const [message, setMessage] = useState(""); const [fallbackData, setFallbackData] = useState<Analysis[]>([]);
@@ -26,7 +32,7 @@ export default function JobAnalysisPage() {
     <ProfileSourceBadge info={data}/>
     {message ? <StatusBanner tone="warning">{message}</StatusBanner> : null}{data && !data.available ? <StatusBanner>{data.message}</StatusBanner> : null}
     {data?.small_sample ? <StatusBanner tone="warning">{data.sample_notice}</StatusBanner> : null}
-    {data?.available ? <div className="analysis-grid"><article className="panel span-2"><div className="panel-title"><span>岗位技能频率</span><small>分析样本：{data.jd_count}条JD</small></div><ReactECharts option={option} style={{ height: 360 }} /><div className="frequency-ledger">{data.skill_frequencies.slice(0, 12).map((item) => <div key={item.skill_name}><span>{item.skill_name}</span><strong>{item.evidence_jd_count}/{item.sample_size} · {Math.round(item.frequency * 100)}%</strong></div>)}</div></article><article className="panel"><div className="panel-title"><span>岗位要求概览</span><small>招聘信息汇总</small></div><Info label="学历要求" value={data.education} /><Info label="经验要求" value={data.experience} /><Info label="项目经验" value={data.project_experience} /></article><article className="panel span-2"><div className="panel-title"><span>常见工作职责</span><small>来自真实招聘信息</small></div><ol className="detail-list">{split(data.core_responsibilities).map((item) => <li key={item}>{item}</li>)}</ol></article><article className="panel"><div className="panel-title"><span>技能要求</span><small>必备与加分项</small></div><h3>必备技能</h3><TagList values={split(data.required_skills_text)} /><h3>加分技能</h3><TagList values={split(data.bonus_skills_text)} /></article></div> : null}
+    {data?.available ? <div className="analysis-grid"><article className="panel span-2"><div className="panel-title"><span>{data.small_sample ? "岗位技能证据" : "岗位技能频率"}</span><small>分析样本：{data.jd_count}条JD{data.small_sample ? " · 暂不计算频率" : ""}</small></div>{data.small_sample ? null : <ReactECharts option={option} style={{ height: 360 }} />}<div className="frequency-ledger">{data.skill_frequencies.slice(0, 12).map((item) => <div key={item.skill_name}><span>{item.skill_name}</span><strong>{formatSkillFrequency(item, data.small_sample)}</strong></div>)}</div></article><article className="panel"><div className="panel-title"><span>岗位要求概览</span><small>招聘信息汇总</small></div><Info label="学历要求" value={data.education} /><Info label="经验要求" value={data.experience} /><Info label="项目经验" value={data.project_experience} /></article><article className="panel span-2"><div className="panel-title"><span>常见工作职责</span><small>来自真实招聘信息</small></div><ol className="detail-list">{split(data.core_responsibilities).map((item) => <li key={item}>{item}</li>)}</ol></article><article className="panel"><div className="panel-title"><span>技能要求</span><small>必备与加分项</small></div><h3>必备技能</h3><TagList values={split(data.required_skills_text)} /><h3>加分技能</h3><TagList values={split(data.bonus_skills_text)} /></article></div> : null}
     <PublishedProfile profile={data?.published_profile}/>
   </>;
 }
