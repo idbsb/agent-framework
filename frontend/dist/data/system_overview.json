@@ -1,15 +1,15 @@
 {
-  "data_version": "1.0+supplemental_jd_v3",
-  "truth_statement": "当前系统基于237条真实招聘JD构建。",
+  "data_version": "1.0+supplemental_jd_v3+batch_20260904",
+  "truth_statement": "当前系统基于278条真实招聘JD构建。",
   "metrics": {
-    "jd_count": 237,
-    "standard_job_count": 144,
+    "jd_count": 278,
+    "standard_job_count": 153,
     "standard_skill_count": 84,
     "frozen_standard_skill_count": 82,
-    "graph_node_count": 490,
-    "graph_edge_count": 2012,
+    "graph_node_count": 657,
+    "graph_edge_count": 2273,
     "resume_count": 27,
-    "evidence_covered_jd_count": 211
+    "evidence_covered_jd_count": 251
   },
   "top_jobs": [
     {
@@ -21,6 +21,18 @@
       "jd_count": 9
     },
     {
+      "job_title": "Java开发工程师",
+      "jd_count": 9
+    },
+    {
+      "job_title": "数据分析师",
+      "jd_count": 9
+    },
+    {
+      "job_title": "测试开发工程师",
+      "jd_count": 7
+    },
+    {
       "job_title": "具身智能算法工程师",
       "jd_count": 6
     },
@@ -29,62 +41,50 @@
       "jd_count": 6
     },
     {
-      "job_title": "AI算法测试开发工程师",
-      "jd_count": 5
-    },
-    {
-      "job_title": "AI评测工程师",
-      "jd_count": 5
-    },
-    {
-      "job_title": "AI智能体应用开发工程师",
-      "jd_count": 4
-    },
-    {
-      "job_title": "AI安全攻防工程师",
-      "jd_count": 4
+      "job_title": "大模型评测工程师",
+      "jd_count": 6
     }
   ],
   "top_skills": [
     {
       "skill_name": "Python",
-      "evidence_jd_count": 151
+      "evidence_jd_count": 178
     },
     {
       "skill_name": "大语言模型（LLM）",
-      "evidence_jd_count": 92
+      "evidence_jd_count": 108
     },
     {
       "skill_name": "C++",
-      "evidence_jd_count": 73
+      "evidence_jd_count": 80
     },
     {
       "skill_name": "PyTorch",
-      "evidence_jd_count": 61
+      "evidence_jd_count": 65
     },
     {
       "skill_name": "RAG",
-      "evidence_jd_count": 54
+      "evidence_jd_count": 63
     },
     {
       "skill_name": "Java",
-      "evidence_jd_count": 43
-    },
-    {
-      "skill_name": "Linux",
-      "evidence_jd_count": 33
+      "evidence_jd_count": 61
     },
     {
       "skill_name": "LangChain",
-      "evidence_jd_count": 33
+      "evidence_jd_count": 39
     },
     {
-      "skill_name": "TensorFlow",
-      "evidence_jd_count": 33
+      "skill_name": "自然语言处理（NLP）",
+      "evidence_jd_count": 38
+    },
+    {
+      "skill_name": "Linux",
+      "evidence_jd_count": 37
     },
     {
       "skill_name": "计算机视觉（CV）",
-      "evidence_jd_count": 33
+      "evidence_jd_count": 35
     }
   ],
   "sources": [
@@ -103,6 +103,10 @@
     {
       "source": "猎聘招聘官网",
       "jd_count": 16
+    },
+    {
+      "source": "国家大学生就业服务平台",
+      "jd_count": 12
     },
     {
       "source": "BOSS直聘官方招聘",
@@ -137,6 +141,10 @@
       "jd_count": 7
     },
     {
+      "source": "京东官方招聘",
+      "jd_count": 7
+    },
+    {
       "source": "科大讯飞招聘官网",
       "jd_count": 6
     },
@@ -165,6 +173,10 @@
       "jd_count": 4
     },
     {
+      "source": "吉林大学就业网",
+      "jd_count": 4
+    },
+    {
       "source": "腾讯招聘",
       "jd_count": 3
     },
@@ -182,6 +194,22 @@
     },
     {
       "source": "上海人工智能实验室招聘",
+      "jd_count": 2
+    },
+    {
+      "source": "鼠鼠求职（招聘聚合）",
+      "jd_count": 2
+    },
+    {
+      "source": "牛客网",
+      "jd_count": 2
+    },
+    {
+      "source": "对外经济贸易大学就业网",
+      "jd_count": 2
+    },
+    {
+      "source": "香港中文大学（深圳）就业网",
       "jd_count": 2
     },
     {
@@ -211,13 +239,53 @@
     {
       "source": "前程无忧招聘官网",
       "jd_count": 1
+    },
+    {
+      "source": "天津工业大学就业网",
+      "jd_count": 1
+    },
+    {
+      "source": "海康威视官方招聘",
+      "jd_count": 1
+    },
+    {
+      "source": "西安电子科技大学就业网",
+      "jd_count": 1
+    },
+    {
+      "source": "上海科技大学就业网",
+      "jd_count": 1
+    },
+    {
+      "source": "山东大学就业网",
+      "jd_count": 1
+    },
+    {
+      "source": "长沙理工大学就业网",
+      "jd_count": 1
+    },
+    {
+      "source": "大连海事大学就业网",
+      "jd_count": 1
+    },
+    {
+      "source": "滴滴官方招聘",
+      "jd_count": 1
+    },
+    {
+      "source": "百度官方招聘",
+      "jd_count": 1
+    },
+    {
+      "source": "应届生求职网（来源浙江大学）",
+      "jd_count": 1
     }
   ],
   "graph_status": {
     "available": true,
     "status": "connected",
-    "source_label": "组员A正式知识图谱",
-    "notice": "正式图谱完整保留在后台；当前接口按所选岗位或技能返回直接关联子图。"
+    "source_label": "Graph V2（正式基准图谱 + 2026-09-04真实增量批次）",
+    "notice": "NEW 为本批次新增节点/关系，UPDATED 为本批次有新增 Evidence 的既有关系。"
   },
   "evolution_status": {
     "support_jd_count": 12,
@@ -4083,5 +4151,304 @@
       "exact_evidence_count": 1,
       "supporting_evidence_count": 0
     }
-  ]
+  ],
+  "batch_update": {
+    "batch_id": "BATCH-20260904",
+    "graph_version": "Graph V2",
+    "baseline_graph_version": "Graph V1",
+    "updated_at": "2026-09-04",
+    "files_loaded": 6,
+    "workbooks": [
+      {
+        "file_name": "01_真实JD数据集.xlsx",
+        "sha256": "1CE8DEFF6A537F1AC3AA2EABCCE41EF947A44FCB3F88BE1E596CDE9C5C86CBE0",
+        "sheets": [
+          {
+            "sheet_name": "JD主数据",
+            "row_count": 42,
+            "fields": [
+              "JD编号",
+              "岗位分组",
+              "岗位标准分类",
+              "原始岗位名称",
+              "企业名称",
+              "所属行业",
+              "工作地点",
+              "来源平台",
+              "来源URL",
+              "发布日期",
+              "采集日期",
+              "学历要求",
+              "经验要求",
+              "岗位职责",
+              "任职要求",
+              "加分项/优先条件",
+              "技能原文",
+              "备注",
+              "真实性状态",
+              "duplicate_group",
+              "duplicate_type",
+              "canonical_jd_id"
+            ]
+          },
+          {
+            "sheet_name": "来源审计",
+            "row_count": 42,
+            "fields": [
+              "JD编号",
+              "原始岗位名称",
+              "企业",
+              "URL",
+              "页面是否可访问",
+              "是否企业官方来源",
+              "是否招聘平台来源",
+              "发布日期是否明确",
+              "JD正文是否完整",
+              "是否疑似转载",
+              "是否疑似重复",
+              "审核备注"
+            ]
+          },
+          {
+            "sheet_name": "时间窗口统计",
+            "row_count": 137,
+            "fields": [
+              "岗位标准分类",
+              "时间窗口",
+              "JD数量",
+              "企业数量",
+              "来源数量",
+              "主要技能",
+              "技能出现次数",
+              "技能出现频率"
+            ]
+          }
+        ]
+      },
+      {
+        "file_name": "02_既有岗位能力变化.xlsx",
+        "sha256": "4A38D825DAD50DD6582310091C7043DABA85F3096F578F04EECB2CB516753863",
+        "sheets": [
+          {
+            "sheet_name": "岗位时间对比",
+            "row_count": 6,
+            "fields": [
+              "岗位",
+              "时间窗口",
+              "JD数量",
+              "企业数量",
+              "样本状态",
+              "支撑JD"
+            ]
+          },
+          {
+            "sheet_name": "技能变化明细",
+            "row_count": 26,
+            "fields": [
+              "岗位",
+              "技能",
+              "早期出现次数",
+              "早期频率",
+              "近期出现次数",
+              "近期频率",
+              "变化方向",
+              "支撑JD",
+              "备注"
+            ]
+          },
+          {
+            "sheet_name": "JD证据映射",
+            "row_count": 14,
+            "fields": [
+              "JD编号",
+              "岗位",
+              "时间窗口",
+              "原始岗位名称",
+              "企业",
+              "URL",
+              "技能原文"
+            ]
+          }
+        ]
+      },
+      {
+        "file_name": "03_新兴岗位趋势.xlsx",
+        "sha256": "1E662A986F378EAF7328971E89BFEDC57E9126B824933BCC57DBA041E813DFFD",
+        "sheets": [
+          {
+            "sheet_name": "新兴岗位趋势",
+            "row_count": 8,
+            "fields": [
+              "岗位候选",
+              "时间窗口",
+              "JD数量",
+              "企业数量",
+              "来源数量",
+              "首次观察时间",
+              "最近观察时间",
+              "核心技能",
+              "新增/差异技能",
+              "相关既有岗位",
+              "备注"
+            ]
+          }
+        ]
+      },
+      {
+        "file_name": "04_政策文件与行业报告.xlsx",
+        "sha256": "989345BB38F7F4D5B4607CE4045083696B7305688D818CA03979B5D77C773E0D",
+        "sheets": [
+          {
+            "sheet_name": "政策文件",
+            "row_count": 9,
+            "fields": [
+              "编号",
+              "文件名称",
+              "发布机构",
+              "发布日期",
+              "政策层级",
+              "主题",
+              "与项目相关的原文摘要",
+              "支持的岗位/技能方向",
+              "原始URL",
+              "访问日期"
+            ]
+          },
+          {
+            "sheet_name": "行业报告",
+            "row_count": 7,
+            "fields": [
+              "编号",
+              "报告名称",
+              "发布机构",
+              "发布日期",
+              "报告类型",
+              "研究对象",
+              "关键结论",
+              "与项目相关的技能/岗位趋势",
+              "原始URL",
+              "是否可公开访问",
+              "访问日期",
+              "备注"
+            ]
+          }
+        ]
+      },
+      {
+        "file_name": "05_多源交叉验证.xlsx",
+        "sha256": "111D37198B80A0DAE36137CF47921EB3E8EB5B21889CF3F629AA0442469213C3",
+        "sheets": [
+          {
+            "sheet_name": "多源交叉验证",
+            "row_count": 5,
+            "fields": [
+              "岗位/技能趋势",
+              "JD证据",
+              "政策证据",
+              "行业报告证据",
+              "GitHub技术证据",
+              "综合说明",
+              "证据强度"
+            ]
+          }
+        ]
+      },
+      {
+        "file_name": "06_检索与真实性审计.xlsx",
+        "sha256": "3CB03ED56AC387E8FCD03309B173793740D9EAECD654D858548192577B30329F",
+        "sheets": [
+          {
+            "sheet_name": "检索日志",
+            "row_count": 49,
+            "fields": [
+              "检索日期",
+              "检索关键词",
+              "检索平台/站点",
+              "访问URL",
+              "是否纳入",
+              "未纳入原因",
+              "备注"
+            ]
+          }
+        ]
+      }
+    ],
+    "baseline": {
+      "jd_count": 237,
+      "job_node_count": 117,
+      "skill_node_count": 82,
+      "relation_count": 2012
+    },
+    "incremental": {
+      "raw_jd_count": 42,
+      "jd_count": 41,
+      "duplicate_excluded_count": 1,
+      "source_count": 17,
+      "company_count": 34,
+      "job_count": 11,
+      "dated_jd_count": 28,
+      "dated_jd_ratio": 0.6829,
+      "new_job_count": 9,
+      "observed_skill_count": 179,
+      "changed_job_count": 3,
+      "emerging_candidate_count": 8
+    },
+    "current": {
+      "jd_count": 278,
+      "job_count": 153,
+      "job_node_count": 126,
+      "skill_node_count": 240,
+      "relation_count": 2273
+    },
+    "recruitment_sources": {
+      "国家大学生就业服务平台": 12,
+      "天津工业大学就业网": 1,
+      "海康威视官方招聘": 1,
+      "京东官方招聘": 7,
+      "鼠鼠求职（招聘聚合）": 2,
+      "牛客网": 2,
+      "西安电子科技大学就业网": 1,
+      "上海科技大学就业网": 1,
+      "山东大学就业网": 1,
+      "吉林大学就业网": 4,
+      "长沙理工大学就业网": 1,
+      "对外经济贸易大学就业网": 2,
+      "大连海事大学就业网": 1,
+      "香港中文大学（深圳）就业网": 2,
+      "滴滴官方招聘": 1,
+      "百度官方招聘": 1,
+      "应届生求职网（来源浙江大学）": 1
+    },
+    "audit": {
+      "status_counts": {
+        "VERIFIED": 30,
+        "PARTIAL": 12
+      },
+      "inclusion_counts": {
+        "已纳入": 42,
+        "未纳入": 7
+      },
+      "exclusion_reasons": {
+        "教程文章，不是真实招聘JD": 1,
+        "求职指南，不是招聘JD": 1,
+        "模板/汇编，不可追溯到单一招聘主体": 1,
+        "当前抓取仅显示页面标题，无法核验完整JD正文": 1,
+        "转载来源，未核验腾讯官方正文": 1,
+        "第三方聚合页，未核验企业官方原页": 1,
+        "企业名称登录后可见，无法确认招聘主体": 1
+      },
+      "audit_record_count": 49
+    },
+    "external_source_counts": {
+      "政策文件": 9,
+      "行业报告": 7,
+      "交叉验证": 5
+    },
+    "graph_change": {
+      "new_job_node_count": 9,
+      "new_skill_node_count": 158,
+      "new_relation_count": 261,
+      "updated_relation_count": 3
+    }
+  }
 }

@@ -109,9 +109,12 @@ def main() -> int:
     formal_qa = full_graph.get("formal_qa_report") or {}
     graph_passed = (
         graph.get("available") and full_graph.get("source_type") == "formal_json"
-        and full_graph.get("summary", {}).get("node_count") == formal_qa.get("node_count") == 490
-        and full_graph.get("summary", {}).get("edge_count") == formal_qa.get("edge_count") == 2012
-        and full_graph.get("summary", {}).get("job_skill_edge_count") == formal_qa.get("job_skill_edge_count") == 633
+        and full_graph.get("baseline_summary", {}).get("node_count") == formal_qa.get("node_count") == 490
+        and full_graph.get("baseline_summary", {}).get("edge_count") == formal_qa.get("edge_count") == 2012
+        and full_graph.get("baseline_summary", {}).get("job_skill_edge_count") == formal_qa.get("job_skill_edge_count") == 633
+        and full_graph.get("graph_version") == "Graph V2"
+        and full_graph.get("summary", {}).get("node_count", 0) > full_graph.get("baseline_summary", {}).get("node_count", 0)
+        and full_graph.get("summary", {}).get("edge_count", 0) > full_graph.get("baseline_summary", {}).get("edge_count", 0)
         and graph.get("edges") and all(edge.get("evidence_jd_ids") for edge in graph["edges"])
     )
     evolution_passed = (

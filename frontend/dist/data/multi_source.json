@@ -1,0 +1,581 @@
+{
+  "batch_id": "BATCH-20260904",
+  "graph_version": "Graph V2",
+  "baseline_graph_version": "Graph V1",
+  "updated_at": "2026-09-04",
+  "files_loaded": 6,
+  "workbooks": [
+    {
+      "file_name": "01_真实JD数据集.xlsx",
+      "sha256": "1CE8DEFF6A537F1AC3AA2EABCCE41EF947A44FCB3F88BE1E596CDE9C5C86CBE0",
+      "sheets": [
+        {
+          "sheet_name": "JD主数据",
+          "row_count": 42,
+          "fields": [
+            "JD编号",
+            "岗位分组",
+            "岗位标准分类",
+            "原始岗位名称",
+            "企业名称",
+            "所属行业",
+            "工作地点",
+            "来源平台",
+            "来源URL",
+            "发布日期",
+            "采集日期",
+            "学历要求",
+            "经验要求",
+            "岗位职责",
+            "任职要求",
+            "加分项/优先条件",
+            "技能原文",
+            "备注",
+            "真实性状态",
+            "duplicate_group",
+            "duplicate_type",
+            "canonical_jd_id"
+          ]
+        },
+        {
+          "sheet_name": "来源审计",
+          "row_count": 42,
+          "fields": [
+            "JD编号",
+            "原始岗位名称",
+            "企业",
+            "URL",
+            "页面是否可访问",
+            "是否企业官方来源",
+            "是否招聘平台来源",
+            "发布日期是否明确",
+            "JD正文是否完整",
+            "是否疑似转载",
+            "是否疑似重复",
+            "审核备注"
+          ]
+        },
+        {
+          "sheet_name": "时间窗口统计",
+          "row_count": 137,
+          "fields": [
+            "岗位标准分类",
+            "时间窗口",
+            "JD数量",
+            "企业数量",
+            "来源数量",
+            "主要技能",
+            "技能出现次数",
+            "技能出现频率"
+          ]
+        }
+      ]
+    },
+    {
+      "file_name": "02_既有岗位能力变化.xlsx",
+      "sha256": "4A38D825DAD50DD6582310091C7043DABA85F3096F578F04EECB2CB516753863",
+      "sheets": [
+        {
+          "sheet_name": "岗位时间对比",
+          "row_count": 6,
+          "fields": [
+            "岗位",
+            "时间窗口",
+            "JD数量",
+            "企业数量",
+            "样本状态",
+            "支撑JD"
+          ]
+        },
+        {
+          "sheet_name": "技能变化明细",
+          "row_count": 26,
+          "fields": [
+            "岗位",
+            "技能",
+            "早期出现次数",
+            "早期频率",
+            "近期出现次数",
+            "近期频率",
+            "变化方向",
+            "支撑JD",
+            "备注"
+          ]
+        },
+        {
+          "sheet_name": "JD证据映射",
+          "row_count": 14,
+          "fields": [
+            "JD编号",
+            "岗位",
+            "时间窗口",
+            "原始岗位名称",
+            "企业",
+            "URL",
+            "技能原文"
+          ]
+        }
+      ]
+    },
+    {
+      "file_name": "03_新兴岗位趋势.xlsx",
+      "sha256": "1E662A986F378EAF7328971E89BFEDC57E9126B824933BCC57DBA041E813DFFD",
+      "sheets": [
+        {
+          "sheet_name": "新兴岗位趋势",
+          "row_count": 8,
+          "fields": [
+            "岗位候选",
+            "时间窗口",
+            "JD数量",
+            "企业数量",
+            "来源数量",
+            "首次观察时间",
+            "最近观察时间",
+            "核心技能",
+            "新增/差异技能",
+            "相关既有岗位",
+            "备注"
+          ]
+        }
+      ]
+    },
+    {
+      "file_name": "04_政策文件与行业报告.xlsx",
+      "sha256": "989345BB38F7F4D5B4607CE4045083696B7305688D818CA03979B5D77C773E0D",
+      "sheets": [
+        {
+          "sheet_name": "政策文件",
+          "row_count": 9,
+          "fields": [
+            "编号",
+            "文件名称",
+            "发布机构",
+            "发布日期",
+            "政策层级",
+            "主题",
+            "与项目相关的原文摘要",
+            "支持的岗位/技能方向",
+            "原始URL",
+            "访问日期"
+          ]
+        },
+        {
+          "sheet_name": "行业报告",
+          "row_count": 7,
+          "fields": [
+            "编号",
+            "报告名称",
+            "发布机构",
+            "发布日期",
+            "报告类型",
+            "研究对象",
+            "关键结论",
+            "与项目相关的技能/岗位趋势",
+            "原始URL",
+            "是否可公开访问",
+            "访问日期",
+            "备注"
+          ]
+        }
+      ]
+    },
+    {
+      "file_name": "05_多源交叉验证.xlsx",
+      "sha256": "111D37198B80A0DAE36137CF47921EB3E8EB5B21889CF3F629AA0442469213C3",
+      "sheets": [
+        {
+          "sheet_name": "多源交叉验证",
+          "row_count": 5,
+          "fields": [
+            "岗位/技能趋势",
+            "JD证据",
+            "政策证据",
+            "行业报告证据",
+            "GitHub技术证据",
+            "综合说明",
+            "证据强度"
+          ]
+        }
+      ]
+    },
+    {
+      "file_name": "06_检索与真实性审计.xlsx",
+      "sha256": "3CB03ED56AC387E8FCD03309B173793740D9EAECD654D858548192577B30329F",
+      "sheets": [
+        {
+          "sheet_name": "检索日志",
+          "row_count": 49,
+          "fields": [
+            "检索日期",
+            "检索关键词",
+            "检索平台/站点",
+            "访问URL",
+            "是否纳入",
+            "未纳入原因",
+            "备注"
+          ]
+        }
+      ]
+    }
+  ],
+  "baseline": {
+    "jd_count": 237,
+    "job_node_count": 117,
+    "skill_node_count": 82,
+    "relation_count": 2012
+  },
+  "incremental": {
+    "raw_jd_count": 42,
+    "jd_count": 41,
+    "duplicate_excluded_count": 1,
+    "source_count": 17,
+    "company_count": 34,
+    "job_count": 11,
+    "dated_jd_count": 28,
+    "dated_jd_ratio": 0.6829,
+    "new_job_count": 9,
+    "observed_skill_count": 179,
+    "changed_job_count": 3,
+    "emerging_candidate_count": 8
+  },
+  "current": {
+    "jd_count": 278,
+    "job_count": 153,
+    "job_node_count": 126,
+    "skill_node_count": 240,
+    "relation_count": 2273
+  },
+  "recruitment_sources": {
+    "国家大学生就业服务平台": 12,
+    "天津工业大学就业网": 1,
+    "海康威视官方招聘": 1,
+    "京东官方招聘": 7,
+    "鼠鼠求职（招聘聚合）": 2,
+    "牛客网": 2,
+    "西安电子科技大学就业网": 1,
+    "上海科技大学就业网": 1,
+    "山东大学就业网": 1,
+    "吉林大学就业网": 4,
+    "长沙理工大学就业网": 1,
+    "对外经济贸易大学就业网": 2,
+    "大连海事大学就业网": 1,
+    "香港中文大学（深圳）就业网": 2,
+    "滴滴官方招聘": 1,
+    "百度官方招聘": 1,
+    "应届生求职网（来源浙江大学）": 1
+  },
+  "audit": {
+    "status_counts": {
+      "VERIFIED": 30,
+      "PARTIAL": 12
+    },
+    "inclusion_counts": {
+      "已纳入": 42,
+      "未纳入": 7
+    },
+    "exclusion_reasons": {
+      "教程文章，不是真实招聘JD": 1,
+      "求职指南，不是招聘JD": 1,
+      "模板/汇编，不可追溯到单一招聘主体": 1,
+      "当前抓取仅显示页面标题，无法核验完整JD正文": 1,
+      "转载来源，未核验腾讯官方正文": 1,
+      "第三方聚合页，未核验企业官方原页": 1,
+      "企业名称登录后可见，无法确认招聘主体": 1
+    },
+    "audit_record_count": 49
+  },
+  "external_source_counts": {
+    "政策文件": 9,
+    "行业报告": 7,
+    "交叉验证": 5
+  },
+  "graph_change": {
+    "new_job_node_count": 9,
+    "new_skill_node_count": 158,
+    "new_relation_count": 261,
+    "updated_relation_count": 3
+  },
+  "external_evidence": [
+    {
+      "evidence_id": "P001",
+      "source_type": "政策证据",
+      "title": "国务院关于印发新一代人工智能发展规划的通知",
+      "publisher": "国务院",
+      "published_date": "2017-07-08",
+      "summary": "规划提出构建开放协同的人工智能科技创新体系，强化基础理论、关键技术、平台和人才队伍，并布局人工智能安全评估与管控。",
+      "supports": "人工智能算法、智能系统、AI安全、人才培养",
+      "url": "https://app.www.gov.cn/govdata/gov/201707/20/408540/article.html"
+    },
+    {
+      "evidence_id": "P002",
+      "source_type": "政策证据",
+      "title": "关于发展数字经济稳定并扩大就业的指导意见",
+      "publisher": "国家发展改革委等",
+      "published_date": "2018-09-18",
+      "summary": "提出前瞻加强数字人才培养培训，扩大互联网、物联网、大数据、云计算、人工智能等数字人才培养规模。",
+      "supports": "大数据、云计算、物联网、人工智能",
+      "url": "https://www.ndrc.gov.cn/xxgk/zcfb/tz/201809/t20180926_962281.html"
+    },
+    {
+      "evidence_id": "P003",
+      "source_type": "政策证据",
+      "title": "国务院关于印发“十四五”数字经济发展规划的通知",
+      "publisher": "国务院",
+      "published_date": "2022-01-12",
+      "summary": "提出加强职业院校数字技术技能人才培养，深化数字经济领域新工科建设，支持校企共建产业学院、实验室和实习基地。",
+      "supports": "数字技能、软件工程、数据、云计算",
+      "url": "https://www.miit.gov.cn/xwdt/szyw/art/2022/art_4ecc233a663b44329d0863e60b51192b.html"
+    },
+    {
+      "evidence_id": "P004",
+      "source_type": "政策证据",
+      "title": "加快数字人才培育支撑数字经济发展行动方案（2024-2026年）",
+      "publisher": "人力资源社会保障部等九部门",
+      "published_date": "2024-04-02",
+      "summary": "围绕数字产业化和产业数字化发展需要，实施数字技术工程师培育、数字技能提升、数字人才国际交流等行动。",
+      "supports": "数字技术工程师、人工智能、大数据、云计算",
+      "url": "https://www.digitalchina.gov.cn/2024/xwzx/qwfb/202404/t20240424_4813555.htm"
+    },
+    {
+      "evidence_id": "P005",
+      "source_type": "政策证据",
+      "title": "国家人工智能产业综合标准化体系建设指南（2024版）",
+      "publisher": "工业和信息化部等四部门",
+      "published_date": "2024-06-05",
+      "summary": "围绕基础共性、基础支撑、关键技术、智能产品与服务、赋能新型工业化、行业应用和安全治理建设标准体系。",
+      "supports": "AI工程、智能制造、AI安全、数据与算力",
+      "url": "https://www.miit.gov.cn/jgsj/kjs/wjfb/art/2024/art_0b6ff6228d0a47cc9519dd76c7a02ef2.html"
+    },
+    {
+      "evidence_id": "P006",
+      "source_type": "政策证据",
+      "title": "人力资源社会保障部等8部门关于推动技能强企工作的指导意见",
+      "publisher": "人力资源社会保障部等八部门",
+      "published_date": "2025-03-19",
+      "summary": "提出聚焦大数据、人工智能、智能制造、集成电路、数据安全等领域挖掘培育新的数字职业序列。",
+      "supports": "大数据、人工智能、智能制造、数据安全",
+      "url": "https://www.moe.gov.cn/jyb_xxgk/gk_gbgg/moe_0/2025/gb02/gb02_zh/202505/t20250530_1192471.html"
+    },
+    {
+      "evidence_id": "P007",
+      "source_type": "政策证据",
+      "title": "关于加强数据要素学科专业建设和数字人才队伍建设的意见",
+      "publisher": "国家发展改革委等",
+      "published_date": "2025-12-03",
+      "summary": "提出建立数据领域科技发展和国家战略需求牵引的学科专业调整机制，支持增设数据采集清洗、标注、合规和运营等相关专业。",
+      "supports": "数据工程、数据治理、数据合规",
+      "url": "https://app.www.gov.cn/govdata/gov/202512/03/540748/article.html"
+    },
+    {
+      "evidence_id": "P008",
+      "source_type": "政策证据",
+      "title": "“人工智能+制造”专项行动实施意见",
+      "publisher": "工业和信息化部等",
+      "published_date": "2025-12-25",
+      "summary": "提出开展人工智能产业人才需求预测，培养既懂人工智能又懂制造业应用的复合型人才。",
+      "supports": "AI应用工程、工业软件、智能制造",
+      "url": "https://www.miit.gov.cn/cms_files/filemanager/1226211233/attach/202512/8b6a31547603437db54d6596d33d04c4.pdf"
+    },
+    {
+      "evidence_id": "P009",
+      "source_type": "政策证据",
+      "title": "关于加快推进“人工智能＋人社”应用发展的实施意见",
+      "publisher": "人力资源社会保障部等四部门",
+      "published_date": "2026-07-08",
+      "summary": "提出拓展就业创业领域人工智能应用场景，并构建职业功能、专业能力和专业知识图谱及智能学习资源。",
+      "supports": "AI应用、知识图谱、数字人才",
+      "url": "https://www.nda.gov.cn/sjj/zwgk/zcfb/0708/20260708133949899211227_pc.html"
+    },
+    {
+      "evidence_id": "R001",
+      "source_type": "行业报告证据",
+      "title": "大模型落地路线图研究报告（2024年）",
+      "publisher": "中国信息通信研究院",
+      "published_date": "2024-09-04",
+      "summary": "报告提出应用方应评估基础资源、人才团队和战略规划等就绪度，系统推进大模型落地。",
+      "supports": "大模型应用工程、平台与团队能力",
+      "url": "https://www.caict.ac.cn/kxyj/qwfb/ztbg/202409/P020240904538515747964.pdf"
+    },
+    {
+      "evidence_id": "R002",
+      "source_type": "行业报告证据",
+      "title": "我国数字人才发展的现状与对策",
+      "publisher": "社会科学文献出版社皮书数据库",
+      "published_date": "2024-11-01",
+      "summary": "报告认为数字人才规模扩大、结构优化，但仍存在供给不足、分布不均和复合型人才短缺。",
+      "supports": "复合型数字技能与人才培养",
+      "url": "https://www.pishu.com.cn/skwx_ps/initDatabaseDetail?contentId=15790738&contentType=literature&siteId=14"
+    },
+    {
+      "evidence_id": "R003",
+      "source_type": "行业报告证据",
+      "title": "人工智能大语言模型技术影响下的劳动力市场求职错配情况报告",
+      "publisher": "北京大学国家发展研究院、智联招聘",
+      "published_date": "2025-12-01",
+      "summary": "基于2021年1月至2025年7月超过162万条岗位-求职者匹配数据，研究大模型技术影响下的求职错配。",
+      "supports": "AI技能暴露、岗位设计与人才匹配",
+      "url": "https://nsd.pku.edu.cn/xzyj/cbw/yjbgxl/9295ba3c7e5c4a24aaf57798c94cb1a2.htm"
+    },
+    {
+      "evidence_id": "R004",
+      "source_type": "行业报告证据",
+      "title": "2025年人工智能产业人才发展报告",
+      "publisher": "智联招聘",
+      "published_date": "2025-11-01",
+      "summary": "报告显示人工智能行业招聘同比增长11%，算法、数据、产品岗位需求增速明显，且AI人才需求向多行业扩散。",
+      "supports": "算法、数据、AI产品及复合技能",
+      "url": "https://hulianhutongshequ.cn/upload/tank/report/2025/202511/3/df0ed4a2ac6c40ff8724c8bb9e6a65d3.pdf"
+    },
+    {
+      "evidence_id": "R005",
+      "source_type": "行业报告证据",
+      "title": "2025年AI人才流动报告",
+      "publisher": "脉脉",
+      "published_date": "2025-09-18",
+      "summary": "中国日报公开报道引述报告：2025年1-7月平台AI新发岗位量同比增长超10倍，简历投递量增长11倍。",
+      "supports": "AI岗位与人才流动",
+      "url": "https://cn.chinadaily.com.cn/a/202509/18/WS68cbb97aa310f072577492b3.html"
+    },
+    {
+      "evidence_id": "R006",
+      "source_type": "行业报告证据",
+      "title": "中国人工智能人才发展报告（2025～2026）",
+      "publisher": "中国劳动和社会保障科学研究院组织专家编写",
+      "published_date": "2026-04-01",
+      "summary": "报告系统分析人才规模结构、教育培养、区域行业需求，并指出高端短缺和结构失衡等问题。",
+      "supports": "人工智能人才供需、培养、可信AI",
+      "url": "https://cpms.ssap.com.cn/skwx_cmr/bookdetail?ID=8485427&SiteID=23"
+    },
+    {
+      "evidence_id": "R007",
+      "source_type": "行业报告证据",
+      "title": "2025～2026年中国人工智能人才发展报告",
+      "publisher": "莫荣、战梦霞、刘永魁",
+      "published_date": "2026-04-01",
+      "summary": "专题报告依托智联招聘数据分析人工智能人才特征、地域、薪资和行业需求，并提出优化供给和可信AI环境建议。",
+      "supports": "AI人才供需、AI安全、复合能力",
+      "url": "https://cpms.ssap.com.cn/skwx_cmr/initDatabaseDetail?contentId=8485462&contentType=literature&siteId=23"
+    }
+  ],
+  "cross_validation": [
+    {
+      "trend": "AI Agent / MCP",
+      "jd_evidence_ids": [
+        "JD002",
+        "JD003",
+        "JD005",
+        "JD007",
+        "JD008",
+        "JD009",
+        "JD010",
+        "JD012",
+        "JD015",
+        "JD016",
+        "JD025",
+        "JD035",
+        "JD039",
+        "JD040",
+        "JD042"
+      ],
+      "policy_evidence_ids": [
+        "P004",
+        "P005",
+        "P009"
+      ],
+      "report_evidence_ids": [
+        "R001",
+        "R004",
+        "R006"
+      ],
+      "other_evidence": "本轮未采集",
+      "summary": "多个独立来源观察到智能体、工具调用和应用工程能力；不等同于岗位必然高速增长。",
+      "strength": "中"
+    },
+    {
+      "trend": "大模型评测 / AI安全",
+      "jd_evidence_ids": [
+        "JD009",
+        "JD014",
+        "JD015",
+        "JD016",
+        "JD017"
+      ],
+      "policy_evidence_ids": [
+        "P001",
+        "P005"
+      ],
+      "report_evidence_ids": [
+        "R004",
+        "R006",
+        "R007"
+      ],
+      "other_evidence": "本轮未采集",
+      "summary": "JD出现评测基准、LLM-as-Judge、红队和安全治理要求，政策与报告提供方向性支持。",
+      "strength": "中"
+    },
+    {
+      "trend": "Java岗位AI能力融合",
+      "jd_evidence_ids": [
+        "JD019",
+        "JD023",
+        "JD025",
+        "JD026"
+      ],
+      "policy_evidence_ids": [
+        "P003",
+        "P004"
+      ],
+      "report_evidence_ids": [
+        "R001",
+        "R004"
+      ],
+      "other_evidence": "本轮未采集",
+      "summary": "早期样本以Java框架和数据库为主；部分2026样本增加AI编码、LLM API、RAG与Agent，但样本量有限。",
+      "strength": "中"
+    },
+    {
+      "trend": "数据分析AI工具与Agent",
+      "jd_evidence_ids": [
+        "JD030",
+        "JD031",
+        "JD032",
+        "JD033",
+        "JD035"
+      ],
+      "policy_evidence_ids": [
+        "P004",
+        "P007",
+        "P009"
+      ],
+      "report_evidence_ids": [
+        "R003",
+        "R004"
+      ],
+      "other_evidence": "本轮未采集",
+      "summary": "部分2026 JD在SQL/Python之外增加AI工具、智能分析或Agent Flow，属于样本观察。",
+      "strength": "中"
+    },
+    {
+      "trend": "测试开发AI化",
+      "jd_evidence_ids": [
+        "JD038",
+        "JD039",
+        "JD040",
+        "JD041",
+        "JD042"
+      ],
+      "policy_evidence_ids": [
+        "P004",
+        "P005"
+      ],
+      "report_evidence_ids": [
+        "R001",
+        "R004"
+      ],
+      "other_evidence": "本轮未采集",
+      "summary": "近期样本出现LLM/Agent测试、模型评测与AI生成用例；传统自动化测试能力仍持续存在。",
+      "strength": "中"
+    }
+  ]
+}

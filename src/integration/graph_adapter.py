@@ -3,12 +3,14 @@ from __future__ import annotations
 import json
 import copy
 import re
+import hashlib
 from pathlib import Path
 from typing import Any
 
 from ..core.skill_extractor import SkillIndex
 from ..data_loader import DataLoader
 from ..core.effective_profiles import EffectiveJobProfiles
+from .incremental_data import BATCH_ID, GRAPH_VERSION, BASELINE_GRAPH_VERSION, IncrementalDataService
 
 
 GRAPH_SOURCE_LABEL = "由组员A现有正式关系表转换"
@@ -89,7 +91,7 @@ class GraphAdapter:
         job_skill_count = sum(1 for edge in edges if edge.get("edge_type") == "Job_Skill")
         qa_path = path.with_name("qa_report_v1.json")
         qa_report = json.loads(qa_path.read_text(encoding="utf-8")) if qa_path.exists() else None
-        return {
+        baseline = {
             **{key: item for key, item in value.items() if key not in {"nodes", "edges", "summary"}},
             "available": True,
             "status": "connected",
@@ -108,6 +110,72 @@ class GraphAdapter:
             },
             "formal_qa_report": qa_report,
         }
+        return self._overlay_incremental(baseline)
+
+    def _overlay_incremental(self, payload: dict[str, Any]) -> dict[str, Any]:
+        """Apply the read-only batch as a transparent Graph V2 overlay."""
+        service = IncrementalDataService(self.project_root, self.skill_index)
+        by_job = service.skill_names()
+        rows = service.standardized_jds()
+        evidence_by_job: dict[str, list[str]] = {}
+        for row in rows:
+            evidence_by_job.setdefault(_text(row.get("standard_job_title")), []).append(_text(row.get("evidence_id")))
+        result = copy.deepcopy(payload)
+        baseline_summary = dict(result.get("summary", {}))
+        nodes = {node["id"]: node for node in result.get("nodes", [])}
+        job_by_name = {_text(node.get("name")).casefold(): node for node in nodes.values() if node.get("type") == "job"}
+        skill_by_name = {_text(node.get("name")).casefold(): node for node in nodes.values() if node.get("type") == "skill"}
+        pair_to_edge = {(edge.get("source"), edge.get("target")): edge for edge in result.get("edges", []) if self._is_job_skill(edge)}
+        new_jobs = new_skills = new_relations = updated_relations = 0
+        for job_title, skills in sorted(by_job.items()):
+            job_rows = [row for row in rows if _text(row.get("standard_job_title")) == job_title]
+            job = job_by_name.get(job_title.casefold())
+            if job is None:
+                job_id = "job:inc:" + hashlib.sha1(job_title.encode("utf-8")).hexdigest()[:12]
+                job = {"id": job_id, "name": job_title, "type": "job", "formal_type": "Job", "batch_status": "NEW", "batch_id": BATCH_ID, "is_emerging": True}
+                nodes[job_id] = job; job_by_name[job_title.casefold()] = job; new_jobs += 1
+            else:
+                job.update(batch_status="UPDATED", batch_id=BATCH_ID)
+            dates = sorted(_text(row.get("publish_date")) for row in job_rows if _text(row.get("publish_date")))
+            job.update(
+                standard_job_title=job_title, job_status="新兴岗位候选" if any(_text(row.get("job_family")) == "新兴岗位候选" for row in job_rows) else "既有岗位",
+                is_emerging=any(_text(row.get("job_family")) == "新兴岗位候选" for row in job_rows),
+                incremental_jd_count=len(job_rows), company_count=len({_text(row.get("company")) for row in job_rows if _text(row.get("company"))}),
+                source_count=len({_text(row.get("source")) for row in job_rows if _text(row.get("source"))}), evidence_count=len(job_rows),
+                first_seen=dates[0] if dates else "", last_seen=dates[-1] if dates else "", updated_at="2026-09-04",
+                graph_version=GRAPH_VERSION, evidence_ids=evidence_by_job.get(job_title, []), core_skills=sorted(skills),
+            )
+            for skill_name in sorted(skills):
+                skill = skill_by_name.get(skill_name.casefold())
+                if skill is None:
+                    skill_id = "skill:inc:" + hashlib.sha1(skill_name.casefold().encode("utf-8")).hexdigest()[:12]
+                    skill = {"id": skill_id, "name": skill_name, "type": "skill", "formal_type": "Skill", "batch_status": "NEW", "batch_id": BATCH_ID}
+                    nodes[skill_id] = skill; skill_by_name[skill_name.casefold()] = skill; new_skills += 1
+                pair = (job["id"], skill["id"])
+                ids = evidence_by_job.get(job_title, [])
+                if pair in pair_to_edge:
+                    edge = pair_to_edge[pair]
+                    edge["incremental_evidence_ids"] = ids
+                    edge["evidence_jd_ids"] = list(dict.fromkeys([*edge.get("evidence_jd_ids", []), *ids]))
+                    edge["evidence_count"] = len(edge["evidence_jd_ids"])
+                    edge.update(batch_status="UPDATED", batch_id=BATCH_ID); updated_relations += 1
+                else:
+                    edge = {"id": f"inc:{job['id']}:{skill['id']}", "source": job["id"], "target": skill["id"], "edge_type": "Job_Skill",
+                        "relation": "requires_skill", "job_title": job_title, "skill_name": skill_name, "frequency": 0,
+                        "mention_count": len(ids), "evidence_jd_ids": ids, "evidence_count": len(ids), "batch_status": "NEW", "batch_id": BATCH_ID}
+                    result["edges"].append(edge); pair_to_edge[pair] = edge; new_relations += 1
+        result["nodes"] = list(nodes.values())
+        result["baseline_summary"] = baseline_summary
+        result["graph_version"] = GRAPH_VERSION
+        result["baseline_graph_version"] = BASELINE_GRAPH_VERSION
+        result["batch_id"] = BATCH_ID
+        result["graph_change"] = {"new_job_node_count": new_jobs, "new_skill_node_count": new_skills, "new_relation_count": new_relations, "updated_relation_count": updated_relations}
+        result["summary"] = {**baseline_summary, "node_count": len(result["nodes"]), "edge_count": len(result["edges"]),
+            "job_skill_edge_count": sum(self._is_job_skill(edge) for edge in result["edges"]),
+            "job_count": sum(node.get("type") == "job" for node in result["nodes"]), "skill_count": sum(node.get("type") == "skill" for node in result["nodes"])}
+        result["source_label"] = "Graph V2（正式基准图谱 + 2026-09-04真实增量批次）"
+        result["notice"] = "NEW 为本批次新增节点/关系，UPDATED 为本批次有新增 Evidence 的既有关系。"
+        return result
 
     def _from_excel(self, path: Path) -> dict[str, Any]:
         workbook_sheet = "Sheet1" if path.name == "重要岗位技能分析表.xlsx" else "技能明细"

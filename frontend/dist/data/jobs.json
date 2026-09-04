@@ -1,5 +1,5 @@
 {
-  "data_version": "1.0+supplemental_jd_v3",
+  "data_version": "1.0+supplemental_jd_v3+batch_20260904",
   "jobs": [
     {
       "standard_job_title": "3D数字人算法工程师",
@@ -8,6 +8,10 @@
     {
       "standard_job_title": "AI Agent优化工程师",
       "jd_count": 1
+    },
+    {
+      "standard_job_title": "AI Agent工程师",
+      "jd_count": 4
     },
     {
       "standard_job_title": "AI Agent开发工程师",
@@ -71,6 +75,10 @@
     },
     {
       "standard_job_title": "AI工作流搭建师",
+      "jd_count": 1
+    },
+    {
+      "standard_job_title": "AI平台工程师",
       "jd_count": 1
     },
     {
@@ -186,7 +194,19 @@
       "jd_count": 3
     },
     {
+      "standard_job_title": "Java开发工程师",
+      "jd_count": 9
+    },
+    {
+      "standard_job_title": "LLMOps/AI平台工程师",
+      "jd_count": 1
+    },
+    {
       "standard_job_title": "LLM模型算法研究员",
+      "jd_count": 1
+    },
+    {
+      "standard_job_title": "RAG工程师",
       "jd_count": 1
     },
     {
@@ -366,6 +386,10 @@
       "jd_count": 3
     },
     {
+      "standard_job_title": "大模型安全工程师",
+      "jd_count": 1
+    },
+    {
       "standard_job_title": "大模型安全攻防工程师",
       "jd_count": 3
     },
@@ -383,7 +407,7 @@
     },
     {
       "standard_job_title": "大模型应用工程师",
-      "jd_count": 1
+      "jd_count": 4
     },
     {
       "standard_job_title": "大模型应用开发工程师",
@@ -443,7 +467,7 @@
     },
     {
       "standard_job_title": "大模型评测工程师",
-      "jd_count": 2
+      "jd_count": 6
     },
     {
       "standard_job_title": "大模型评测算法工程师",
@@ -484,6 +508,10 @@
     {
       "standard_job_title": "数字孪生开发工程师",
       "jd_count": 1
+    },
+    {
+      "standard_job_title": "数据分析师",
+      "jd_count": 9
     },
     {
       "standard_job_title": "无人机集群调度平台工程师",
@@ -535,6 +563,14 @@
     },
     {
       "standard_job_title": "模型训练优化工程师",
+      "jd_count": 1
+    },
+    {
+      "standard_job_title": "测试开发工程师",
+      "jd_count": 7
+    },
+    {
+      "standard_job_title": "算法工程师",
       "jd_count": 1
     },
     {

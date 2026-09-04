@@ -163,10 +163,16 @@ class DataLoader:
                 "candidate_id": candidate_id,
                 "data_protection": protection_label,
             })
-        ids = [row.get("jd_id") for row in rows + supplemental]
+        from .integration.incremental_data import IncrementalDataService
+        incremental = IncrementalDataService(self.project_root).standardized_jds()
+        ids = [row.get("jd_id") for row in rows + supplemental + incremental]
         if len(ids) != len(set(ids)):
             raise DataConfigurationError("岗位分析组合输入存在重复JD编号")
-        return rows + supplemental
+        return rows + supplemental + incremental
+
+    def load_incremental_jds(self) -> list[dict[str, Any]]:
+        from .integration.incremental_data import IncrementalDataService
+        return IncrementalDataService(self.project_root).standardized_jds()
 
     def job_analysis_data_version(self) -> str:
         base = str(self.version.get("data_version") or "unknown")
@@ -177,7 +183,7 @@ class DataLoader:
         path = path if path.is_absolute() else self.project_root / path
         payload = json.loads(path.read_text(encoding="utf-8"))
         supplemental = str(payload.get("data_version") or "supplemental")
-        return f"{base}+{supplemental}"
+        return f"{base}+{supplemental}+batch_20260904"
 
     def load_job_title_mapping(self) -> list[dict[str, Any]]:
         return self._load_mapped("standard_job_title_mapping")

@@ -1,16 +1,15 @@
-import { Activity, BriefcaseBusiness, Database, FileSearch, FileUser, Menu, Network, Sparkles, TrendingUp, UserRoundSearch, X } from "lucide-react";
+import { Activity, BriefcaseBusiness, Database, FileUser, Menu, Network, RadioTower, Sparkles, TrendingUp, UserRoundSearch, X } from "lucide-react";
 import { useState } from "react";
 import { NavLink, Outlet, useLocation } from "react-router-dom";
 
 const items = [
-  ["/", "求职数据概览", Database, "了解岗位与技能趋势"],
-  ["/jobs", "岗位分析", BriefcaseBusiness, "看懂目标岗位的真实要求"],
-  ["/graph", "岗位能力图谱", Network, "探索岗位与技能之间的关系"],
-  ["/evolution", "技能趋势", TrendingUp, "关注岗位能力要求的变化"],
-  ["/emerging", "新岗位机会", Sparkles, "发现正在形成的职业方向"],
-  ["/jd-parse", "职位解析", FileSearch, "快速提取职位核心要求"],
+  ["/", "首页 · 求职数据概览", Database, "招聘市场变化驱动的岗位能力图谱"],
+  ["/jobs", "岗位", BriefcaseBusiness, "看懂目标岗位的真实要求"],
+  ["/multi-source", "多源数据", RadioTower, "查看招聘数据与外部佐证"],
+  ["/job-changes", "岗位变化", TrendingUp, "查看新增数据带来的岗位与能力变化"],
+  ["/graph", "动态能力图谱", Network, "探索 Graph V2 岗位与技能关系"],
   ["/resume-parse", "简历分析", FileUser, "识别个人经历与技能亮点"],
-  ["/match", "人岗匹配", UserRoundSearch, "评估差距并规划提升路径"],
+  ["/match", "精准人岗匹配与差距分析", UserRoundSearch, "使用最新图谱评估匹配与能力差距"],
 ] as const;
 
 export default function Layout() {

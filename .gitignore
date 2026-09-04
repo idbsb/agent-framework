@@ -1,5 +1,11 @@
 # Runtime data and user-imported competition data
-data/
+/data/
+!/data/
+/data/*
+!/data/incremental/
+/data/incremental/*
+!/data/incremental/batch_20260904/
+!/data/incremental/batch_20260904/*.xlsx
 *.db
 *.sqlite
 *.sqlite3
@@ -20,6 +26,7 @@ venv/
 node_modules/
 .npm-cache/
 frontend/node_modules/
+/frontend/public/
 # The free Render service serves this reviewed production bundle directly.
 !frontend/dist/
 !frontend/dist/**

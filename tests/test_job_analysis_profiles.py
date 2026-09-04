@@ -24,10 +24,12 @@ class JobAnalysisProfileRegressionTest(unittest.TestCase):
             (self.services.loader.project_root / "data/external/supplemental_jd_v3.json").read_text(encoding="utf-8")
         )
         expected_supplemental = sum(bool(row["count_in_statistics"]) for row in payload["records"])
+        expected_incremental = len(self.services.loader.load_incremental_jds())
         analysis_rows = self.services.loader.load_job_analysis_jds()
-        self.assertEqual(len(analysis_rows), len(base) + expected_supplemental)
+        self.assertEqual(len(analysis_rows), len(base) + expected_supplemental + expected_incremental)
         self.assertEqual(len(payload["records"]), 49)  # PROTECTED_NEW_DATA conservation guard
         self.assertEqual(sum(row["jd_id"].startswith("SUP-JD-") for row in analysis_rows), expected_supplemental)
+        self.assertEqual(sum(row["jd_id"].startswith("BATCH-20260904-") for row in analysis_rows), expected_incremental)
 
     def test_every_job_uses_one_traceable_aggregate_profile(self):
         rows = self.services.loader.load_job_analysis_jds()

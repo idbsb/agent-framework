@@ -20,8 +20,8 @@ test("job seeker navigation excludes developer-facing product placeholders", asy
   assert.doesNotMatch(layout, /TALENT GRAPH|Evidence-bound AI|MULTI-SOURCE TALENT INTELLIGENCE/);
 });
 
-test("all eight pages exclude numbered hero labels and internal demo copy", async () => {
-  const pages = ["DashboardPage", "JobAnalysisPage", "GraphPage", "EvolutionPage", "EmergingPage", "JDParsePage", "ResumeParsePage", "MatchPage"];
+test("all production pages exclude numbered hero labels and internal demo copy", async () => {
+  const pages = ["DashboardPage", "JobAnalysisPage", "GraphPage", "EvolutionPage", "EmergingPage", "JDParsePage", "ResumeParsePage", "MatchPage", "MultiSourcePage", "JobChangesPage"];
   const content = (await Promise.all(pages.map((name) => source(`pages/${name}.tsx`)))).join("\n");
   assert.doesNotMatch(content, /index="0[1-8]"|ADAPTER READY|Evolution Adapter|真实API|现场演示|Matching Engine recommendations|直接调用Matching Engine|组员A/);
 });

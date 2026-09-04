@@ -1,0 +1,485 @@
+{
+  "batch_id": "BATCH-20260904",
+  "graph_version": "Graph V2",
+  "updated_at": "2026-09-04",
+  "summary": {
+    "raw_jd_count": 42,
+    "jd_count": 41,
+    "duplicate_excluded_count": 1,
+    "source_count": 17,
+    "company_count": 34,
+    "job_count": 11,
+    "dated_jd_count": 28,
+    "dated_jd_ratio": 0.6829,
+    "new_job_count": 9,
+    "observed_skill_count": 179,
+    "changed_job_count": 3,
+    "emerging_candidate_count": 8,
+    "new_job_node_count": 9,
+    "new_skill_node_count": 158,
+    "new_relation_count": 261,
+    "updated_relation_count": 3
+  },
+  "emerging_jobs": [
+    {
+      "candidate_id": "INC-EMERGING-001",
+      "candidate_name": "AI Agent工程师",
+      "status": "新兴岗位候选",
+      "jd_count": 3,
+      "company_count": 3,
+      "source_count": 2,
+      "first_seen": "2026-09-02",
+      "last_seen": "2026-09-02",
+      "core_skills": [
+        "Python",
+        "RAG",
+        "Agent",
+        "LLM",
+        "Prompt",
+        "MCP",
+        "Function Calling",
+        "向量",
+        "AI",
+        "评测",
+        "大模型",
+        "LangChain",
+        "Dify",
+        "Cursor"
+      ],
+      "distinguishing_skills": [
+        "仅描述样本中差异技能"
+      ],
+      "similar_existing_jobs": [
+        "软件工程师",
+        "算法工程师",
+        "平台工程师"
+      ],
+      "notice": "潜在新兴岗位候选；未证明为正式新职业",
+      "batch_id": "BATCH-20260904"
+    },
+    {
+      "candidate_id": "INC-EMERGING-002",
+      "candidate_name": "大模型应用工程师",
+      "status": "新兴岗位候选",
+      "jd_count": 3,
+      "company_count": 3,
+      "source_count": 2,
+      "first_seen": "2026-06-24",
+      "last_seen": "2026-06-24",
+      "core_skills": [
+        "Java",
+        "Python",
+        "SQL",
+        "RAG",
+        "Agent",
+        "LLM",
+        "Prompt",
+        "向量",
+        "Docker",
+        "K8s",
+        "CI",
+        "CD",
+        "AI",
+        "大模型",
+        "多模态",
+        "PyTorch"
+      ],
+      "distinguishing_skills": [
+        "仅描述样本中差异技能"
+      ],
+      "similar_existing_jobs": [
+        "软件工程师",
+        "算法工程师",
+        "平台工程师"
+      ],
+      "notice": "潜在新兴岗位候选；未证明为正式新职业",
+      "batch_id": "BATCH-20260904"
+    },
+    {
+      "candidate_id": "INC-EMERGING-003",
+      "candidate_name": "RAG工程师",
+      "status": "新兴岗位候选",
+      "jd_count": 1,
+      "company_count": 1,
+      "source_count": 1,
+      "first_seen": "2026-05-11",
+      "last_seen": "2026-05-11",
+      "core_skills": [
+        "Java",
+        "Spring",
+        "Spring Boot",
+        "Python",
+        "RAG",
+        "Agent",
+        "Prompt",
+        "MCP",
+        "Function Calling",
+        "向量",
+        "AI",
+        "大模型",
+        "LangChain",
+        "Dify"
+      ],
+      "distinguishing_skills": [
+        "仅描述样本中差异技能"
+      ],
+      "similar_existing_jobs": [
+        "软件工程师",
+        "算法工程师",
+        "平台工程师"
+      ],
+      "notice": "潜在新兴岗位候选；未证明为正式新职业",
+      "batch_id": "BATCH-20260904"
+    },
+    {
+      "candidate_id": "INC-EMERGING-004",
+      "candidate_name": "大模型安全工程师",
+      "status": "新兴岗位候选",
+      "jd_count": 1,
+      "company_count": 1,
+      "source_count": 1,
+      "first_seen": "2026-07-10",
+      "last_seen": "2026-07-10",
+      "core_skills": [
+        "Python",
+        "SQL",
+        "RAG",
+        "Agent",
+        "LLM",
+        "Prompt",
+        "向量",
+        "AI",
+        "评测",
+        "大模型",
+        "多模态",
+        "PyTorch"
+      ],
+      "distinguishing_skills": [
+        "仅描述样本中差异技能"
+      ],
+      "similar_existing_jobs": [
+        "软件工程师",
+        "算法工程师",
+        "平台工程师"
+      ],
+      "notice": "潜在新兴岗位候选；未证明为正式新职业",
+      "batch_id": "BATCH-20260904"
+    },
+    {
+      "candidate_id": "INC-EMERGING-005",
+      "candidate_name": "AI平台工程师",
+      "status": "新兴岗位候选",
+      "jd_count": 1,
+      "company_count": 1,
+      "source_count": 1,
+      "first_seen": "2026-07-14",
+      "last_seen": "2026-07-14",
+      "core_skills": [
+        "Java",
+        "Python",
+        "RAG",
+        "Agent",
+        "LLM",
+        "向量",
+        "AI",
+        "评测",
+        "LangChain",
+        "Copilot"
+      ],
+      "distinguishing_skills": [
+        "仅描述样本中差异技能"
+      ],
+      "similar_existing_jobs": [
+        "软件工程师",
+        "算法工程师",
+        "平台工程师"
+      ],
+      "notice": "潜在新兴岗位候选；未证明为正式新职业",
+      "batch_id": "BATCH-20260904"
+    },
+    {
+      "candidate_id": "INC-EMERGING-006",
+      "candidate_name": "算法工程师",
+      "status": "新兴岗位候选",
+      "jd_count": 1,
+      "company_count": 1,
+      "source_count": 1,
+      "first_seen": "2026-06-16",
+      "last_seen": "2026-06-16",
+      "core_skills": [
+        "Python",
+        "Agent",
+        "大模型"
+      ],
+      "distinguishing_skills": [
+        "仅描述样本中差异技能"
+      ],
+      "similar_existing_jobs": [
+        "软件工程师",
+        "算法工程师",
+        "平台工程师"
+      ],
+      "notice": "潜在新兴岗位候选；未证明为正式新职业",
+      "batch_id": "BATCH-20260904"
+    },
+    {
+      "candidate_id": "INC-EMERGING-007",
+      "candidate_name": "LLMOps/AI平台工程师",
+      "status": "新兴岗位候选",
+      "jd_count": 1,
+      "company_count": 1,
+      "source_count": 1,
+      "first_seen": "2026-05-13",
+      "last_seen": "2026-05-13",
+      "core_skills": [
+        "LLM",
+        "AI",
+        "大模型"
+      ],
+      "distinguishing_skills": [
+        "仅描述样本中差异技能"
+      ],
+      "similar_existing_jobs": [
+        "软件工程师",
+        "算法工程师",
+        "平台工程师"
+      ],
+      "notice": "潜在新兴岗位候选；未证明为正式新职业",
+      "batch_id": "BATCH-20260904"
+    },
+    {
+      "candidate_id": "INC-EMERGING-008",
+      "candidate_name": "大模型评测工程师",
+      "status": "新兴岗位候选",
+      "jd_count": 4,
+      "company_count": 4,
+      "source_count": 3,
+      "first_seen": "2026-06-25",
+      "last_seen": "2026-06-25",
+      "core_skills": [
+        "Java",
+        "Python",
+        "SQL",
+        "Agent",
+        "LLM",
+        "Prompt",
+        "AI",
+        "评测",
+        "大模型",
+        "多模态",
+        "PyTorch",
+        "LangChain"
+      ],
+      "distinguishing_skills": [
+        "仅描述样本中差异技能"
+      ],
+      "similar_existing_jobs": [
+        "软件工程师",
+        "算法工程师",
+        "平台工程师"
+      ],
+      "notice": "潜在新兴岗位候选；未证明为正式新职业",
+      "batch_id": "BATCH-20260904"
+    }
+  ],
+  "capability_changes": [
+    {
+      "job_title": "Java开发工程师",
+      "new_skills": [],
+      "growing_skills": [],
+      "stable_skills": [],
+      "declining_skills": [],
+      "clues": [
+        "Java",
+        "Spring",
+        "Spring Boot",
+        "MySQL",
+        "SQL",
+        "RAG",
+        "Agent",
+        "LLM",
+        "Prompt",
+        "AI",
+        "大模型",
+        "LangChain",
+        "Cursor"
+      ],
+      "support_jd_ids": [
+        "JD019",
+        "JD025",
+        "JD026"
+      ],
+      "sample_insufficient": true,
+      "sample_status": "样本不足，当前仅作为变化线索，不形成显著趋势判断。",
+      "batch_id": "BATCH-20260904"
+    },
+    {
+      "job_title": "数据分析师",
+      "new_skills": [],
+      "growing_skills": [],
+      "stable_skills": [],
+      "declining_skills": [],
+      "clues": [
+        "Python",
+        "SQL",
+        "Agent",
+        "LLM",
+        "AI",
+        "大模型",
+        "Dify",
+        "Copilot"
+      ],
+      "support_jd_ids": [
+        "JD030",
+        "JD031",
+        "JD032",
+        "JD033",
+        "JD035"
+      ],
+      "sample_insufficient": true,
+      "sample_status": "样本不足，当前仅作为变化线索，不形成显著趋势判断。",
+      "batch_id": "BATCH-20260904"
+    },
+    {
+      "job_title": "测试开发工程师",
+      "new_skills": [],
+      "growing_skills": [],
+      "stable_skills": [],
+      "declining_skills": [],
+      "clues": [
+        "Python",
+        "SQL",
+        "Agent",
+        "CI/CD",
+        "AI"
+      ],
+      "support_jd_ids": [
+        "JD038",
+        "JD042"
+      ],
+      "sample_insufficient": true,
+      "sample_status": "样本不足，当前仅作为变化线索，不形成显著趋势判断。",
+      "batch_id": "BATCH-20260904"
+    }
+  ],
+  "cross_validation": [
+    {
+      "trend": "AI Agent / MCP",
+      "jd_evidence_ids": [
+        "JD002",
+        "JD003",
+        "JD005",
+        "JD007",
+        "JD008",
+        "JD009",
+        "JD010",
+        "JD012",
+        "JD015",
+        "JD016",
+        "JD025",
+        "JD035",
+        "JD039",
+        "JD040",
+        "JD042"
+      ],
+      "policy_evidence_ids": [
+        "P004",
+        "P005",
+        "P009"
+      ],
+      "report_evidence_ids": [
+        "R001",
+        "R004",
+        "R006"
+      ],
+      "other_evidence": "本轮未采集",
+      "summary": "多个独立来源观察到智能体、工具调用和应用工程能力；不等同于岗位必然高速增长。",
+      "strength": "中"
+    },
+    {
+      "trend": "大模型评测 / AI安全",
+      "jd_evidence_ids": [
+        "JD009",
+        "JD014",
+        "JD015",
+        "JD016",
+        "JD017"
+      ],
+      "policy_evidence_ids": [
+        "P001",
+        "P005"
+      ],
+      "report_evidence_ids": [
+        "R004",
+        "R006",
+        "R007"
+      ],
+      "other_evidence": "本轮未采集",
+      "summary": "JD出现评测基准、LLM-as-Judge、红队和安全治理要求，政策与报告提供方向性支持。",
+      "strength": "中"
+    },
+    {
+      "trend": "Java岗位AI能力融合",
+      "jd_evidence_ids": [
+        "JD019",
+        "JD023",
+        "JD025",
+        "JD026"
+      ],
+      "policy_evidence_ids": [
+        "P003",
+        "P004"
+      ],
+      "report_evidence_ids": [
+        "R001",
+        "R004"
+      ],
+      "other_evidence": "本轮未采集",
+      "summary": "早期样本以Java框架和数据库为主；部分2026样本增加AI编码、LLM API、RAG与Agent，但样本量有限。",
+      "strength": "中"
+    },
+    {
+      "trend": "数据分析AI工具与Agent",
+      "jd_evidence_ids": [
+        "JD030",
+        "JD031",
+        "JD032",
+        "JD033",
+        "JD035"
+      ],
+      "policy_evidence_ids": [
+        "P004",
+        "P007",
+        "P009"
+      ],
+      "report_evidence_ids": [
+        "R003",
+        "R004"
+      ],
+      "other_evidence": "本轮未采集",
+      "summary": "部分2026 JD在SQL/Python之外增加AI工具、智能分析或Agent Flow，属于样本观察。",
+      "strength": "中"
+    },
+    {
+      "trend": "测试开发AI化",
+      "jd_evidence_ids": [
+        "JD038",
+        "JD039",
+        "JD040",
+        "JD041",
+        "JD042"
+      ],
+      "policy_evidence_ids": [
+        "P004",
+        "P005"
+      ],
+      "report_evidence_ids": [
+        "R001",
+        "R004"
+      ],
+      "other_evidence": "本轮未采集",
+      "summary": "近期样本出现LLM/Agent测试、模型评测与AI生成用例；传统自动化测试能力仍持续存在。",
+      "strength": "中"
+    }
+  ]
+}

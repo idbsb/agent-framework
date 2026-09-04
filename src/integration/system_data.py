@@ -9,6 +9,7 @@ from ..api.service import CoreServices
 from ..core.job_profile_builder import JobProfileBuilder
 from .evolution_adapter import EvolutionAdapter
 from .graph_adapter import GraphAdapter
+from .incremental_data import IncrementalDataService
 
 
 def _text(value: object) -> str:
@@ -22,6 +23,7 @@ class SystemDataService:
         self.project_root = self.loader.project_root
         self.graph = GraphAdapter(self.loader, services.skill_index, effective_profiles=services.matching_engine.effective_profiles)
         self.evolution = EvolutionAdapter(self.project_root)
+        self.incremental = IncrementalDataService(self.project_root, services.skill_index)
         self.profile_builder = JobProfileBuilder(
             self.loader.load_job_analysis_jds(),
             services.skill_index,
@@ -76,6 +78,20 @@ class SystemDataService:
                 evidence_covered += 1
             # A JD contributes at most once per skill, even with many evidence spans.
             skill_counts.update({item.standard_skill_name for item in extracted if item.accepted})
+        incremental_ids = {row["jd_id"] for row in self.incremental.standardized_jds()}
+        baseline_rows = [row for row in rows if row.get("jd_id") not in incremental_ids]
+        baseline_jobs = {_text(row.get("standard_job_title")) for row in baseline_rows if _text(row.get("standard_job_title"))}
+        batch = self.incremental.overview(len(baseline_rows), baseline_jobs, {
+            "job_node_count": graph.get("baseline_summary", graph.get("summary", {})).get("job_count", 0),
+            "skill_node_count": graph.get("baseline_summary", graph.get("summary", {})).get("skill_count", 0),
+            "relation_count": graph.get("baseline_summary", graph.get("summary", {})).get("edge_count", 0),
+        })
+        batch["graph_change"] = graph.get("graph_change", {})
+        batch["current"].update({
+            "job_node_count": graph.get("summary", {}).get("job_count", 0),
+            "skill_node_count": graph.get("summary", {}).get("skill_count", 0),
+            "relation_count": graph.get("summary", {}).get("edge_count", 0),
+        })
         return {
             "data_version": self.loader.job_analysis_data_version(),
             "truth_statement": f"当前系统基于{len(rows)}条真实招聘JD构建。",
@@ -96,7 +112,19 @@ class SystemDataService:
             "evolution_status": self.evolution.for_job("AI Agent开发工程师"),
             "emerging_summary": emerging.get("summary", {}),
             "emerging_candidates": emerging.get("candidates", [])[:3],
+            "batch_update": batch,
         }
+
+    def multi_source(self) -> dict[str, Any]:
+        overview = self.overview()["batch_update"]
+        return {**overview, "external_evidence": self.incremental.external_evidence(), "cross_validation": self.incremental.cross_validation()}
+
+    def job_changes(self) -> dict[str, Any]:
+        overview = self.overview()["batch_update"]
+        return {"batch_id": overview["batch_id"], "graph_version": overview["graph_version"], "updated_at": overview["updated_at"],
+                "summary": {**overview["incremental"], **overview.get("graph_change", {})},
+                "emerging_jobs": self.incremental.emerging(), "capability_changes": self.incremental.changes(),
+                "cross_validation": self.incremental.cross_validation()}
 
     def job_analysis(self, job_title: str) -> dict[str, Any]:
         reader = self.services.matching_engine.effective_profiles

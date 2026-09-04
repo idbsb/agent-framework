@@ -23,6 +23,7 @@ class SystemIntegrationTest(unittest.TestCase):
             "/api/system/overview", "/api/job-analysis/{job_title}", "/api/graph/job/{job_title}",
             "/api/graph/skill/{skill_id}", "/api/evolution/job/{job_title}", "/api/emerging-jobs",
             "/api/emerging-jobs/{candidate_id}",
+            "/api/multi-source", "/api/job-changes",
         }
         self.assertTrue(original | added <= paths)
 
@@ -31,11 +32,14 @@ class SystemIntegrationTest(unittest.TestCase):
         self.assertTrue(graph["available"])
         self.assertEqual(graph["status"], "connected")
         self.assertEqual(graph["source_type"], "formal_json")
-        self.assertEqual(graph["summary"]["node_count"], 490)
-        self.assertEqual(graph["summary"]["edge_count"], 2012)
-        self.assertEqual(graph["summary"]["job_skill_edge_count"], 633)
+        self.assertEqual(graph["baseline_summary"]["node_count"], 490)
+        self.assertEqual(graph["baseline_summary"]["edge_count"], 2012)
+        self.assertEqual(graph["baseline_summary"]["job_skill_edge_count"], 633)
+        self.assertGreater(graph["summary"]["node_count"], graph["baseline_summary"]["node_count"])
+        self.assertGreater(graph["summary"]["edge_count"], graph["baseline_summary"]["edge_count"])
+        self.assertEqual(graph["graph_version"], "Graph V2")
         job_skill_edges = [edge for edge in graph["edges"] if edge.get("edge_type") == "Job_Skill"]
-        self.assertEqual(len(job_skill_edges), 633)
+        self.assertEqual(len(job_skill_edges), graph["summary"]["job_skill_edge_count"])
         self.assertTrue(all(edge["evidence_jd_ids"] for edge in job_skill_edges))
         self.assertTrue(all(edge["evidence_count"] == len(edge["evidence_jd_ids"]) for edge in job_skill_edges))
 

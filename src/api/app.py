@@ -148,6 +148,16 @@ def system_overview() -> dict:
     return get_system_data().overview()
 
 
+@app.get("/api/multi-source")
+def multi_source() -> dict:
+    return get_system_data().multi_source()
+
+
+@app.get("/api/job-changes")
+def job_changes() -> dict:
+    return get_system_data().job_changes()
+
+
 @app.get("/api/job-analysis/{job_title}")
 def job_analysis(job_title: str) -> dict:
     return get_system_data().job_analysis(job_title)

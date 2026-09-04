@@ -22,11 +22,14 @@ after(async () => {
 const routes = [
   ["/", "真实招聘数据"],
   ["/jobs", "看懂目标岗位真正需要什么"],
+  ["/multi-source", "多源数据采集与质量追溯"],
+  ["/job-changes", "岗位变化：原来、本次新增与现在"],
   ["/evolution", "关注岗位能力要求的变化"],
   ["/emerging", "发现正在形成的新岗位机会"],
   ["/jd-parse", "职位解析"],
   ["/resume-parse", "简历分析"],
   ["/match", "人岗匹配"],
+  ["/gap-analysis", "能力差距"],
 ];
 
 for (const [path, expectedText] of routes) {

@@ -24,6 +24,8 @@ def main() -> int:
         if title:
             counts[title] = counts.get(title, 0) + 1
     write_json(target / "system_overview.json", system.overview())
+    write_json(target / "multi_source.json", system.multi_source())
+    write_json(target / "job_changes.json", system.job_changes())
     write_json(target / "jobs.json", {"data_version": services.loader.job_analysis_data_version(), "jobs": [{"standard_job_title": title, "jd_count": counts[title]} for title in sorted(counts)]})
     write_json(target / "graph_compat_v1.json", system.graph.load())
     focus = ["AI Agent开发工程师", "RAG引擎研发工程师", "AI安全技术工程师"]
