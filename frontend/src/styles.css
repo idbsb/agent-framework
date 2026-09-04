@@ -248,6 +248,15 @@ textarea { resize: vertical; line-height: 1.6; }
 .change-flow small,.graph-version-compare small { color:var(--muted); font-size:9px; }.change-flow b,.graph-version-compare b{color:var(--brand-dark);font-size:12px}.change-flow span{color:var(--muted);font-size:9px}
 .section-heading { display:flex; justify-content:space-between; align-items:center; margin:28px 0 10px; color:var(--brand); }.section-heading h2{margin:2px 0;color:var(--text);font-size:18px}
 .change-card-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:12px; }.change-card button{display:flex;gap:6px;align-items:center;padding:0;border:0;background:transparent;color:var(--brand-dark);font-size:10px}.change-card h2{font-size:15px}
+.evolution-card { display:grid; gap:12px; }
+.period-compare { display:flex; align-items:center; gap:10px; }
+.period-compare>div { flex:1; display:grid; gap:3px; padding:12px; border:1px solid var(--border); border-radius:9px; background:#f8fafc; }
+.period-compare small,.period-compare span { color:var(--muted); font-size:9px; }
+.period-compare b { color:var(--brand-dark); font-size:26px; font-variant-numeric:tabular-nums; }
+.period-compare>svg { flex:0 0 auto; color:var(--brand); }
+.skill-shift-list { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:7px; }
+.skill-shift-list>span { display:flex; justify-content:space-between; gap:8px; padding:8px 9px; border-radius:7px; background:#f8fafc; color:#374151; font-size:10px; }
+.skill-shift-list small { color:var(--muted); white-space:nowrap; }
 .change-list { display:grid; gap:12px; }.graph-change-callout{display:flex;align-items:center;gap:16px}.graph-change-callout>div{flex:1}.graph-change-callout p{margin:5px 0;color:var(--muted);font-size:10px}.graph-change-callout .primary-button{padding:10px 14px}
 
 @keyframes spin { to { transform: rotate(360deg); } }
@@ -285,7 +294,7 @@ textarea { resize: vertical; line-height: 1.6; }
   .toolbar label { min-width: 0; }
   .evidence-line { grid-template-columns: 1fr; }
   .detail-drawer { padding: 26px 20px; }
-  .batch-panel{grid-column:auto}.batch-stats,.three-column-grid,.change-card-grid,.evidence-table{grid-template-columns:1fr}.change-flow,.graph-version-compare{align-items:stretch;flex-direction:column}.change-flow>svg,.graph-version-compare>svg{transform:rotate(90deg)}.sheet-row{grid-template-columns:1fr}.workbook-list summary{flex-direction:column}.graph-change-callout{align-items:flex-start;flex-direction:column}
+  .batch-panel{grid-column:auto}.batch-stats,.three-column-grid,.change-card-grid,.evidence-table{grid-template-columns:1fr}.change-flow,.graph-version-compare{align-items:stretch;flex-direction:column}.change-flow>svg,.graph-version-compare>svg{transform:rotate(90deg)}.sheet-row{grid-template-columns:1fr}.workbook-list summary{flex-direction:column}.graph-change-callout{align-items:flex-start;flex-direction:column}.period-compare{align-items:stretch;flex-direction:column}.period-compare>svg{transform:rotate(90deg)}.skill-shift-list{grid-template-columns:1fr}
 }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { scroll-behavior: auto !important; transition-duration: .01ms !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; }

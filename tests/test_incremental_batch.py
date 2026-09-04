@@ -35,6 +35,15 @@ class IncrementalBatchIntegrationTest(unittest.TestCase):
         self.assertTrue(insufficient)
         self.assertTrue(all("不形成显著趋势判断" in item["sample_status"] for item in insufficient))
 
+    def test_job_change_contains_real_time_window_comparison(self):
+        changes = {item["job_title"]: item for item in self.system.job_changes()["capability_changes"]}
+        self.assertEqual(changes["Java开发工程师"]["early_period"]["jd_count"], 1)
+        self.assertEqual(changes["Java开发工程师"]["recent_period"]["jd_count"], 2)
+        self.assertEqual(changes["数据分析师"]["early_period"]["company_count"], 2)
+        self.assertEqual(changes["数据分析师"]["recent_period"]["company_count"], 3)
+        new_java_clues = [item["skill_name"] for item in changes["Java开发工程师"]["skill_changes"] if item["early_count"] == 0 and item["recent_count"] > 0]
+        self.assertIn("AI", new_java_clues)
+
     def test_graph_v2_and_latest_profiles_feed_match(self):
         graph = self.system.graph.load()
         self.assertEqual(graph["graph_version"], "Graph V2")

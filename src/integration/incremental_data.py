@@ -121,14 +121,29 @@ class IncrementalDataService:
         skill_rows = self.load()["sheets"]["技能变化明细"]
         job_rows = self.load()["sheets"]["岗位时间对比"]
         status_by_job: dict[str, list[str]] = defaultdict(list)
+        periods_by_job: dict[str, list[dict[str, Any]]] = defaultdict(list)
         support_by_job: dict[str, set[str]] = defaultdict(set)
         for row in job_rows:
             job = _text(row.get("岗位")); status_by_job[job].append(_text(row.get("样本状态"))); support_by_job[job].update(_ids(row.get("支撑JD")))
+            periods_by_job[job].append({
+                "label": _text(row.get("时间窗口")),
+                "jd_count": int(row.get("JD数量") or 0),
+                "company_count": int(row.get("企业数量") or 0),
+                "support_jd_ids": _ids(row.get("支撑JD")),
+            })
         grouped: dict[str, dict[str, Any]] = {}
         for row in skill_rows:
             job, skill, direction = _text(row.get("岗位")), _text(row.get("技能")), _text(row.get("变化方向"))
-            item = grouped.setdefault(job, {"job_title": job, "new_skills": [], "growing_skills": [], "stable_skills": [], "declining_skills": [], "clues": [], "support_jd_ids": set()})
+            item = grouped.setdefault(job, {"job_title": job, "new_skills": [], "growing_skills": [], "stable_skills": [], "declining_skills": [], "clues": [], "skill_changes": [], "support_jd_ids": set()})
             item["support_jd_ids"].update(_ids(row.get("支撑JD")))
+            item["skill_changes"].append({
+                "skill_name": skill,
+                "early_count": int(row.get("早期出现次数") or 0),
+                "early_frequency": row.get("早期频率"),
+                "recent_count": int(row.get("近期出现次数") or 0),
+                "recent_frequency": row.get("近期频率"),
+                "direction": direction,
+            })
             if "新增" in direction: item["new_skills"].append(skill)
             elif "增强" in direction or "上升" in direction: item["growing_skills"].append(skill)
             elif "稳定" in direction: item["stable_skills"].append(skill)
@@ -138,7 +153,18 @@ class IncrementalDataService:
         for job, item in grouped.items():
             insufficient = any("不足" in status or "insufficient" in status.lower() for status in status_by_job[job])
             item["support_jd_ids"].update(support_by_job[job]); item["support_jd_ids"] = sorted(item["support_jd_ids"])
-            item.update(sample_insufficient=insufficient, sample_status="样本不足，当前仅作为变化线索，不形成显著趋势判断。" if insufficient else "可比较", batch_id=BATCH_ID)
+            periods = periods_by_job[job]
+            early = periods[0] if periods else {"label": "暂无数据", "jd_count": 0, "company_count": 0}
+            recent = periods[-1] if periods else early
+            if recent["jd_count"] > early["jd_count"]: trend = "观察数量上升"
+            elif recent["jd_count"] < early["jd_count"]: trend = "观察数量下降"
+            else: trend = "观察数量持平"
+            item.update(
+                periods=periods, early_period=early, recent_period=recent, trend=trend,
+                sample_insufficient=insufficient,
+                sample_status="样本不足，当前仅作为变化线索，不形成显著趋势判断。" if insufficient else "可比较",
+                batch_id=BATCH_ID,
+            )
             result.append(item)
         return result
 

@@ -304,11 +304,154 @@
         "LangChain",
         "Cursor"
       ],
+      "skill_changes": [
+        {
+          "skill_name": "Java",
+          "early_count": 1,
+          "early_frequency": 1,
+          "recent_count": 2,
+          "recent_frequency": 1,
+          "direction": "样本不足"
+        },
+        {
+          "skill_name": "Spring",
+          "early_count": 1,
+          "early_frequency": 1,
+          "recent_count": 2,
+          "recent_frequency": 1,
+          "direction": "样本不足"
+        },
+        {
+          "skill_name": "Spring Boot",
+          "early_count": 1,
+          "early_frequency": 1,
+          "recent_count": 0,
+          "recent_frequency": 0,
+          "direction": "样本不足"
+        },
+        {
+          "skill_name": "MySQL",
+          "early_count": 1,
+          "early_frequency": 1,
+          "recent_count": 0,
+          "recent_frequency": 0,
+          "direction": "样本不足"
+        },
+        {
+          "skill_name": "SQL",
+          "early_count": 1,
+          "early_frequency": 1,
+          "recent_count": 0,
+          "recent_frequency": 0,
+          "direction": "样本不足"
+        },
+        {
+          "skill_name": "RAG",
+          "early_count": 0,
+          "early_frequency": 0,
+          "recent_count": 1,
+          "recent_frequency": 0.5,
+          "direction": "样本不足"
+        },
+        {
+          "skill_name": "Agent",
+          "early_count": 0,
+          "early_frequency": 0,
+          "recent_count": 1,
+          "recent_frequency": 0.5,
+          "direction": "样本不足"
+        },
+        {
+          "skill_name": "LLM",
+          "early_count": 0,
+          "early_frequency": 0,
+          "recent_count": 1,
+          "recent_frequency": 0.5,
+          "direction": "样本不足"
+        },
+        {
+          "skill_name": "Prompt",
+          "early_count": 0,
+          "early_frequency": 0,
+          "recent_count": 1,
+          "recent_frequency": 0.5,
+          "direction": "样本不足"
+        },
+        {
+          "skill_name": "AI",
+          "early_count": 0,
+          "early_frequency": 0,
+          "recent_count": 2,
+          "recent_frequency": 1,
+          "direction": "样本不足"
+        },
+        {
+          "skill_name": "大模型",
+          "early_count": 0,
+          "early_frequency": 0,
+          "recent_count": 1,
+          "recent_frequency": 0.5,
+          "direction": "样本不足"
+        },
+        {
+          "skill_name": "LangChain",
+          "early_count": 0,
+          "early_frequency": 0,
+          "recent_count": 1,
+          "recent_frequency": 0.5,
+          "direction": "样本不足"
+        },
+        {
+          "skill_name": "Cursor",
+          "early_count": 0,
+          "early_frequency": 0,
+          "recent_count": 1,
+          "recent_frequency": 0.5,
+          "direction": "样本不足"
+        }
+      ],
       "support_jd_ids": [
         "JD019",
         "JD025",
         "JD026"
       ],
+      "periods": [
+        {
+          "label": "2022-2023",
+          "jd_count": 1,
+          "company_count": 1,
+          "support_jd_ids": [
+            "JD019"
+          ]
+        },
+        {
+          "label": "2026",
+          "jd_count": 2,
+          "company_count": 2,
+          "support_jd_ids": [
+            "JD025",
+            "JD026"
+          ]
+        }
+      ],
+      "early_period": {
+        "label": "2022-2023",
+        "jd_count": 1,
+        "company_count": 1,
+        "support_jd_ids": [
+          "JD019"
+        ]
+      },
+      "recent_period": {
+        "label": "2026",
+        "jd_count": 2,
+        "company_count": 2,
+        "support_jd_ids": [
+          "JD025",
+          "JD026"
+        ]
+      },
+      "trend": "观察数量上升",
       "sample_insufficient": true,
       "sample_status": "样本不足，当前仅作为变化线索，不形成显著趋势判断。",
       "batch_id": "BATCH-20260904"
@@ -329,6 +472,72 @@
         "Dify",
         "Copilot"
       ],
+      "skill_changes": [
+        {
+          "skill_name": "Python",
+          "early_count": 1,
+          "early_frequency": 0.5,
+          "recent_count": 3,
+          "recent_frequency": 1,
+          "direction": "样本不足"
+        },
+        {
+          "skill_name": "SQL",
+          "early_count": 1,
+          "early_frequency": 0.5,
+          "recent_count": 3,
+          "recent_frequency": 1,
+          "direction": "样本不足"
+        },
+        {
+          "skill_name": "Agent",
+          "early_count": 0,
+          "early_frequency": 0,
+          "recent_count": 1,
+          "recent_frequency": 0.3333333333333333,
+          "direction": "样本不足"
+        },
+        {
+          "skill_name": "LLM",
+          "early_count": 0,
+          "early_frequency": 0,
+          "recent_count": 2,
+          "recent_frequency": 0.6666666666666666,
+          "direction": "样本不足"
+        },
+        {
+          "skill_name": "AI",
+          "early_count": 0,
+          "early_frequency": 0,
+          "recent_count": 2,
+          "recent_frequency": 0.6666666666666666,
+          "direction": "样本不足"
+        },
+        {
+          "skill_name": "大模型",
+          "early_count": 0,
+          "early_frequency": 0,
+          "recent_count": 1,
+          "recent_frequency": 0.3333333333333333,
+          "direction": "样本不足"
+        },
+        {
+          "skill_name": "Dify",
+          "early_count": 0,
+          "early_frequency": 0,
+          "recent_count": 1,
+          "recent_frequency": 0.3333333333333333,
+          "direction": "样本不足"
+        },
+        {
+          "skill_name": "Copilot",
+          "early_count": 0,
+          "early_frequency": 0,
+          "recent_count": 1,
+          "recent_frequency": 0.3333333333333333,
+          "direction": "样本不足"
+        }
+      ],
       "support_jd_ids": [
         "JD030",
         "JD031",
@@ -336,6 +545,47 @@
         "JD033",
         "JD035"
       ],
+      "periods": [
+        {
+          "label": "2022-2023",
+          "jd_count": 2,
+          "company_count": 2,
+          "support_jd_ids": [
+            "JD030",
+            "JD031"
+          ]
+        },
+        {
+          "label": "2026",
+          "jd_count": 3,
+          "company_count": 3,
+          "support_jd_ids": [
+            "JD032",
+            "JD033",
+            "JD035"
+          ]
+        }
+      ],
+      "early_period": {
+        "label": "2022-2023",
+        "jd_count": 2,
+        "company_count": 2,
+        "support_jd_ids": [
+          "JD030",
+          "JD031"
+        ]
+      },
+      "recent_period": {
+        "label": "2026",
+        "jd_count": 3,
+        "company_count": 3,
+        "support_jd_ids": [
+          "JD032",
+          "JD033",
+          "JD035"
+        ]
+      },
+      "trend": "观察数量上升",
       "sample_insufficient": true,
       "sample_status": "样本不足，当前仅作为变化线索，不形成显著趋势判断。",
       "batch_id": "BATCH-20260904"
@@ -353,10 +603,85 @@
         "CI/CD",
         "AI"
       ],
+      "skill_changes": [
+        {
+          "skill_name": "Python",
+          "early_count": 0,
+          "early_frequency": null,
+          "recent_count": 1,
+          "recent_frequency": 0.5,
+          "direction": "样本不足"
+        },
+        {
+          "skill_name": "SQL",
+          "early_count": 0,
+          "early_frequency": null,
+          "recent_count": 1,
+          "recent_frequency": 0.5,
+          "direction": "样本不足"
+        },
+        {
+          "skill_name": "Agent",
+          "early_count": 0,
+          "early_frequency": null,
+          "recent_count": 1,
+          "recent_frequency": 0.5,
+          "direction": "样本不足"
+        },
+        {
+          "skill_name": "CI/CD",
+          "early_count": 0,
+          "early_frequency": null,
+          "recent_count": 1,
+          "recent_frequency": 0.5,
+          "direction": "样本不足"
+        },
+        {
+          "skill_name": "AI",
+          "early_count": 0,
+          "early_frequency": null,
+          "recent_count": 1,
+          "recent_frequency": 0.5,
+          "direction": "样本不足"
+        }
+      ],
       "support_jd_ids": [
         "JD038",
         "JD042"
       ],
+      "periods": [
+        {
+          "label": "2022-2023",
+          "jd_count": 0,
+          "company_count": 0,
+          "support_jd_ids": []
+        },
+        {
+          "label": "2026",
+          "jd_count": 2,
+          "company_count": 2,
+          "support_jd_ids": [
+            "JD038",
+            "JD042"
+          ]
+        }
+      ],
+      "early_period": {
+        "label": "2022-2023",
+        "jd_count": 0,
+        "company_count": 0,
+        "support_jd_ids": []
+      },
+      "recent_period": {
+        "label": "2026",
+        "jd_count": 2,
+        "company_count": 2,
+        "support_jd_ids": [
+          "JD038",
+          "JD042"
+        ]
+      },
+      "trend": "观察数量上升",
       "sample_insufficient": true,
       "sample_status": "样本不足，当前仅作为变化线索，不形成显著趋势判断。",
       "batch_id": "BATCH-20260904"
