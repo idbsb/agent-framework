@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import hashlib
 import json
+import copy
 from datetime import date, datetime
 from pathlib import Path
 from typing import Any, Iterable
@@ -39,6 +40,7 @@ class DataLoader:
         self.sources = self._read_yaml(self.config_path)
         self.field_mapping = self._read_yaml(self.project_root / "config" / "field_mapping.yaml")
         self.version = self._read_yaml(self.project_root / "config" / "version.yaml")
+        self._runtime_cache: dict[str, Any] = {}
 
     @staticmethod
     def _read_yaml(path: Path) -> dict[str, Any]:
@@ -103,7 +105,18 @@ class DataLoader:
         ]
 
     def load_jds(self) -> list[dict[str, Any]]:
-        return self._load_mapped("standardized_jd_dataset")
+        if "jds" not in self._runtime_cache:
+            self._runtime_cache["jds"] = self._load_mapped("standardized_jd_dataset")
+        return copy.deepcopy(self._runtime_cache["jds"])
+
+    def load_job_analysis_corpus_config(self) -> dict[str, Any]:
+        if "job_analysis_corpus" not in self._runtime_cache:
+            path = self.project_root / "config" / "job_analysis_corpus.json"
+            value = json.loads(path.read_text(encoding="utf-8"))
+            if not isinstance(value.get("statistical_exclusions"), list) or not isinstance(value.get("aggregate_job_profiles"), dict):
+                raise DataConfigurationError("岗位分析派生口径配置无效")
+            self._runtime_cache["job_analysis_corpus"] = value
+        return copy.deepcopy(self._runtime_cache["job_analysis_corpus"])
 
     def load_job_analysis_jds(self) -> list[dict[str, Any]]:
         """Return the immutable formal corpus plus approved supplemental statistics rows.
@@ -111,6 +124,8 @@ class DataLoader:
         The supplemental source and its existing candidate mapping remain untouched. Confirmed
         duplicates stay in the protected source for auditability but are not counted twice.
         """
+        if "job_analysis_jds" in self._runtime_cache:
+            return copy.deepcopy(self._runtime_cache["job_analysis_jds"])
         rows = self.load_jds()
         source = self.sources.get("supplemental_job_analysis")
         if not isinstance(source, dict):
@@ -165,10 +180,71 @@ class DataLoader:
             })
         from .integration.incremental_data import IncrementalDataService
         incremental = IncrementalDataService(self.project_root).standardized_jds()
-        ids = [row.get("jd_id") for row in rows + supplemental + incremental]
+        combined = rows + supplemental + incremental
+        ids = [row.get("jd_id") for row in combined]
         if len(ids) != len(set(ids)):
             raise DataConfigurationError("岗位分析组合输入存在重复JD编号")
-        return rows + supplemental + incremental
+        excluded = {
+            str(item.get("jd_id", "")).strip()
+            for item in self.load_job_analysis_corpus_config()["statistical_exclusions"]
+        }
+        unknown = excluded - set(ids)
+        if unknown:
+            raise DataConfigurationError(f"岗位分析排重配置引用未知JD：{sorted(unknown)}")
+        result = [row for row in combined if row.get("jd_id") not in excluded]
+        self._runtime_cache["job_analysis_jds"] = result
+        return copy.deepcopy(result)
+
+    def job_analysis_groups(self) -> dict[str, list[str]]:
+        configured = self.load_job_analysis_corpus_config()["aggregate_job_profiles"]
+        return {
+            title: list(dict.fromkeys(str(value).strip() for value in item.get("member_jd_ids", []) if str(value).strip()))
+            for title, item in configured.items()
+        }
+
+    def job_analysis_rows_for_title(self, job_title: str) -> list[dict[str, Any]]:
+        if "job_analysis_rows_by_title" not in self._runtime_cache:
+            rows = self.load_job_analysis_jds()
+            grouped: dict[str, list[dict[str, Any]]] = {}
+            for row in rows:
+                title = str(row.get("standard_job_title", "")).strip()
+                if title:
+                    grouped.setdefault(title, []).append(row)
+            rows_by_id = {str(row.get("jd_id")): row for row in rows}
+            for title, member_ids in self.job_analysis_groups().items():
+                combined = {str(row.get("jd_id")): row for row in grouped.get(title, [])}
+                combined.update({jd_id: rows_by_id[jd_id] for jd_id in member_ids if jd_id in rows_by_id})
+                grouped[title] = list(combined.values())
+            self._runtime_cache["job_analysis_rows_by_title"] = grouped
+        return copy.deepcopy(self._runtime_cache["job_analysis_rows_by_title"].get(job_title, []))
+
+    def job_analysis_counts(self) -> dict[str, int]:
+        self.job_analysis_rows_for_title("")
+        grouped = self._runtime_cache["job_analysis_rows_by_title"]
+        return {title: len(rows) for title, rows in sorted(grouped.items())}
+
+    def job_analysis_audit(self) -> dict[str, Any]:
+        base = self.load_jds()
+        payload = json.loads((self.project_root / "data/external/supplemental_jd_v3.json").read_text(encoding="utf-8"))
+        supplemental_raw = list(payload.get("records") or [])
+        supplemental_counted = sum(bool(row.get("count_in_statistics")) for row in supplemental_raw)
+        from .integration.incremental_data import IncrementalDataService
+        incremental_service = IncrementalDataService(self.project_root)
+        incremental_source_rows = incremental_service.raw_jds()
+        incremental_counted = incremental_service.standardized_jds()
+        exclusions = self.load_job_analysis_corpus_config()["statistical_exclusions"]
+        return {
+            "physical_source_record_count": len(base) + len(supplemental_raw) + len(incremental_source_rows),
+            "base_record_count": len(base),
+            "raw_source_record_count": len(base) + supplemental_counted + len(incremental_counted),
+            "effective_jd_count": len(self.load_job_analysis_jds()),
+            "cross_source_duplicate_excluded_count": len(exclusions),
+            "protected_supplemental_record_count": len(supplemental_raw),
+            "protected_supplemental_counted_record_count": supplemental_counted,
+            "protected_incremental_record_count": len(incremental_source_rows),
+            "protected_incremental_counted_record_count": len(incremental_counted),
+            "statistical_exclusions": exclusions,
+        }
 
     def load_incremental_jds(self) -> list[dict[str, Any]]:
         from .integration.incremental_data import IncrementalDataService
@@ -192,11 +268,14 @@ class DataLoader:
         return self._load_mapped("standardized_resume_testset")
 
     def load_skill_dictionary(self) -> tuple[list[dict[str, Any]], list[dict[str, Any]]]:
+        if "skill_dictionary" in self._runtime_cache:
+            return copy.deepcopy(self._runtime_cache["skill_dictionary"])
         source = self.sources["standard_skill_dictionary"]
         path = self.resolve_path("standard_skill_dictionary")
         skills = self.read_sheet(path, source["standard_skills_sheet"])
         aliases = self.read_sheet(path, source["aliases_sheet"])
-        return skills, aliases
+        self._runtime_cache["skill_dictionary"] = (skills, aliases)
+        return copy.deepcopy((skills, aliases))
 
     def load_job_skill_gold(self) -> list[dict[str, Any]]:
         source = self.sources.get("job_skill_gold")

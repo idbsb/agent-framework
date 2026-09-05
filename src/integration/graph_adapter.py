@@ -36,6 +36,7 @@ class GraphAdapter:
         self.skill_index = skill_index
         self.project_root = loader.project_root
         self.effective_profiles = effective_profiles or EffectiveJobProfiles(loader, skill_index, {})
+        self._load_cache: dict[str, Any] | None = None
 
     def _json_paths(self) -> list[Path]:
         return [
@@ -110,7 +111,65 @@ class GraphAdapter:
             },
             "formal_qa_report": qa_report,
         }
-        return self._overlay_incremental(baseline)
+        return self._overlay_job_aggregates(self._overlay_incremental(baseline))
+
+    def _overlay_job_aggregates(self, payload: dict[str, Any]) -> dict[str, Any]:
+        """Make every selectable job graph use the same deduplicated JD evidence corpus."""
+        result = copy.deepcopy(payload)
+        nodes = {node["id"]: node for node in result.get("nodes", [])}
+        job_by_name = {_text(node.get("name")): node for node in nodes.values() if node.get("type") == "job"}
+        skill_by_name = {_text(node.get("name")).casefold(): node for node in nodes.values() if node.get("type") == "skill"}
+        replaced_job_ids: set[str] = set()
+        generated_edges: list[dict[str, Any]] = []
+        for title, total in self.loader.job_analysis_counts().items():
+            rows = self.loader.job_analysis_rows_for_title(title)
+            job = job_by_name.get(title)
+            if job is None:
+                job_id = "job:aggregate:" + hashlib.sha1(title.encode("utf-8")).hexdigest()[:12]
+                job = {"id": job_id, "name": title, "type": "job", "formal_type": "Job"}
+                nodes[job_id] = job
+                job_by_name[title] = job
+            job.update(standard_job_title=title, jd_count=total, evidence_count=total, profile_source="jd_aggregate")
+            replaced_job_ids.add(job["id"])
+            evidence: dict[str, set[str]] = {}
+            for row in rows:
+                for item in self.skill_index.extract_fields([
+                    ("responsibilities", row.get("responsibilities")),
+                    ("required_skills_raw", row.get("required_skills_raw")),
+                    ("bonus_skills_raw", row.get("bonus_skills_raw")),
+                ]):
+                    if item.accepted and item.polarity == "affirmed":
+                        evidence.setdefault(item.skill_id, set()).add(_text(row.get("jd_id")))
+            for skill_id, ids in evidence.items():
+                skill_name = self.skill_index.standard_name(skill_id)
+                skill = skill_by_name.get(skill_name.casefold())
+                if skill is None:
+                    skill = {"id": skill_id, "name": skill_name, "type": "skill", "formal_type": "Skill"}
+                    nodes[skill_id] = skill
+                    skill_by_name[skill_name.casefold()] = skill
+                evidence_ids = sorted(value for value in ids if value)
+                generated_edges.append({
+                    "id": f"aggregate:{job['id']}:{skill['id']}", "source": job["id"], "target": skill["id"],
+                    "edge_type": "Job_Skill", "relation": "requires_skill", "job_title": title,
+                    "skill_name": skill_name, "frequency": len(evidence_ids) / total if total else 0,
+                    "mention_count": len(evidence_ids), "evidence_jd_ids": evidence_ids,
+                    "evidence_count": len(evidence_ids), "sample_size": total, "profile_source": "jd_aggregate",
+                })
+        preserved = [
+            edge for edge in result.get("edges", [])
+            if not (self._is_job_skill(edge) and edge.get("source") in replaced_job_ids)
+        ]
+        result["nodes"] = list(nodes.values())
+        result["edges"] = preserved + generated_edges
+        result["source_label"] = "真实招聘信息聚合"
+        result["notice"] = "岗位与技能关系均由去重后的招聘信息生成，并保留招聘信息编号作为依据。"
+        result["summary"] = {
+            "node_count": len(result["nodes"]), "edge_count": len(result["edges"]),
+            "job_skill_edge_count": sum(self._is_job_skill(edge) for edge in result["edges"]),
+            "job_count": sum(node.get("type") == "job" for node in result["nodes"]),
+            "skill_count": sum(node.get("type") == "skill" for node in result["nodes"]),
+        }
+        return result
 
     def _overlay_incremental(self, payload: dict[str, Any]) -> dict[str, Any]:
         """Apply the read-only batch as a transparent Graph V2 overlay."""
@@ -245,13 +304,17 @@ class GraphAdapter:
         }
 
     def load(self) -> dict[str, Any]:
+        if self._load_cache is not None:
+            return copy.deepcopy(self._load_cache)
         for path in self._json_paths():
             if path.exists():
-                return self._from_json(path)
+                self._load_cache = self._from_json(path)
+                return copy.deepcopy(self._load_cache)
         for path in self._excel_paths():
             if path.exists():
-                return self._from_excel(path)
-        return {
+                self._load_cache = self._overlay_job_aggregates(self._from_excel(path))
+                return copy.deepcopy(self._load_cache)
+        self._load_cache = {
             "available": False,
             "status": "not_connected",
             "source_type": "missing",
@@ -261,6 +324,7 @@ class GraphAdapter:
             "edges": [],
             "summary": {"node_count": 0, "edge_count": 0, "job_count": 0, "skill_count": 0},
         }
+        return copy.deepcopy(self._load_cache)
 
     @staticmethod
     def _filter_payload(payload: dict[str, Any], edges: list[dict[str, Any]]) -> dict[str, Any]:
@@ -342,9 +406,16 @@ class GraphAdapter:
         result = self._filter_payload(payload, edges[:limit] if limit is not None else edges)
         result["job_title"] = job_title
         result.update(self.effective_profiles.metadata(effective))
-        if payload.get("available") and not edges:
+        if result.get("profile_source") == "static_baseline" and self.loader.job_analysis_rows_for_title(job_title):
+            result["profile_source"] = "jd_aggregate"
+        if payload.get("available") and not edges and self.loader.job_analysis_rows_for_title(job_title):
+            result["nodes"] = [job_node] if job_node else []
+            result["summary"] = {"node_count": len(result["nodes"]), "edge_count": 0, "job_skill_edge_count": 0, "evidence_count": 0}
+            result["status"] = "connected"
+            result["notice"] = "该岗位已有真实招聘信息，但原文未命中当前标准技能词典。"
+        elif payload.get("available") and not edges:
             result["status"] = "job_not_found"
-            result["notice"] = "当前组员A关系表中没有该岗位。"
+            result["notice"] = "当前没有该岗位的招聘信息。"
         return result
 
     def for_skill(self, skill_id: str) -> dict[str, Any]:

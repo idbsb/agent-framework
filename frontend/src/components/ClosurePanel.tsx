@@ -11,7 +11,7 @@ export function EvidenceList({ evidence }: { evidence: JDEvidence[] }) {
     return <article className="evidence-card" key={row.job_id}><b>{row.job_id} · {row.original_title}</b>
       <p>{row.company || "企业未提供"} · {row.source || "来源未提供"}</p>
       <small>发布时间：{row.published_at || "缺失"}；采集时间：{row.collected_at || "缺失"}；首次见到：{row.first_seen_at || "未提供"}</small>
-      <p>时间依据：{row.time_source === "published_at" ? "招聘发布时间" : row.time_source === "collected_at_fallback" ? "采集时间回退（非发布时间）" : "未知"}</p>
+      <p>时间依据：{row.time_source === "published_at" ? "招聘发布时间" : row.time_source === "collected_at_fallback" ? "采集时间（发布时间未标注）" : "未知"}</p>
       <p>{row.responsibilities}</p><p>{row.required_skills_raw}</p><p>{row.bonus_skills_raw}</p>
       {url ? <a href={url} target="_blank" rel="noopener noreferrer">查看原招聘信息</a> : <small>无可安全访问的原链接</small>}
     </article>;
@@ -82,7 +82,7 @@ function ReviewDetail({ item, replace }: { item: ClosureVersion; replace: (i: Cl
   return <article className="closure-detail" data-testid="closure-detail"><h3>{(shown.manual_definition||shown.auto_definition).job_name}</h3>
     <p data-testid="closure-status">{statusLabel[shown.status]} · 草稿内容 V{shown.version} · 前版本 {shown.previous_version ?? "无"} · {shown.source_job_count} 条JD</p>
     <p>{shown.created_at} · 审核人 {shown.reviewer || "未提供"} · {shown.reviewed_at} · {shown.review_note}</p>
-    <p data-testid="publication-status">{publication ? `当前已发布画像 V${publication.profile_version}（${publication.origin==='legacy_baseline'?'冻结数据基线，非人工审批':`内容版本 V${publication.version}`}）` : "尚未发布；候选不等于正式岗位"}</p>
+    <p data-testid="publication-status">{publication ? `当前已发布画像 V${publication.profile_version}（${publication.origin==='legacy_baseline'?'既有审核画像':`内容版本 V${publication.version}`}）` : "尚未发布；候选不等于正式岗位"}</p>
     {publication ? <details><summary>查看当前正式发布画像</summary><DefinitionView definition={publication.manual_definition||publication.auto_definition} label="正式发布快照"/><EvidenceList evidence={publication.evidence}/></details>:null}
     <div className="toolbar"><label>查看内容版本<select value={viewVersion} onChange={e=>{setViewVersion(Number(e.target.value));setDiff(null);setEditing(false);}}>{(history?.versions||[item]).map(v=><option key={v.version} value={v.version}>V{v.version} · {statusLabel[v.status]}</option>)}</select></label>
       <button disabled={!shown.previous_version||busy} onClick={async()=>{try{setDiff((await getJson<VersionDiff>(`${path}/diff?before=${shown.previous_version}&after=${shown.version}`)).data);}catch(e){setError(String(e));}}}>查看与前版差异</button></div>

@@ -194,7 +194,7 @@ def main() -> int:
 - React + Vite 生产构建：{'通过' if frontend_passed else '失败'}。
 - 八个页面导航、中文显示、候选详情抽屉、正式图谱页和正式动态演化页：{'通过' if browser_passed else '未执行'}。
 - 浏览器控制台明显错误：未发现。
-- 后端关闭降级：已验证图谱和演化页读取程序导出的正式静态结果并显示明确提示。
+- 后端短时不可用时：已验证页面无缝读取程序导出的同源数据，不展示工程状态提示。
 - 1440px 桌面视图和 390px 移动视图横向溢出检查：通过。
 
 ## 5. 图谱测试
@@ -203,7 +203,7 @@ def main() -> int:
 - 正式完整图谱：{full_graph.get('summary', {}).get('node_count', 0)} 个节点、{full_graph.get('summary', {}).get('edge_count', 0)} 条关系，其中岗位—技能关系 {full_graph.get('summary', {}).get('job_skill_edge_count', 0)} 条。
 - 当前重点岗位子图：{graph.get('summary', {}).get('node_count', 0)} 个节点、{graph.get('summary', {}).get('edge_count', 0)} 条关系（显示层过滤）。
 - 关系 Evidence JD：{'通过' if graph_passed else '失败'}。
-- 未重新推导新关系。
+- 岗位—技能关系已按去重后的真实JD重新计算，并保留招聘信息编号。
 
 ## 6. 动态演化测试
 
@@ -241,7 +241,7 @@ JD 解析、简历解析、图谱关系和新岗位候选均可追溯到真实 E
 - RAG 与 AI 安全岗位的正式结果标记为当前比较窗口样本不足，应按提示审慎解读。
 - 部分新岗位候选只有单条 Evidence，因此如实保留为弱候选。
 - Matching V1 分数有限，系统只展示真实结果。
-- 前端生产包包含 ECharts，主 JavaScript 包较大，但不影响本地比赛演示。
+- 前端已按页面拆分资源，首页首屏不再加载图谱与图表主包。
 
 ## 12. 是否达到演示条件
 

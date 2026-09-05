@@ -21,7 +21,7 @@ test('evidence escapes HTML and links use noopener noreferrer', async () => {
   assert.match(html, /&lt;script&gt;/);
   assert.match(html, /rel="noopener noreferrer"/);
   assert.ok(!html.includes('href="javascript:'));
-  assert.match(html, /采集时间回退/);
+  assert.match(html, /采集时间（发布时间未标注）/);
 });
 test('manual definition rendering escapes edits and labels insufficient fields', async () => {
   const { DefinitionView } = await server.ssrLoadModule('/src/components/ClosurePanel.tsx');

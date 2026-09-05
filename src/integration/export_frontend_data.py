@@ -17,12 +17,7 @@ def main() -> int:
     target.mkdir(parents=True, exist_ok=True)
     services = get_services()
     system = get_system_data()
-    rows = services.loader.load_job_analysis_jds()
-    counts: dict[str, int] = {}
-    for row in rows:
-        title = str(row.get("standard_job_title") or "").strip()
-        if title:
-            counts[title] = counts.get(title, 0) + 1
+    counts = services.loader.job_analysis_counts()
     write_json(target / "system_overview.json", system.overview())
     write_json(target / "multi_source.json", system.multi_source())
     write_json(target / "job_changes.json", system.job_changes())

@@ -28,6 +28,7 @@ class SystemDataService:
             self.loader.load_job_analysis_jds(),
             services.skill_index,
             services.matching_engine.profile_config,
+            self.loader.job_analysis_groups(),
         )
 
     def _emerging(self) -> dict[str, Any]:
@@ -64,7 +65,7 @@ class SystemDataService:
         skills, _ = self.loader.load_skill_dictionary()
         graph = self.graph.load()
         emerging = self._emerging()
-        job_counts = Counter(_text(row.get("standard_job_title")) for row in rows if _text(row.get("standard_job_title")))
+        job_counts = Counter(self.loader.job_analysis_counts())
         source_counts = Counter(_text(row.get("source")) for row in rows if _text(row.get("source")))
         skill_counts: Counter[str] = Counter()
         evidence_covered = 0
@@ -86,6 +87,13 @@ class SystemDataService:
             "skill_node_count": graph.get("baseline_summary", graph.get("summary", {})).get("skill_count", 0),
             "relation_count": graph.get("baseline_summary", graph.get("summary", {})).get("edge_count", 0),
         })
+        corpus_audit = self.loader.job_analysis_audit()
+        cross_source_duplicates = corpus_audit["cross_source_duplicate_excluded_count"]
+        batch["incremental"]["jd_count"] = len(rows) - len(baseline_rows)
+        batch["incremental"]["duplicate_excluded_count"] += cross_source_duplicates
+        batch["incremental"]["cross_source_duplicate_excluded_count"] = cross_source_duplicates
+        batch["current"]["jd_count"] = len(rows)
+        batch["current"]["job_count"] = len(job_counts)
         batch["graph_change"] = graph.get("graph_change", {})
         batch["current"].update({
             "job_node_count": graph.get("summary", {}).get("job_count", 0),
@@ -105,6 +113,7 @@ class SystemDataService:
                 "resume_count": len(resumes),
                 "evidence_covered_jd_count": evidence_covered,
             },
+            "corpus_audit": corpus_audit,
             "top_jobs": [{"job_title": title, "jd_count": count} for title, count in job_counts.most_common(8)],
             "top_skills": [{"skill_name": name, "evidence_jd_count": count} for name, count in skill_counts.most_common(10)],
             "sources": [{"source": name, "jd_count": count} for name, count in source_counts.most_common()],
@@ -131,7 +140,7 @@ class SystemDataService:
         effective = reader.get_effective_job_profile(job_title)
         matching_profile = effective["matching_profile"] or {}
         result = self.profile_builder.build(job_title, matching_profile)
-        result["graph_source_label"] = "当前最新JD自动聚合"
+        result["graph_source_label"] = "真实招聘信息聚合"
         result.update(reader.metadata(effective))
         if effective["profile_source"] == "static_baseline" and result.get("available"):
             result["profile_source"] = "jd_aggregate"

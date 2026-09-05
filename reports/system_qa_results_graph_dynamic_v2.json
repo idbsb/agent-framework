@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-09-05T04:16:58+08:00",
+  "generated_at": "2026-09-05T11:12:33+08:00",
   "environment": {
     "os": "Windows-11-10.0.26200-SP0",
     "python": "3.12.14",
@@ -90,25 +90,25 @@
     }
   },
   "observations": {
-    "job_count": 153,
-    "skill_count": 84,
+    "job_count": 152,
+    "skill_count": 94,
     "overview_metrics": {
-      "jd_count": 278,
-      "standard_job_count": 153,
-      "standard_skill_count": 84,
+      "jd_count": 277,
+      "standard_job_count": 152,
+      "standard_skill_count": 94,
       "frozen_standard_skill_count": 82,
-      "graph_node_count": 657,
-      "graph_edge_count": 2273,
+      "graph_node_count": 694,
+      "graph_edge_count": 2495,
       "resume_count": 27,
-      "evidence_covered_jd_count": 251
+      "evidence_covered_jd_count": 276
     },
     "focus_job_analysis_available": true,
     "graph_summary": {
-      "node_count": 657,
-      "edge_count": 2273,
-      "job_skill_edge_count": 894,
-      "job_count": 126,
-      "skill_count": 240
+      "node_count": 694,
+      "edge_count": 2495,
+      "job_skill_edge_count": 1116,
+      "job_count": 153,
+      "skill_count": 250
     },
     "evolution_status": "connected",
     "evolution_samples": {
@@ -126,7 +126,7 @@
       "medium_confidence": 10,
       "weak_candidate": 19
     },
-    "live_match_score": 36.33
+    "live_match_score": 50.33
   },
   "missing_group_a_files": []
 }

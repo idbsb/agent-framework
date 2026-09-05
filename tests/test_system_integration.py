@@ -67,10 +67,11 @@ class SystemIntegrationTest(unittest.TestCase):
         self.assertTrue(self.system.evolution.for_job("RAG引擎研发工程师")["sample_insufficient"])
         self.assertTrue(self.system.evolution.for_job("AI安全技术工程师")["sample_insufficient"])
 
-    def test_evolution_fallback_copy_describes_formal_static_results(self):
+    def test_evolution_page_hides_internal_fallback_wording(self):
         source = (self.root / "frontend" / "src" / "pages" / "EvolutionPage.tsx").read_text(encoding="utf-8")
         self.assertNotIn("静态缺失状态", source)
-        self.assertIn("静态正式演化结果", source)
+        self.assertNotIn("静态正式演化结果", source)
+        self.assertNotIn("暂时无法连接实时服务", source)
 
     def test_emerging_candidates_have_complete_evidence(self):
         value = json.loads((self.root / "outputs" / "emerging_jobs_v1.json").read_text(encoding="utf-8"))

@@ -1,24 +1,46 @@
 {
   "data_version": "1.0+supplemental_jd_v3+batch_20260904",
-  "truth_statement": "当前系统基于278条真实招聘JD构建。",
+  "truth_statement": "当前系统基于277条真实招聘JD构建。",
   "metrics": {
-    "jd_count": 278,
-    "standard_job_count": 153,
-    "standard_skill_count": 84,
+    "jd_count": 277,
+    "standard_job_count": 152,
+    "standard_skill_count": 94,
     "frozen_standard_skill_count": 82,
-    "graph_node_count": 657,
-    "graph_edge_count": 2273,
+    "graph_node_count": 694,
+    "graph_edge_count": 2495,
     "resume_count": 27,
-    "evidence_covered_jd_count": 251
+    "evidence_covered_jd_count": 276
+  },
+  "corpus_audit": {
+    "physical_source_record_count": 282,
+    "base_record_count": 191,
+    "raw_source_record_count": 278,
+    "effective_jd_count": 277,
+    "cross_source_duplicate_excluded_count": 1,
+    "protected_supplemental_record_count": 49,
+    "protected_supplemental_counted_record_count": 46,
+    "protected_incremental_record_count": 42,
+    "protected_incremental_counted_record_count": 41,
+    "statistical_exclusions": [
+      {
+        "jd_id": "BATCH-20260904-JD007",
+        "canonical_jd_id": "JD-065",
+        "reason": "与基础库JD-065的来源URL完全相同；保留原始记录与审计信息，统计只计一次。"
+      }
+    ]
   },
   "top_jobs": [
     {
-      "job_title": "AI Agent开发工程师",
-      "jd_count": 12
+      "job_title": "AI安全技术工程师",
+      "jd_count": 30
     },
     {
-      "job_title": "AI安全技术工程师",
-      "jd_count": 9
+      "job_title": "AI Agent开发工程师",
+      "jd_count": 25
+    },
+    {
+      "job_title": "RAG引擎研发工程师",
+      "jd_count": 10
     },
     {
       "job_title": "Java开发工程师",
@@ -33,26 +55,22 @@
       "jd_count": 7
     },
     {
-      "job_title": "具身智能算法工程师",
-      "jd_count": 6
-    },
-    {
       "job_title": "具身智能工程师",
       "jd_count": 6
     },
     {
-      "job_title": "大模型评测工程师",
+      "job_title": "具身智能算法工程师",
       "jd_count": 6
     }
   ],
   "top_skills": [
     {
-      "skill_name": "Python",
-      "evidence_jd_count": 178
+      "skill_name": "大语言模型（LLM）",
+      "evidence_jd_count": 193
     },
     {
-      "skill_name": "大语言模型（LLM）",
-      "evidence_jd_count": 108
+      "skill_name": "Python",
+      "evidence_jd_count": 177
     },
     {
       "skill_name": "C++",
@@ -64,27 +82,27 @@
     },
     {
       "skill_name": "RAG",
-      "evidence_jd_count": 63
+      "evidence_jd_count": 62
     },
     {
       "skill_name": "Java",
-      "evidence_jd_count": 61
+      "evidence_jd_count": 60
+    },
+    {
+      "skill_name": "强化学习",
+      "evidence_jd_count": 52
+    },
+    {
+      "skill_name": "数据采集与标注",
+      "evidence_jd_count": 47
+    },
+    {
+      "skill_name": "AI安全",
+      "evidence_jd_count": 40
     },
     {
       "skill_name": "LangChain",
-      "evidence_jd_count": 39
-    },
-    {
-      "skill_name": "自然语言处理（NLP）",
       "evidence_jd_count": 38
-    },
-    {
-      "skill_name": "Linux",
-      "evidence_jd_count": 37
-    },
-    {
-      "skill_name": "计算机视觉（CV）",
-      "evidence_jd_count": 35
     }
   ],
   "sources": [
@@ -241,10 +259,6 @@
       "jd_count": 1
     },
     {
-      "source": "天津工业大学就业网",
-      "jd_count": 1
-    },
-    {
       "source": "海康威视官方招聘",
       "jd_count": 1
     },
@@ -284,8 +298,8 @@
   "graph_status": {
     "available": true,
     "status": "connected",
-    "source_label": "Graph V2（正式基准图谱 + 2026-09-04真实增量批次）",
-    "notice": "NEW 为本批次新增节点/关系，UPDATED 为本批次有新增 Evidence 的既有关系。"
+    "source_label": "真实招聘信息聚合",
+    "notice": "岗位与技能关系均由去重后的招聘信息生成，并保留招聘信息编号作为依据。"
   },
   "evolution_status": {
     "support_jd_count": 12,
@@ -4381,8 +4395,8 @@
     },
     "incremental": {
       "raw_jd_count": 42,
-      "jd_count": 41,
-      "duplicate_excluded_count": 1,
+      "jd_count": 40,
+      "duplicate_excluded_count": 2,
       "source_count": 17,
       "company_count": 34,
       "job_count": 11,
@@ -4391,14 +4405,15 @@
       "new_job_count": 9,
       "observed_skill_count": 179,
       "changed_job_count": 3,
-      "emerging_candidate_count": 8
+      "emerging_candidate_count": 8,
+      "cross_source_duplicate_excluded_count": 1
     },
     "current": {
-      "jd_count": 278,
-      "job_count": 153,
-      "job_node_count": 126,
-      "skill_node_count": 240,
-      "relation_count": 2273
+      "jd_count": 277,
+      "job_count": 152,
+      "job_node_count": 153,
+      "skill_node_count": 250,
+      "relation_count": 2495
     },
     "recruitment_sources": {
       "国家大学生就业服务平台": 12,

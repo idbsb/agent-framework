@@ -8,10 +8,10 @@ type Overview = { truth_statement: string; metrics: Record<string, number>; top_
 const metrics = [["jd_count", "真实JD", Database], ["standard_job_count", "标准岗位", BriefcaseBusiness], ["standard_skill_count", "标准技能", Blocks], ["graph_node_count", "图谱节点", Network], ["graph_edge_count", "图谱关系", Radar], ["resume_count", "测试简历", FileUser]] as const;
 
 export default function DashboardPage() {
-  const [data, setData] = useState<Overview | null>(null); const [error, setError] = useState(""); const [fallback, setFallback] = useState(false);
-  useEffect(() => { getJson<Overview>("/api/system/overview", "/data/system_overview.json").then((result) => { setData(result.data); setFallback(result.fallback); }).catch((reason: Error) => setError(reason.message)); }, []);
+  const [data, setData] = useState<Overview | null>(null); const [error, setError] = useState("");
+  useEffect(() => { getJson<Overview>("/api/system/overview", "/data/system_overview.json").then((result) => setData(result.data)).catch((reason: Error) => setError(reason.message)); }, []);
   return <>
-    {error ? <StatusBanner tone="error">数据加载失败：{error}</StatusBanner> : null}{fallback ? <StatusBanner tone="warning">暂时无法连接实时服务，当前展示最近可用数据。</StatusBanner> : null}
+    {error ? <StatusBanner tone="error">数据加载失败：{error}</StatusBanner> : null}
     <section className="hero-panel"><div><p className="kicker">真实招聘数据 · 招聘市场变化驱动 · 动态岗位能力图谱</p><h2>{data?.truth_statement || "正在读取岗位与技能数据…"}</h2><p>以多源真实证据持续发现岗位变化、更新能力要求，并将最新岗位画像用于简历解析、精准匹配和差距分析。</p></div></section>
     <section className="closure-flow"><Link to="/multi-source">多源数据采集</Link><span>→</span><Link to="/job-changes">新岗位发现与定义 / 既有岗位能力更新</Link><span>→</span><Link to="/graph">动态能力图谱</Link><span>→</span><Link to="/resume-parse">简历解析</Link><span>→</span><Link to="/match">精准匹配与差距分析</Link></section>
     <section className="metric-grid">{metrics.map(([key, label, Icon]) => <article className="metric-card" key={key}><div className="metric-icon"><Icon size={19} /></div><div className="metric-value">{data?.metrics[key] ?? "—"}</div><div className="metric-label">{label}</div></article>)}</section>

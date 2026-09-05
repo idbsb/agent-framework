@@ -5,16 +5,190 @@ import { PageIntro, StatusBanner, TagList } from "../components/Layout";
 import type { EmergingCandidate } from "../types";
 import ClosurePanel from "../components/ClosurePanel";
 
-type Payload = { available: boolean; notice: string; data_version?: string; updated_at?: string; generated_at?: string; summary: { candidate_count: number; high_confidence: number; medium_confidence: number; weak_candidate: number }; candidates: EmergingCandidate[] };
+type Payload = {
+  available: boolean;
+  notice: string;
+  data_version?: string;
+  updated_at?: string;
+  generated_at?: string;
+  summary: {
+    candidate_count: number;
+    high_confidence: number;
+    medium_confidence: number;
+    weak_candidate: number;
+  };
+  candidates: EmergingCandidate[];
+};
 export default function EmergingPage() {
-  const [data, setData] = useState<Payload | null>(null); const [selected, setSelected] = useState<EmergingCandidate | null>(null); const [fallback, setFallback] = useState(false);
-  useEffect(() => { getJson<Payload>("/api/emerging-jobs", "/data/emerging_jobs_v2.json").then((result) => { setData(result.data); setFallback(result.fallback); }); }, []);
-  return <><PageIntro kicker="职业方向 · 新兴技能 · 多源依据" title="发现正在形成的新岗位机会" description="结合多来源招聘信息识别新的职业方向，并展示判断依据与可信程度。" />
-    {fallback ? <StatusBanner tone="warning">暂时无法连接实时服务，当前展示最近可用的岗位机会数据。</StatusBanner> : null}<StatusBanner>{data?.notice} {data?.data_version ? `数据版本：${data.data_version}；更新时间：${data.updated_at || data.generated_at || "待补"}` : ""}</StatusBanner>
-    <section className="candidate-summary"><div><b>{data?.summary.candidate_count ?? 0}</b><span>全部候选</span></div><div className="high"><b>{data?.summary.high_confidence ?? 0}</b><span>高置信</span></div><div className="medium"><b>{data?.summary.medium_confidence ?? 0}</b><span>中置信</span></div><div className="weak"><b>{data?.summary.weak_candidate ?? 0}</b><span>弱候选</span></div></section>
-    <section className="candidate-grid">{data?.candidates.map((item) => <article className="candidate-card" key={item.candidate_id}><div className="candidate-top"><span>{item.candidate_id}</span><em className={`confidence ${item.confidence_level.startsWith("中") ? "medium" : item.confidence_level.startsWith("高") ? "" : "weak"}`}>{item.confidence_v2 || item.confidence_level}</em></div><div className="score-ring"><b>{item.emerging_score_v2 ?? item.emerging_score}</b><span>新兴度</span></div><h2>{item.candidate_name}</h2><p>{item.why_emerging}</p><div className="candidate-stats"><span>{item.counted_evidence_count ?? item.evidence_count}<small>去重依据</small></span><span>{item.company_count}<small>相关企业</small></span><span>{item.source_count}<small>信息来源</small></span></div><TagList values={item.core_skills.slice(0, 5)} empty="当前技能依据不足" /><button onClick={() => setSelected(item)}>查看完整证据 <ArrowRight size={14} /></button></article>)}</section>
-    {selected ? <div className="drawer-backdrop" onClick={() => setSelected(null)}><aside className="detail-drawer" onClick={(event) => event.stopPropagation()}><button className="drawer-close" onClick={() => setSelected(null)} aria-label="关闭"><X /></button><p className="kicker">{selected.candidate_id} · 岗位机会详情</p><h1>{selected.candidate_name}</h1><div className="drawer-score">{selected.emerging_score_v2 ?? selected.emerging_score}<span>{selected.confidence_v2 || selected.confidence_level}</span></div><div className="version-compare"><span>V1：{selected.emerging_score_v1 ?? "—"} · {selected.confidence_v1 || "无V1基线"}</span><span>V2：{selected.emerging_score_v2 ?? selected.emerging_score} · {selected.confidence_v2 || selected.confidence_level}</span><span>证据强度：{selected.evidence_strength_v2 ?? "—"}</span></div><h3>发现理由</h3><p>{selected.why_emerging}</p><h3>与现有岗位的关系</h3><p>{selected.relation_to_existing_jobs}</p><h3>核心技能</h3><TagList values={selected.core_skills} /><h3>差异化技能</h3><TagList values={selected.distinguishing_skills} /><h3>完整招聘依据（去重计数 {selected.counted_evidence_count ?? selected.evidence_count} / 审计记录 {selected.evidence_count}）</h3>{(selected.evidence_records || []).map((item) => <details className="evidence-detail" key={item.jd_id}><summary><b>{item.evidence_id || item.jd_id}</b><span>{item.original_job_title} · {item.company}</span></summary><div className="evidence-meta"><span>来源：{item.source}</span><span>发布日期：{item.published_date || "待补"}</span><span>去重：{item.duplicate_status || "unique"}{item.duplicate_of ? `（${item.duplicate_of}）` : ""}</span><span>映射：{item.mapping_type || "legacy_evidence"}</span><span>可信度：{item.evidence_confidence ?? "—"}</span></div><h4>岗位职责</h4><p>{item.responsibilities || "原文未单独标注"}</p><h4>任职要求</h4><p>{item.required_skills_raw || "原文未单独标注"}</p>{item.bonus_skills_raw ? <><h4>加分项</h4><p>{item.bonus_skills_raw}</p></> : null}<h4>技能</h4><TagList values={[...(item.skills || []), ...(item.tools_and_frameworks || [])]} empty="未提取到标准技能" /><h4>映射理由</h4><p>{item.mapping_reason || "V1原始Evidence"}</p>{item.source_url ? <a href={item.source_url} target="_blank" rel="noreferrer">打开来源链接</a> : <span className="source-pending">来源链接待补</span>}</details>)}<div className="review-note"><ShieldAlert size={16} /> 新岗位方向仍需持续观察与人工复核，不等同于已发布的正式职业。</div><div className="review-note good"><CheckCircle2 size={16} /> 招聘信息编号：{selected.evidence_jd_ids.join("、")}</div></aside></div> : null}
-    <ClosurePanel />
-  </>;
+  const [data, setData] = useState<Payload | null>(null);
+  const [selected, setSelected] = useState<EmergingCandidate | null>(null);
+  useEffect(() => {
+    getJson<Payload>("/api/emerging-jobs", "/data/emerging_jobs_v2.json").then(
+      (result) => setData(result.data),
+    );
+  }, []);
+  return (
+    <>
+      <PageIntro
+        kicker="职业方向 · 新兴技能 · 多源依据"
+        title="发现正在形成的新岗位机会"
+        description="结合多来源招聘信息识别新的职业方向，并展示判断依据与可信程度。"
+      />
+      <StatusBanner>{data?.notice}</StatusBanner>
+      <section className="candidate-summary">
+        <div>
+          <b>{data?.summary.candidate_count ?? 0}</b>
+          <span>全部候选</span>
+        </div>
+        <div className="high">
+          <b>{data?.summary.high_confidence ?? 0}</b>
+          <span>高置信</span>
+        </div>
+        <div className="medium">
+          <b>{data?.summary.medium_confidence ?? 0}</b>
+          <span>中置信</span>
+        </div>
+        <div className="weak">
+          <b>{data?.summary.weak_candidate ?? 0}</b>
+          <span>弱候选</span>
+        </div>
+      </section>
+      <section className="candidate-grid">
+        {data?.candidates.map((item) => (
+          <article className="candidate-card" key={item.candidate_id}>
+            <div className="candidate-top">
+              <span>{item.candidate_id}</span>
+              <em
+                className={`confidence ${item.confidence_level.startsWith("中") ? "medium" : item.confidence_level.startsWith("高") ? "" : "weak"}`}
+              >
+                {item.confidence_v2 || item.confidence_level}
+              </em>
+            </div>
+            <div className="score-ring">
+              <b>{item.emerging_score_v2 ?? item.emerging_score}</b>
+              <span>新兴度</span>
+            </div>
+            <h2>{item.candidate_name}</h2>
+            <p>{item.why_emerging}</p>
+            <div className="candidate-stats">
+              <span>
+                {item.counted_evidence_count ?? item.evidence_count}
+                <small>去重依据</small>
+              </span>
+              <span>
+                {item.company_count}
+                <small>相关企业</small>
+              </span>
+              <span>
+                {item.source_count}
+                <small>信息来源</small>
+              </span>
+            </div>
+            <TagList
+              values={item.core_skills.slice(0, 5)}
+              empty="当前技能依据不足"
+            />
+            <button onClick={() => setSelected(item)}>
+              查看完整证据 <ArrowRight size={14} />
+            </button>
+          </article>
+        ))}
+      </section>
+      {selected ? (
+        <div className="drawer-backdrop" onClick={() => setSelected(null)}>
+          <aside
+            className="detail-drawer"
+            onClick={(event) => event.stopPropagation()}
+          >
+            <button
+              className="drawer-close"
+              onClick={() => setSelected(null)}
+              aria-label="关闭"
+            >
+              <X />
+            </button>
+            <p className="kicker">{selected.candidate_id} · 岗位机会详情</p>
+            <h1>{selected.candidate_name}</h1>
+            <div className="drawer-score">
+              {selected.emerging_score_v2 ?? selected.emerging_score}
+              <span>{selected.confidence_v2 || selected.confidence_level}</span>
+            </div>
+            <div className="version-compare">
+              <span>可信程度：{selected.confidence_v2 || selected.confidence_level}</span>
+              <span>证据强度：{selected.evidence_strength_v2 ?? "—"}</span>
+            </div>
+            <h3>发现理由</h3>
+            <p>{selected.why_emerging}</p>
+            <h3>与现有岗位的关系</h3>
+            <p>{selected.relation_to_existing_jobs}</p>
+            <h3>核心技能</h3>
+            <TagList values={selected.core_skills} />
+            <h3>差异化技能</h3>
+            <TagList values={selected.distinguishing_skills} />
+            <h3>
+              完整招聘依据（去重计数{" "}
+              {selected.counted_evidence_count ?? selected.evidence_count} /
+              审计记录 {selected.evidence_count}）
+            </h3>
+            {(selected.evidence_records || []).map((item) => (
+              <details className="evidence-detail" key={item.jd_id}>
+                <summary>
+                  <b>{item.evidence_id || item.jd_id}</b>
+                  <span>
+                    {item.original_job_title} · {item.company}
+                  </span>
+                </summary>
+                <div className="evidence-meta">
+                  <span>来源：{item.source}</span>
+                  <span>发布日期：{item.published_date || "待补"}</span>
+                  <span>
+                    去重：{item.duplicate_status || "unique"}
+                    {item.duplicate_of ? `（${item.duplicate_of}）` : ""}
+                  </span>
+                  <span>映射：{item.mapping_type || "legacy_evidence"}</span>
+                  <span>可信度：{item.evidence_confidence ?? "—"}</span>
+                </div>
+                <h4>岗位职责</h4>
+                <p>{item.responsibilities || "原文未单独标注"}</p>
+                <h4>任职要求</h4>
+                <p>{item.required_skills_raw || "原文未单独标注"}</p>
+                {item.bonus_skills_raw ? (
+                  <>
+                    <h4>加分项</h4>
+                    <p>{item.bonus_skills_raw}</p>
+                  </>
+                ) : null}
+                <h4>技能</h4>
+                <TagList
+                  values={[
+                    ...(item.skills || []),
+                    ...(item.tools_and_frameworks || []),
+                  ]}
+                  empty="未提取到标准技能"
+                />
+                <h4>映射理由</h4>
+                <p>{item.mapping_reason || "历史招聘依据"}</p>
+                {item.source_url ? (
+                  <a href={item.source_url} target="_blank" rel="noreferrer">
+                    打开来源链接
+                  </a>
+                ) : (
+                  <span className="source-pending">来源链接待补</span>
+                )}
+              </details>
+            ))}
+            <div className="review-note">
+              <ShieldAlert size={16} />{" "}
+              新岗位方向仍需持续观察与人工复核，不等同于已发布的正式职业。
+            </div>
+            <div className="review-note good">
+              <CheckCircle2 size={16} /> 招聘信息编号：
+              {selected.evidence_jd_ids.join("、")}
+            </div>
+          </aside>
+        </div>
+      ) : null}
+      <ClosurePanel />
+    </>
+  );
 }
-

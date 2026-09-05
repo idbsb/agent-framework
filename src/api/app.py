@@ -114,12 +114,7 @@ def match_resume(request: MatchRequest) -> MatchResult:
 @app.get("/api/jobs")
 def list_jobs() -> dict:
     services = get_services()
-    rows = services.loader.load_job_analysis_jds()
-    counts = {}
-    for row in rows:
-        title = str(row.get("standard_job_title", "")).strip()
-        if title:
-            counts[title] = counts.get(title, 0) + 1
+    counts = services.loader.job_analysis_counts()
     effective = services.matching_engine.effective_profiles
     publications = effective.published_profiles()
     for title, published in publications.items():

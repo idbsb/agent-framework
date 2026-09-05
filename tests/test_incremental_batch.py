@@ -24,9 +24,10 @@ class IncrementalBatchIntegrationTest(unittest.TestCase):
         payload = self.system.multi_source()
         self.assertEqual(payload["baseline"]["jd_count"], 237)
         self.assertEqual(payload["incremental"]["raw_jd_count"], 42)
-        self.assertEqual(payload["incremental"]["jd_count"], 41)
-        self.assertEqual(payload["incremental"]["duplicate_excluded_count"], 1)
-        self.assertEqual(payload["current"]["jd_count"], 278)
+        self.assertEqual(payload["incremental"]["jd_count"], 40)
+        self.assertEqual(payload["incremental"]["duplicate_excluded_count"], 2)
+        self.assertEqual(payload["incremental"]["cross_source_duplicate_excluded_count"], 1)
+        self.assertEqual(payload["current"]["jd_count"], 277)
 
     def test_cautious_sample_conclusions_are_preserved(self):
         changes = self.system.job_changes()["capability_changes"]

@@ -45,11 +45,10 @@ class MatchingEngine:
         self.effective_profiles = effective_profiles or EffectiveJobProfiles(loader, skill_index, self.profiles)
 
     def _build_profiles(self) -> dict[str, dict]:
-        grouped: dict[str, list[dict]] = defaultdict(list)
-        for row in self.loader.load_job_analysis_jds():
-            title = str(row.get("standard_job_title", ""))
-            if title:
-                grouped[title].append(row)
+        grouped = {
+            title: self.loader.job_analysis_rows_for_title(title)
+            for title in self.loader.job_analysis_counts()
+        }
         profiles = {}
         for title, rows in grouped.items():
             required, bonus = Counter(), Counter()

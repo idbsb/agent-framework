@@ -227,8 +227,8 @@
   },
   "incremental": {
     "raw_jd_count": 42,
-    "jd_count": 41,
-    "duplicate_excluded_count": 1,
+    "jd_count": 40,
+    "duplicate_excluded_count": 2,
     "source_count": 17,
     "company_count": 34,
     "job_count": 11,
@@ -237,14 +237,15 @@
     "new_job_count": 9,
     "observed_skill_count": 179,
     "changed_job_count": 3,
-    "emerging_candidate_count": 8
+    "emerging_candidate_count": 8,
+    "cross_source_duplicate_excluded_count": 1
   },
   "current": {
-    "jd_count": 278,
-    "job_count": 153,
-    "job_node_count": 126,
-    "skill_node_count": 240,
-    "relation_count": 2273
+    "jd_count": 277,
+    "job_count": 152,
+    "job_node_count": 153,
+    "skill_node_count": 250,
+    "relation_count": 2495
   },
   "recruitment_sources": {
     "国家大学生就业服务平台": 12,

@@ -4,8 +4,8 @@
   "updated_at": "2026-09-04",
   "summary": {
     "raw_jd_count": 42,
-    "jd_count": 41,
-    "duplicate_excluded_count": 1,
+    "jd_count": 40,
+    "duplicate_excluded_count": 2,
     "source_count": 17,
     "company_count": 34,
     "job_count": 11,
@@ -15,6 +15,7 @@
     "observed_skill_count": 179,
     "changed_job_count": 3,
     "emerging_candidate_count": 8,
+    "cross_source_duplicate_excluded_count": 1,
     "new_job_node_count": 9,
     "new_skill_node_count": 158,
     "new_relation_count": 261,

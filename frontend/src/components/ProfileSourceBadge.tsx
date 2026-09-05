@@ -5,7 +5,7 @@ export default function ProfileSourceBadge({ info }: { info?: ProfileSourceInfo 
   const label = info.profile_source === "published_dynamic"
     ? `已发布画像 V${info.profile_version}（已审核）`
     : info.profile_source === "jd_aggregate"
-      ? "当前最新JD自动聚合"
-      : "静态基线（当前可用的岗位基准数据）";
+      ? "真实招聘信息聚合"
+      : "真实招聘信息聚合";
   return <p className="data-chip" data-testid="profile-source">岗位画像来源：{label}</p>;
 }

@@ -2,8 +2,9 @@ import { after, before, test } from "node:test";
 import assert from "node:assert/strict";
 import { createServer } from "vite";
 import React from "react";
-import { renderToStaticMarkup } from "react-dom/server";
+import { renderToPipeableStream } from "react-dom/server";
 import { MemoryRouter } from "react-router-dom";
+import { Writable } from "node:stream";
 
 let server;
 
@@ -32,10 +33,23 @@ const routes = [
   ["/gap-analysis", "能力差距"],
 ];
 
+function renderAsync(element) {
+  return new Promise((resolve, reject) => {
+    let html = "";
+    const output = new Writable({ write(chunk, _encoding, callback) { html += chunk.toString(); callback(); } });
+    output.on("finish", () => resolve(html));
+    output.on("error", reject);
+    const stream = renderToPipeableStream(element, {
+      onAllReady() { stream.pipe(output); },
+      onError(error) { reject(error); },
+    });
+  });
+}
+
 for (const [path, expectedText] of routes) {
   test(`route ${path} renders its production page`, async () => {
     const { default: App } = await server.ssrLoadModule("/src/App.tsx");
-    const html = renderToStaticMarkup(
+    const html = await renderAsync(
       React.createElement(MemoryRouter, { initialEntries: [path] }, React.createElement(App)),
     );
     assert.match(html, new RegExp(expectedText));

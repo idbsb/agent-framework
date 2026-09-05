@@ -110,7 +110,7 @@ class EffectiveProfileTest(unittest.TestCase):
         before = raw.for_job(STATIC_JOB)
         self.seed()  # an unpublished candidate cannot change any official graph
         self.assertEqual(self.graph.for_job(STATIC_JOB), before)
-        self.assertEqual(before["profile_source"], "static_baseline")
+        self.assertEqual(before["profile_source"], "jd_aggregate")
         self.assertEqual(self.graph.load_effective()["edges"], self.graph.load()["edges"])
 
     def test_08_graph_v2_and_reverse_skill_lookup(self):

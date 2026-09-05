@@ -5,16 +5,319 @@ import { LoaderCircle, Target } from "lucide-react";
 import { getJson, postJson } from "../api";
 import { PageIntro, StatusBanner, TagList } from "../components/Layout";
 import type { JobOption } from "../types";
-import ProfileSourceBadge, { type ProfileSourceInfo } from "../components/ProfileSourceBadge";
+import ProfileSourceBadge, {
+  type ProfileSourceInfo,
+} from "../components/ProfileSourceBadge";
 
-type MatchResult = ProfileSourceInfo & { resume_id: string; job_title: string; match_score: number; dimension_scores: Record<string, number | null>; dimension_status: Record<string, "met" | "not_met" | "unknown">; evaluated_dimensions: string[]; data_completeness: number; matched_skills: string[]; missing_skills: string[]; advantage_skills: string[]; priority_skills: string[]; recommendations: string[]; explanation: string[]; need_human_review: boolean };
-const example = { education: "硕士，人工智能", experience: "2年", work_experience: "负责AI Agent平台研发，使用Python与FastAPI。", projects: "基于LangGraph开发企业客服Agent，集成RAG、MCP与向量数据库，使用Docker部署。", skills_raw: "Python、LangGraph、RAG、MCP、FastAPI、Docker、向量数据库、Prompt Engineering" };
-const labels: Record<string, string> = { required_skills: "必备技能", bonus_skills: "加分技能", projects: "项目经历", experience: "工作经验", education: "学历" };
+type MatchResult = ProfileSourceInfo & {
+  resume_id: string;
+  job_title: string;
+  match_score: number;
+  dimension_scores: Record<string, number | null>;
+  dimension_status: Record<string, "met" | "not_met" | "unknown">;
+  evaluated_dimensions: string[];
+  data_completeness: number;
+  matched_skills: string[];
+  missing_skills: string[];
+  advantage_skills: string[];
+  priority_skills: string[];
+  recommendations: string[];
+  explanation: string[];
+  need_human_review: boolean;
+};
+const example = {
+  education: "硕士，人工智能",
+  experience: "2年",
+  work_experience: "负责AI Agent平台研发，使用Python与FastAPI。",
+  projects:
+    "基于LangGraph开发企业客服Agent，集成RAG、MCP与向量数据库，使用Docker部署。",
+  skills_raw:
+    "Python、LangGraph、RAG、MCP、FastAPI、Docker、向量数据库、Prompt Engineering",
+};
+const labels: Record<string, string> = {
+  required_skills: "必备技能",
+  bonus_skills: "加分技能",
+  projects: "项目经历",
+  experience: "工作经验",
+  education: "学历",
+};
 export default function MatchPage() {
-  const [jobs, setJobs] = useState<JobOption[]>([]); const [jobTitle, setJobTitle] = useState("AI Agent开发工程师"); const [form, setForm] = useState(() => emptyForm(example)); const [result, setResult] = useState<MatchResult | null>(null); const [error, setError] = useState(""); const [loading, setLoading] = useState(false);
-  useEffect(() => { getJson<{ jobs: JobOption[] }>("/api/jobs", "/data/jobs.json").then((value) => setJobs(value.data.jobs)); }, []);
-  const submit = async (event: FormEvent) => { event.preventDefault(); setLoading(true); setError(""); try { setResult(await postJson<MatchResult>("/api/match", matchPayload(form, jobTitle))); } catch (reason) { setError((reason as Error).message); } finally { setLoading(false); } };
-  const option = useMemo(() => ({ radar: { indicator: (result?.evaluated_dimensions || []).map((key) => ({ name: labels[key], max: 100 })), axisName: { color: "#4b5563" }, splitLine: { lineStyle: { color: "#e5e7eb" } }, splitArea: { areaStyle: { color: ["#ffffff", "#f9fafb"] } }, axisLine: { lineStyle: { color: "#e5e7eb" } } }, series: [{ type: "radar", data: [{ value: (result?.evaluated_dimensions || []).map((key) => result?.dimension_scores[key]), name: "匹配维度", areaStyle: { color: "rgba(16,185,129,.20)" }, lineStyle: { color: "#10b981", width: 2 }, itemStyle: { color: "#059669" } }] }], tooltip: { backgroundColor: "#ffffff", borderColor: "#e5e7eb", textStyle: { color: "#111827" } } }), [result]);
-  const level = !result ? "" : result.match_score >= 75 ? "高" : result.match_score >= 45 ? "中" : "低";
-  return <><PageIntro kicker="匹配评分 · 能力差距 · 提升建议" title="评估你与目标岗位的匹配程度" description="选择目标岗位并填写个人经历，查看优势、技能差距和下一步提升方向。" /><div className="match-layout"><form className="panel form-panel match-form" onSubmit={submit}><div className="panel-title"><span>目标岗位与个人经历</span><small>信息越完整，结果越有参考价值</small></div><label>目标岗位<select value={jobTitle} onChange={(event) => setJobTitle(event.target.value)}>{jobs.map((item) => <option key={item.standard_job_title}>{item.standard_job_title}</option>)}</select></label><div className="form-row"><label>学历<input value={form.education} onChange={(event) => setForm({ ...form, education: event.target.value })} /></label><label>工作经验<input value={form.experience} onChange={(event) => setForm({ ...form, experience: event.target.value })} /></label></div><label>工作经历<textarea rows={5} value={form.work_experience} onChange={(event) => setForm({ ...form, work_experience: event.target.value })} /></label><label>项目经历<textarea rows={6} value={form.projects} onChange={(event) => setForm({ ...form, projects: event.target.value })} /></label><label>技能清单<textarea rows={5} value={form.skills_raw} onChange={(event) => setForm({ ...form, skills_raw: event.target.value })} /></label><button type="button" disabled={loading} onClick={() => { setForm({ ...example }); setResult(null); setError(""); }}>加载示例</button><button type="button" disabled={loading} onClick={() => { setForm(emptyForm(example)); setResult(null); setError(""); }}>清空内容</button><button className="primary-button" disabled={loading}>{loading ? <LoaderCircle className="spin" /> : <Target />}查看匹配结果</button>{error ? <StatusBanner tone="error">匹配失败：{error}</StatusBanner> : null}</form><div className="match-results">{result ? <><ProfileSourceBadge info={result}/><article className="panel score-panel"><div className="score-main"><span>综合匹配度</span><b>{result.match_score}<small>/100</small></b><em className={`level level-${level}`}>{level}匹配</em></div>{result.evaluated_dimensions.length >= 3 ? <ReactECharts option={option} style={{ height: 330 }} /> : <p>可评估信息不足，暂不绘制雷达图。</p>}</article><article className="panel"><div className="panel-title"><span>五维匹配明细</span><small>已评估 {result.evaluated_dimensions.length}/5 项</small></div><p>仅对信息充足的维度进行评分；未明确的岗位要求不会计入分数。</p>{Object.keys(labels).map(key => <p key={key}>{labels[key]}：{result.dimension_scores[key] == null ? "信息不足，暂不评分" : `${result.dimension_scores[key]} 分 · ${result.dimension_status[key] === "met" ? "符合要求" : "仍有提升空间"}`}</p>)}{result.explanation.map((line, index) => <p key={index}>{line}</p>)}</article><div className="gap-grid"><article className="panel"><div className="panel-title"><span>已具备技能</span><small>{result.matched_skills.length} 项</small></div><TagList values={result.matched_skills} /></article><article className="panel"><div className="panel-title"><span>缺失关键技能</span><small>{result.missing_skills.length} 项</small></div><TagList values={result.missing_skills} /></article><article className="panel"><div className="panel-title"><span>优势技能</span><small>{result.advantage_skills.length} 项</small></div><TagList values={result.advantage_skills} /></article><article className="panel"><div className="panel-title"><span>优先补足技能</span><small>{result.priority_skills.length} 项</small></div><TagList values={result.priority_skills} /></article></div><article className="panel learning-path"><div className="panel-title"><span>建议学习路径</span><small>根据当前差距生成</small></div>{result.recommendations.map((item, index) => <div className="path-step" key={item}><b>{String(index + 1).padStart(2, "0")}</b><span>{item.replace(/^\d+\.\s*/, "")}</span></div>)}<StatusBanner tone={result.need_human_review ? "warning" : "info"}>{result.need_human_review ? "部分信息不足，建议补充后再次评估" : "当前信息足以形成完整参考"}</StatusBanner></article></> : <article className="panel empty-result"><Target size={38} /><h2>开始你的岗位匹配</h2><p>填写个人经历并选择目标岗位，即可查看五维评分、技能差距和提升路径。</p></article>}</div></div></>;
+  const [jobs, setJobs] = useState<JobOption[]>([]);
+  const [jobTitle, setJobTitle] = useState("AI Agent开发工程师");
+  const [form, setForm] = useState(() => emptyForm(example));
+  const [result, setResult] = useState<MatchResult | null>(null);
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
+  useEffect(() => {
+    getJson<{ jobs: JobOption[] }>("/api/jobs", "/data/jobs.json").then(
+      (value) => setJobs(value.data.jobs),
+    );
+  }, []);
+  const submit = async (event: FormEvent) => {
+    event.preventDefault();
+    setLoading(true);
+    setError("");
+    try {
+      setResult(
+        await postJson<MatchResult>("/api/match", matchPayload(form, jobTitle)),
+      );
+    } catch (reason) {
+      setError((reason as Error).message);
+    } finally {
+      setLoading(false);
+    }
+  };
+  const option = useMemo(
+    () => ({
+      radar: {
+        indicator: (result?.evaluated_dimensions || []).map((key) => ({
+          name: labels[key],
+          max: 100,
+        })),
+        axisName: { color: "#4b5563" },
+        splitLine: { lineStyle: { color: "#e5e7eb" } },
+        splitArea: { areaStyle: { color: ["#ffffff", "#f9fafb"] } },
+        axisLine: { lineStyle: { color: "#e5e7eb" } },
+      },
+      series: [
+        {
+          type: "radar",
+          data: [
+            {
+              value: (result?.evaluated_dimensions || []).map(
+                (key) => result?.dimension_scores[key],
+              ),
+              name: "匹配维度",
+              areaStyle: { color: "rgba(16,185,129,.20)" },
+              lineStyle: { color: "#10b981", width: 2 },
+              itemStyle: { color: "#059669" },
+            },
+          ],
+        },
+      ],
+      tooltip: {
+        backgroundColor: "#ffffff",
+        borderColor: "#e5e7eb",
+        textStyle: { color: "#111827" },
+      },
+    }),
+    [result],
+  );
+  const level = !result
+    ? ""
+    : result.match_score >= 75
+      ? "高"
+      : result.match_score >= 45
+        ? "中"
+        : "低";
+  return (
+    <>
+      <PageIntro
+        kicker="匹配评分 · 能力差距 · 提升建议"
+        title="评估你与目标岗位的匹配程度"
+        description="选择目标岗位并填写个人经历，查看优势、技能差距和下一步提升方向。"
+      />
+      <div className="match-layout">
+        <form className="panel form-panel match-form" onSubmit={submit}>
+          <div className="panel-title">
+            <span>目标岗位与个人经历</span>
+            <small>信息越完整，结果越有参考价值</small>
+          </div>
+          <label>
+            目标岗位
+            <select
+              value={jobTitle}
+              onChange={(event) => setJobTitle(event.target.value)}
+            >
+              {jobs.map((item) => (
+                <option key={item.standard_job_title}>
+                  {item.standard_job_title}
+                </option>
+              ))}
+            </select>
+          </label>
+          <div className="form-row">
+            <label>
+              学历
+              <input
+                value={form.education}
+                onChange={(event) =>
+                  setForm({ ...form, education: event.target.value })
+                }
+              />
+            </label>
+            <label>
+              工作经验
+              <input
+                value={form.experience}
+                onChange={(event) =>
+                  setForm({ ...form, experience: event.target.value })
+                }
+              />
+            </label>
+          </div>
+          <label>
+            工作经历
+            <textarea
+              rows={5}
+              value={form.work_experience}
+              onChange={(event) =>
+                setForm({ ...form, work_experience: event.target.value })
+              }
+            />
+          </label>
+          <label>
+            项目经历
+            <textarea
+              rows={6}
+              value={form.projects}
+              onChange={(event) =>
+                setForm({ ...form, projects: event.target.value })
+              }
+            />
+          </label>
+          <label>
+            技能清单
+            <textarea
+              rows={5}
+              value={form.skills_raw}
+              onChange={(event) =>
+                setForm({ ...form, skills_raw: event.target.value })
+              }
+            />
+          </label>
+          <button
+            type="button"
+            disabled={loading}
+            onClick={() => {
+              setForm({ ...example });
+              setResult(null);
+              setError("");
+            }}
+          >
+            加载示例
+          </button>
+          <button
+            type="button"
+            disabled={loading}
+            onClick={() => {
+              setForm(emptyForm(example));
+              setResult(null);
+              setError("");
+            }}
+          >
+            清空内容
+          </button>
+          <button className="primary-button" disabled={loading}>
+            {loading ? <LoaderCircle className="spin" /> : <Target />}
+            查看匹配结果
+          </button>
+          {error ? (
+            <StatusBanner tone="error">匹配失败：{error}</StatusBanner>
+          ) : null}
+        </form>
+        <div className="match-results">
+          {result ? (
+            <>
+              <ProfileSourceBadge info={result} />
+              <article className="panel score-panel">
+                <div className="score-main">
+                  <span>综合匹配度</span>
+                  <b>
+                    {result.match_score}
+                    <small>/100</small>
+                  </b>
+                  <em className={`level level-${level}`}>{level}匹配</em>
+                </div>
+                {result.evaluated_dimensions.length >= 3 ? (
+                  <ReactECharts option={option} style={{ height: 330 }} />
+                ) : (
+                  <p>可评估信息不足，暂不绘制雷达图。</p>
+                )}
+              </article>
+              <article className="panel">
+                <div className="panel-title">
+                  <span>五维匹配明细</span>
+                  <small>
+                    已评估 {result.evaluated_dimensions.length}/5 项
+                  </small>
+                </div>
+                <p>
+                  仅对信息充足的维度进行评分；未明确的岗位要求不会计入分数。
+                </p>
+                {Object.keys(labels).map((key) => (
+                  <p key={key}>
+                    {labels[key]}：
+                    {result.dimension_scores[key] == null
+                      ? "信息不足，暂不评分"
+                      : `${result.dimension_scores[key]} 分 · ${result.dimension_status[key] === "met" ? "符合要求" : "仍有提升空间"}`}
+                  </p>
+                ))}
+                {result.explanation.map((line, index) => (
+                  <p key={index}>{line}</p>
+                ))}
+              </article>
+              <div className="gap-grid">
+                <article className="panel">
+                  <div className="panel-title">
+                    <span>已具备技能</span>
+                    <small>{result.matched_skills.length} 项</small>
+                  </div>
+                  <TagList values={result.matched_skills} />
+                </article>
+                <article className="panel">
+                  <div className="panel-title">
+                    <span>缺失关键技能</span>
+                    <small>{result.missing_skills.length} 项</small>
+                  </div>
+                  <TagList values={result.missing_skills} />
+                </article>
+                <article className="panel">
+                  <div className="panel-title">
+                    <span>优势技能</span>
+                    <small>{result.advantage_skills.length} 项</small>
+                  </div>
+                  <TagList values={result.advantage_skills} />
+                </article>
+                <article className="panel">
+                  <div className="panel-title">
+                    <span>优先补足技能</span>
+                    <small>{result.priority_skills.length} 项</small>
+                  </div>
+                  <TagList values={result.priority_skills} />
+                </article>
+              </div>
+              <article className="panel learning-path">
+                <div className="panel-title">
+                  <span>建议学习路径</span>
+                  <small>根据当前差距生成</small>
+                </div>
+                {result.recommendations.map((item, index) => (
+                  <div className="path-step" key={item}>
+                    <b>{String(index + 1).padStart(2, "0")}</b>
+                    <span>{item.replace(/^\d+\.\s*/, "")}</span>
+                  </div>
+                ))}
+                <StatusBanner
+                  tone={result.need_human_review ? "warning" : "info"}
+                >
+                  {result.need_human_review
+                    ? "部分信息不足，建议补充后再次评估"
+                    : "评估已完成，可结合技能差距查看提升方向"}
+                </StatusBanner>
+              </article>
+            </>
+          ) : (
+            <article className="panel empty-result">
+              <Target size={38} />
+              <h2>开始你的岗位匹配</h2>
+              <p>
+                填写个人经历并选择目标岗位，即可查看五维评分、技能差距和提升路径。
+              </p>
+            </article>
+          )}
+        </div>
+      </div>
+    </>
+  );
 }

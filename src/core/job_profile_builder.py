@@ -32,7 +32,7 @@ def _snippets(value: object) -> list[str]:
 
 
 class JobProfileBuilder:
-    def __init__(self, rows: list[dict[str, Any]], skill_index, profile_config: dict[str, Any]):
+    def __init__(self, rows: list[dict[str, Any]], skill_index, profile_config: dict[str, Any], aggregate_groups: dict[str, list[str]] | None = None):
         self.skill_index = skill_index
         self.profile_config = profile_config
         self.grouped: dict[str, list[dict[str, Any]]] = defaultdict(list)
@@ -40,6 +40,11 @@ class JobProfileBuilder:
             title = _text(row.get("standard_job_title"))
             if title:
                 self.grouped[title].append(row)
+        rows_by_id = {_text(row.get("jd_id")): row for row in rows}
+        for title, member_ids in (aggregate_groups or {}).items():
+            combined = {str(row.get("jd_id")): row for row in self.grouped.get(title, [])}
+            combined.update({jd_id: rows_by_id[jd_id] for jd_id in member_ids if jd_id in rows_by_id})
+            self.grouped[title] = list(combined.values())
 
     @staticmethod
     def _summarize_values(rows: list[dict[str, Any]], *fields: str) -> tuple[str, int]:
